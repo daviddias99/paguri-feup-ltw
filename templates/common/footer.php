@@ -1,7 +1,7 @@
 <?php function display_footer() { ?>
 
             <footer>
-                <p>&copy; Footera completar</p>
+                <p>&copy; Footer a completar</p>
             </footer>
         </body>
     </html>
