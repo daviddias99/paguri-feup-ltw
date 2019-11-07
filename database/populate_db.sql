@@ -29,7 +29,7 @@ VALUES
     (2, '2019-09-21 12:00', '2019-12-21 12:00'),
     (3, '2019-10-21 12:00', '2019-11-29 12:00');
 
-INSERT INTO photo(lodge, filepath, priority)
+INSERT INTO residencePhoto(lodge, filepath, priority)
 VALUES
     (2, '', 10),
     (2, '', 6),
@@ -43,9 +43,10 @@ VALUES
 
 INSERT INTO reply(author, parent, title, content, datestamp)
 VALUES
-    (1, 1, 'Ask Ellon', 'Try twitter, he may answer', '2019-09-16 12:00');
+    (1, 1, 'Ask Ellon', 'Try twitter, he may answer', '2019-09-16 12:00'),
+    (2, 1, 'Thanks but no thanks', 'I am too embarassed to do that :(' , '2019-09-17 12:00');
 
-INSERT INTO comodity(name)
+INSERT INTO commodity(name)
 VALUES
     ('elevator'),
     ('pets allowed'),
@@ -54,7 +55,7 @@ VALUES
     ('towels'),
     ('breakfast');
 
-INSERT INTO residencehascomodity(lodge, item)
+INSERT INTO residencehascommodity(lodge, item)
 VALUES
     (2, 3),
     (2, 4),

@@ -3,11 +3,11 @@ DROP TABLE IF EXISTS residencetype;
 DROP TABLE IF EXISTS residence;
 DROP TABLE IF EXISTS reservation;
 DROP TABLE IF EXISTS availability;
-DROP TABLE IF EXISTS photo;
+DROP TABLE IF EXISTS residencePhoto;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS reply;
-DROP TABLE IF EXISTS comodity;
-DROP TABLE IF EXISTS residencehascomodity;
+DROP TABLE IF EXISTS commodity;
+DROP TABLE IF EXISTS residencehascommodity;
 
 CREATE TABLE user(
     userID INTEGER CONSTRAINT userPK PRIMARY KEY,
@@ -38,6 +38,13 @@ CREATE TABLE residence(
     type INTEGER NOT NULL REFERENCES residenceType
 );
 
+CREATE TABLE residencePhoto(
+    photoID INTEGER CONSTRAINT photoPK PRIMARY KEY,
+    lodge INTEGER NOT NULL REFERENCES residence,
+    filepath TEXT NOT NULL,
+    priority INTEGER DEFAULT 0
+);
+
 CREATE TABLE reservation(
     reservationID INTEGER CONSTRAINT reservationPK PRIMARY KEY,
     lodge INTEGER NOT NULL REFERENCES residence,
@@ -54,13 +61,6 @@ CREATE TABLE availability(
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     CHECK(endDate > startDate)
-);
-
-CREATE TABLE photo(
-    photoID INTEGER CONSTRAINT photoPK PRIMARY KEY,
-    lodge INTEGER NOT NULL REFERENCES residence,
-    filepath TEXT NOT NULL,
-    priority INTEGER DEFAULT 0
 );
 
 CREATE TABLE comment(
@@ -82,13 +82,13 @@ CREATE TABLE reply(
     datestamp DATE NOT NULL
 );
 
-CREATE TABLE comodity(
-    comodityID INTEGER CONSTRAINT comodityPK PRIMARY KEY,
+CREATE TABLE commodity(
+    commodityID INTEGER CONSTRAINT commodityPK PRIMARY KEY,
     name TEXT NOT NULL UNIQUE
 );
 
-CREATE TABLE residencehascomodity(
+CREATE TABLE residencehascommodity(
 	lodge INTEGER NOT NULL REFERENCES Residence,
-	item INTEGER NOT NULL REFERENCES Comodity,
-	CONSTRAINT residenceHasComodityPK PRIMARY KEY(lodge, item)
+	item INTEGER NOT NULL REFERENCES Commodity,
+	CONSTRAINT residenceHasCommodityPK PRIMARY KEY(lodge, item)
 );
