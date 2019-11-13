@@ -1,5 +1,5 @@
 html{
-    background: url('../resources/front_page_background.jpg') no-repeat center center fixed;
+    background: url('../resources/santorini.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
 
     --color-1: #fcbb6d;
@@ -122,6 +122,8 @@ body > header a {
     color: white;
     border-radius: 4px;
     border: none;
+    font-family: 'Roboto Condensed', sans-serif;
+
 }
 
 #search_box form #dates label > input {
@@ -131,7 +133,9 @@ body > header a {
 }
 
 #search_box form label {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: 0.9em;
     font-weight: 300;
 }
+
+
