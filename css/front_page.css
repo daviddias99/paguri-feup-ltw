@@ -19,16 +19,16 @@ body > header {
     /* background-color: var(--color-2); */
 
     /* background-image: linear-gradient(to bottom right, var(--color-3), var(--color-2), var(--color-1)); */
-    background: linear-gradient(114deg, rgba(171,108,130,1) 0%, rgba(216,115,127,1) 18%, rgba(252,187,109,1) 79%);
+    background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
     
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
 }
 
 
 #search_box{
-    margin: auto, 4em, auto, 0em;
+    margin: 3em auto;
     padding: 1em;
-    width: 20em;
+    width: 40em;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -48,12 +48,54 @@ body > header {
 #search_box form{
     display: flex;
     flex-direction: column;
+    
 }
 
-#search_box form *{
+#search_box form #location{
     display: block; 
+    width: 100%;
+}
+
+#search_box form #dates{
+    display: flex;
+    flex-direction: row;
+}
+
+#search_box input {
+
+    height: 2em;
+}
+
+#search_box form > *{
+
+    margin: 0.5em 0;    
+}
+
+#search_box form #dates > * {
+    flex-grow: 1;
+}
+
+#search_box form #dates label > * {
+    display: block;
+
+}
+
+#search_box form #submit_button {
+
+    background-color: var(--color-2);
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+#search_box form #dates label > input {
+
+    margin: 0;
+    width: 100%;
 }
 
 #search_box form label {
     font-family: 'Nunito', sans-serif;
+    font-size: 0.9em;
+    font-weight: 300;
 }

@@ -14,7 +14,7 @@
 
     <header>
         <a href="main_page.html">
-            <!-- <img src="resources/logo_tmp.png"> -->
+            <img src="resources/logo_tmp.png">
         </a>
         <a href="main_page.html">
             Log in
@@ -25,25 +25,27 @@
     </header>
 
     <section id="search_box">
-        <h1>Book unique places to stay and things to do.</h1>
-        <form>
+        <h1>Your dream vacation, one click away... And also an html form filling away.</h1>
+        <form action="" method="get">
             <label>
-                Where <input type="text" name="username" placeholder="Anywhere" value="">
+                WHERE TO? <input id="location" type="text" name="username" placeholder="Anywhere" value="">
             </label>
 
-            <label>
-                Check-In <input type="date" name="username" placeholder="dd-mm-yyyy" value="">
-            </label>
+            <section id="dates">
+                <label>
+                    CHECK-IN <input id="check_in" type="date" name="username" placeholder="dd-mm-yyyy" value="">
+                </label>
+
+                <label>
+                    CHECKOUT <input id="check_out" type="date" name="username" placeholder="dd-mm-yyyy" value="">
+                </label>
+            </section>
 
             <label>
-                Checkout <input type="date" name="username" placeholder="dd-mm-yyyy" value="">
+                Guests <input id="guest_cnt" type="number" value="0" min="0" max="10" step="1">
             </label>
 
-            <label>
-                Guests <input type="number" value="0" min="0" max="10" step="1">
-            </label>
-
-            <input type="submit" value="Search">
+            <input id="submit_button" type="submit" value="SEARCH">
         </form>
 
     </section>
