@@ -36,10 +36,10 @@ VALUES
     (3, '', 2),
     (3, '', 1);
 
-INSERT INTO comment(author, lodge, title, content, rating, datestamp)
+INSERT INTO comment(booking, title, content, rating, datestamp)
 VALUES
-    (2, 1, 'When will this be available???', 'I WANT TO GO TO MARSS', 0, '2019-09-15 12:24'),
-    (3, 3, 'Very confortable', 'Loved the experience', 5, '2019-09-21 15:11');
+    (1, 'When will this be available???', 'I WANT TO GO TO MARSS', 0, '2019-09-15 12:24'),
+    (2, 'Very confortable', 'Loved the experience', 5, '2019-09-21 15:11');
 
 INSERT INTO reply(author, parent, title, content, datestamp)
 VALUES

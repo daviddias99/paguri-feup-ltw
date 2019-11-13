@@ -65,8 +65,7 @@ CREATE TABLE availability(
 
 CREATE TABLE comment(
     commentID INTEGER CONSTRAINT commentPK PRIMARY KEY,
-    author INTEGER NOT NULL REFERENCES user,
-    lodge INTEGER NOT NULL REFERENCES residence,
+    booking INTEGER NOT NULL REFERENCES reservation,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     rating INTEGER NOT NULL CHECK(rating >= 0 and rating <= 5),
