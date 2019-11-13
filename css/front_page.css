@@ -1,0 +1,43 @@
+html{
+    background: url('../resources/front_page_background.jpg') no-repeat center center fixed;
+    background-size:     cover;                      /* <------ */
+}
+
+
+
+body{
+    margin: 0;
+}
+
+#search_box{
+    margin: 5em;
+    padding: 1em;
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
+}
+
+#search_box h1 {
+    
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    font-size: 2em;
+    margin-top: 0em;
+
+}
+
+#search_box form{
+    display: flex;
+    flex-direction: column;
+}
+
+#search_box form *{
+    display: block; 
+}
+
+#search_box form label {
+    font-family: 'Nunito', sans-serif;
+}
