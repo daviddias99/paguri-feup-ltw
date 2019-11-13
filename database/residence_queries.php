@@ -4,7 +4,11 @@
     function getAllResidences() {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT * FROM residence');
+        $stmt = $dbh->prepare(
+            'SELECT residence.*, residencetype.name as type 
+            FROM residence JOIN residencetype
+            ON residence.type = residenceTypeID'
+        );
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -16,7 +20,8 @@
             'SELECT residence.*, residencetype.name as type 
             FROM residence JOIN residencetype
             ON residence.type = residenceTypeID
-            WHERE residenceID = ?');
+            WHERE residenceID = ?'
+        );
 
         $stmt->execute(array($residenceID));
         return $stmt->fetch();        
