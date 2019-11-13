@@ -1,0 +1,59 @@
+html{
+    background: url('../resources/front_page_background.jpg') no-repeat center center fixed;
+    background-size:     cover;                      /* <------ */
+
+    --color-1: #fcbb6d;
+    --color-2: #d8737f;
+    --color-3: #ab6c82;
+    --color-4: #685d79;
+    --color-5: #475c7a;
+}
+
+
+
+body{
+    margin: 0;
+}
+
+body > header {
+    /* background-color: var(--color-2); */
+
+    /* background-image: linear-gradient(to bottom right, var(--color-3), var(--color-2), var(--color-1)); */
+    background: linear-gradient(114deg, rgba(171,108,130,1) 0%, rgba(216,115,127,1) 18%, rgba(252,187,109,1) 79%);
+    
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
+}
+
+
+#search_box{
+    margin: auto, 4em, auto, 0em;
+    padding: 1em;
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
+}
+
+#search_box h1 {
+    
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    font-size: 2em;
+    margin-top: 0em;
+
+}
+
+#search_box form{
+    display: flex;
+    flex-direction: column;
+}
+
+#search_box form *{
+    display: block; 
+}
+
+#search_box form label {
+    font-family: 'Nunito', sans-serif;
+}

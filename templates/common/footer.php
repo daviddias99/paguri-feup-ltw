@@ -1,9 +1,7 @@
-<?php function display_footer() { ?>
-
+<?php function draw_footer() { ?>
             <footer>
-                <p>&copy; Footer a completar</p>
+                <p>&copy; Paguri WIP</p>
             </footer>
         </body>
     </html>
-
 <?php } ?>

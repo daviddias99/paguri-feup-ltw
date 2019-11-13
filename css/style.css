@@ -1,0 +1,19 @@
+body{
+
+    --color-1: #fcbb6d;
+    --color-2: #d8737f;
+    --color-3: #ab6c82;
+    --color-4: #685d79;
+    --color-5: #475c7a;
+
+}
+
+body > header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body > header h1 {
+    margin: 0em;
+}

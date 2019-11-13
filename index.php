@@ -16,7 +16,7 @@
         print_r($replies);
 
     }*/
-    print_r(getResidenceInfo(3));
+    //print_r(getResidenceInfo(3));
 
     display_footer();
 
