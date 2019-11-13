@@ -13,6 +13,7 @@ html{
 
 body{
     margin: 0;
+    font-family: 'Lato', sans-serif;
 }
 
 body > header {
@@ -22,8 +23,40 @@ body > header {
     background: linear-gradient(114deg, rgba(171,108,130,1) 0%, rgba(216,115,127,1) 18%, rgba(252,187,109,1) 79%);
     
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-right: 1.4em;
 }
 
+body > header a {
+    color: white;
+    text-decoration: none;
+    
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo p {
+    margin: 0em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#signup {
+    font-size: 1.2em;
+}
+
+#signup a:first-child:after {
+    content: '|';
+}
 
 #search_box{
     margin: auto, 4em, auto, 0em;
@@ -39,7 +72,6 @@ body > header {
 #search_box h1 {
     
     display: inline-block;
-    font-family: 'Lato', sans-serif;
     font-size: 2em;
     margin-top: 0em;
 
