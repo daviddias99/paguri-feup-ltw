@@ -71,6 +71,10 @@ body > header {
     margin: 0.5em 0;    
 }
 
+#search_box form input::placeholder{
+    color: #AAAAAA
+}
+
 #search_box form #dates > * {
     flex-grow: 1;
 }
