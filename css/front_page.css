@@ -1,6 +1,5 @@
 html{
-    background: url('../resources/santorini.jpg') no-repeat center center fixed;
-    background-size:     cover;                      /* <------ */
+
 
     --color-1: #fcbb6d;
     --color-2: #d8737f;
@@ -14,6 +13,11 @@ html{
 body{
     margin: 0;
     font-family: 'Lato', sans-serif;
+}
+
+body.front_page {
+    background: url('../resources/santorini.jpg') no-repeat center center fixed;
+    background-size:     cover;                      /* <------ */
 }
 
 body > header {
@@ -93,6 +97,10 @@ body > header a {
     flex-direction: row;
 }
 
+#search_box input:focus { 
+    outline: none !important;
+}
+
 #search_box input {
 
     height: 2em;
@@ -124,6 +132,11 @@ body > header a {
     border: none;
     font-family: 'Roboto Condensed', sans-serif;
 
+}
+
+#search_box form #submit_button:focus { 
+    box-shadow: 0 0 10px;
+    outline: black
 }
 
 #search_box form #dates label > input {
