@@ -20,6 +20,10 @@ body.front_page {
     background-size:     cover;                      /* <------ */
 }
 
+body.search_results {
+    background-color: var(--color-5);
+}
+
 body > header {
     /* background-color: var(--color-2); */
 

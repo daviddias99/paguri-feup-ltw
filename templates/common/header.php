@@ -10,8 +10,8 @@
         <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
-        <link href="./css/front_page.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/front_page.css" rel="stylesheet">
     </head>
 
     <body class=<?=$body_class?>>
