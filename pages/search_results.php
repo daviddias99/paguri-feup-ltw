@@ -7,16 +7,21 @@
 
 ?>
 
-<section id="filters">
+<section id="main">
+    <section id="left_side">
+        <section id="filters">
+            <p> OLA </p>
+        </section>
 
-</section>
+        <section id="search_results">
+        <p> OLA </p>
+        </section>
 
-<section id="search_results">
+        </section>
 
-</section>
-
-<section id="map">
-
+    <section id="map">
+    <p> OLA 2</p>
+    </section>
 </section>
 
 

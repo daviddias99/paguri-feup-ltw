@@ -21,10 +21,10 @@
                 <p>paguri</p>
             </a>
             <section id="signup">
-                <a href="main_page.html">
+                <a href="pages/login.php">
                     Log in
                 </a>
-                <a href="main_page.html">
+                <a href="pages/register.php">
                     Register
                 </a>
             </section>
