@@ -4,6 +4,6 @@
     include_once('../templates/auth.php');
 
     draw_header('front_page');
-    draw_login();
+    draw_register();
     draw_footer();
 ?>
