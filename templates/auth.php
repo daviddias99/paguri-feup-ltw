@@ -18,7 +18,7 @@
 <?php function draw_register() { ?>
     <section id="search_box">
         <h1>Register</h1>
-        <form action="" method="post">
+        <form action="../actions/action_register.php" method="post">
             <label>
                 Username <input id="username" type="text" name="username" placeholder="johndoe69" value="">
             </label>
@@ -27,9 +27,6 @@
             </label>
             <label>
                 Last name <input id="lastName" type="text" name="lastName" placeholder="Doe" value="">
-            </label>
-            <label>
-                Date of birth <input id="birth" type="date" name="birth" value="">
             </label>
             <label>
                 Password <input id="password" type="password" name="password" placeholder="********" value="">

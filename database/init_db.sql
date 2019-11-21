@@ -13,6 +13,8 @@ CREATE TABLE user(
     userID INTEGER CONSTRAINT userPK PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
     salt TEXT NOT NULL,
     pwdHash TEXT NOT NULL,
     biography TEXT,

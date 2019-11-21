@@ -41,13 +41,15 @@
         return ($stmt->fetch() === FALSE ? FALSE : TRUE);
     }
 
-    function createUser($username, $email, $salt, $pwdHash) {
+    function createUser($username, $email, $firstName, $lastName, $salt, $pwdHash) {
         global $dbh;
 
         if(userExists($username, $email)) return FALSE;
 
-        $stmt = $dbh->prepare('INSERT INTO user(username, email, salt, pwdHash) VALUES (?, ?, ?, ?)');
-        $stmt->execute(array($username, $email, $salt, $pwdHash));
+        $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, salt, pwdHash) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute(array($username, $email, $firstName, $lastName, $salt, $pwdHash));
+
+        return TRUE;
     }
 
     function validLogin($username, $password) {
