@@ -1,4 +1,4 @@
-<?php function draw_header($body_class)
+<?php function draw_header($body_class, $username)
 { ?>
     <!DOCTYPE html>
     <html lang="en-US">
@@ -16,17 +16,26 @@
 
     <body class=<?=$body_class?>>
         <header>
-            <a href="index.php" id="logo">
+            <a href="front_page.php" id="logo">
                 <img src="resources/logo_tmp.png" height="50" width="50">
                 <p>paguri</p>
             </a>
             <section id="signup">
-                <a href="pages/login.php">
-                    Log in
-                </a>
-                <a href="pages/register.php">
-                    Register
-                </a>
+                <?php if ($username == NULL) { ?>
+                    <a href="login.php">
+                        Log in
+                    </a>
+                    <a href="register.php">
+                        Register
+                    </a>
+                <?php } else { ?>
+                    <a href="index.php">
+                        <?= $username ?>
+                    </a>
+                    <a href="../actions/action_logout.php">
+                        Log out
+                    </a>
+                <?php } ?>
             </section>
         </header>
     <?php } ?>

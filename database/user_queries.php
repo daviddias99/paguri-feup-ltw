@@ -1,5 +1,5 @@
 <?php
-    include_once('database/connection.php');
+    include_once('connection.php');
 
     function getAllUsers() {
         global $dbh;
@@ -43,12 +43,19 @@
 
     function createUser($username, $email, $salt, $pwdHash) {
         global $dbh;
-        
+
         if(userExists($username, $email)) return FALSE;
 
         $stmt = $dbh->prepare('INSERT INTO user(username, email, salt, pwdHash) VALUES (?, ?, ?, ?)');
         $stmt->execute(array($username, $email, $salt, $pwdHash));
     }
 
+    function validLogin($username, $password) {
+        global $dbh;
 
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE username = ? AND pwdHash = ?');
+        $stmt->execute(array($username, $password));
+
+        return $stmt->fetch();
+    }
 ?>
