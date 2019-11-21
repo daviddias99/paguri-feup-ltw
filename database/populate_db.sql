@@ -1,10 +1,5 @@
 PRAGMA foreign_keys = ON;
 
-INSERT INTO user(username, email, firstName, lastName, salt, pwdHash, biography, photo)
-VALUES
-    ('admin', 'admin@paguri.com', "Paguri's", 'Admin', '', 'admin', 'this is my turf', '/path/to/image'),
-    ('Piu piu monstro', 'piupiu@gmail.com', 'Piu-piu', 'Monstro', '', '', 'queria estar vivendo mas estou no twitter', '/path/to/image'),
-    ('paguroidea', 'paguroidea@hotmail.com', 'Paguro', 'Idea', '', '', 'looking for a new shell', '/path/to/image');
 
 INSERT INTO residencetype(name)
 VALUES

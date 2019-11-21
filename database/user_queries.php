@@ -41,13 +41,15 @@
         return ($stmt->fetch() === FALSE ? FALSE : TRUE);
     }
 
-    function createUser($username, $email, $firstName, $lastName, $salt, $pwdHash) {
+    function createUser($username, $email, $firstName, $lastName, $password) {
         global $dbh;
 
-        if(userExists($username, $email)) return FALSE;
+        if (userExists($username, $email)) return FALSE;
 
-        $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, salt, pwdHash) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute(array($username, $email, $firstName, $lastName, $salt, $pwdHash));
+        $options = ['cost' => 12];
+
+        $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute(array($username, $email, $firstName, $lastName, password_hash($password, PASSWORD_DEFAULT, $options)));
 
         return TRUE;
     }
@@ -55,9 +57,13 @@
     function validLogin($username, $password) {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE username = ? AND pwdHash = ?');
-        $stmt->execute(array($username, $password));
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+        $user = $stmt->fetch();
 
-        return $stmt->fetch();
+        if ($user !== false && password_verify($password, $user['password']))
+            return true;
+
+        return false;
     }
 ?>

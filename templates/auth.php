@@ -20,7 +20,10 @@
         <h1>Register</h1>
         <form action="../actions/action_register.php" method="post">
             <label>
-                Username <input id="username" type="text" name="username" placeholder="johndoe69" value="">
+                Username <input id="username" type="text" name="username" placeholder="johndoe" value="">
+            </label>
+            <label>
+                Email <input id="email" type="text" name="email" placeholder="hello@johndoe.com" value="">
             </label>
             <label>
                 First name <input id="firstName" type="text" name="firstName" placeholder="John" value="">

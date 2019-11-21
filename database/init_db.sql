@@ -15,8 +15,7 @@ CREATE TABLE user(
     email TEXT UNIQUE NOT NULL,
     firstName TEXT NOT NULL,
     lastName TEXT NOT NULL,
-    salt TEXT NOT NULL,
-    pwdHash TEXT NOT NULL,
+    password TEXT NOT NULL,
     biography TEXT,
     photo TEXT
 );
