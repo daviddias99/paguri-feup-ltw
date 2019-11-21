@@ -1,3 +1,4 @@
+/*General*/
 html{
 
 
@@ -6,8 +7,8 @@ html{
     --color-3: #ab6c82;
     --color-4: #685d79;
     --color-5: #475c7a;
+    height: 100%;
 }
-
 
 
 body{
@@ -23,31 +24,64 @@ body.front_page {
 }
 
 body.search_results {
+    
+    height: 100%;
     background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
+    display: grid;
 
+    grid-template-columns: auto;
+    grid-template-rows: fit-content(3.5em) auto;
+
+    grid-template-areas: 
+    "header"
+    "main"
+    ;
 }
 
 body.search_results #main {
+
+    grid-area: main;
     display: flex;
     flex-direction: row;
-}
 
-body.search_results #main #left_side {
+
     background-color: white;
-    flex-grow: 1;
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 6px;
+    margin-top: 1em;
 
 }
 
-body.search_results #main #right_side {
-    background-color: white;
-    flex-grow: 1;
+/*Search results*/
+body.search_results .result {
+
+    color: black;
+    margin: 1em;
+    border-top: 1px;
+    border-width: 1px;
+    border-color: gray;
+    border-top-style: solid;
+    display: flex;
+
 }
+
+body.search_results .result img{
+
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 5px;
+
+}
+
+
+/*Header*/
 
 body > header {
-    /* background-color: var(--color-2); */
 
-    /* background-image: linear-gradient(to bottom right, var(--color-3), var(--color-2), var(--color-1)); */
+    grid-area: header;
     background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
     
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58); 
@@ -85,6 +119,8 @@ body > header a {
 #signup a:first-child:after {
     content: '|';
 }
+
+/* Search Box */
 
 #search_box{
     margin: 3em auto;

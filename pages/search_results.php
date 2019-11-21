@@ -9,18 +9,35 @@
 
 <section id="main">
     <section id="left_side">
+
+        <h1>Showing places near '<?=$_GET["location"]?>'</h1>
+        <h2>Showing 1256 resuls (Wow!) </h2>
+
         <section id="filters">
-            <p> OLA </p>
         </section>
 
         <section id="search_results">
-        <p> OLA </p>
-        </section>
+
+            <section class="result">
+                <img src="../resources/house_image_test.jpeg">
+
+                <section class="info">
+                    <h1 class="title">Title</h1>
+                    <h2 class="type">Type</h2>
+                    <h3 class="location">Location</h2>
+                    <p class="info_description"> Description</p>
+                    <p class="info_ppd"> Price per Day </p>
+                </section>
+
+            </section>
 
         </section>
 
-    <section id="map">
-    <p> OLA 2</p>
+    </section>
+
+    <section id="right_side">
+        <section id="map">
+        </section>
     </section>
 </section>
 
