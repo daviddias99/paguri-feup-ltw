@@ -1,7 +1,7 @@
 <?php function draw_login() { ?>
     <section id="search_box">
         <h1>Login</h1>
-        <form action="" method="post">
+        <form action="../actions/action_login.php" method="post">
 
             <label>
                 Username <input id="check_in" type="text" name="username" placeholder="username" value="">
