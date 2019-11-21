@@ -16,12 +16,32 @@ body{
 }
 
 body.front_page {
-    background: url('../resources/santorini.jpg') no-repeat center center fixed;
+  
+    background: url('../resources/oporto.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
+
 }
 
 body.search_results {
-    background-color: var(--color-5);
+    background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
+    background-size:     cover;                      /* <------ */
+
+}
+
+body.search_results #main {
+    display: flex;
+    flex-direction: row;
+}
+
+body.search_results #main #left_side {
+    background-color: white;
+    flex-grow: 1;
+
+}
+
+body.search_results #main #right_side {
+    background-color: white;
+    flex-grow: 1;
 }
 
 body > header {
@@ -154,5 +174,4 @@ body > header a {
     font-size: 0.9em;
     font-weight: 300;
 }
-
 
