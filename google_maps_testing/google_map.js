@@ -3,6 +3,7 @@
 let map;
 let map_clusterer;
 let markers = [];
+let info_windows = [];
 
 let start_position = {
     lat: -34.397, 
@@ -35,6 +36,17 @@ let locations_arr = [
     {lat: -43.999792, lng: 170.463352}
   ];
 
+let iconBase = './map_icons/';
+let icons = {
+    'house' : {
+        icon: iconBase + 'house.png'
+    },
+    'apartment' : {
+        icon: iconBase + 'apartment.png'
+    }
+}
+  
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: start_position,
@@ -54,16 +66,41 @@ function addMarker(position) {
     }));
 }
 
-function addMarkers(locations) {
+function addMarkers(residences) {
     if (map == null) return;
 
-    markers = locations.map(function(location) {
-        return new google.maps.Marker({
-            position: location
+    markers = residences.map(function(residence) {
+
+        let title = 'Titulo';
+        let position = residence;
+        let type = 'house';
+
+
+        let newMarker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: title,
+            icon: icons[type].icon
         });
+
+        addInfoWindow(newMarker);
+
+        return newMarker;
     });
 
     initMapClusterer();
+}
+
+function addInfoWindow(marker) {
+    let infoWindow = new google.maps.InfoWindow({
+        content: 'oiiii'
+    });
+
+    marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+    });
+
+    info_windows.push(infoWindow);
 }
 
 function initMapClusterer() {
