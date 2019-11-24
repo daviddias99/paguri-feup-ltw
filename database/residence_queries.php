@@ -64,5 +64,31 @@
         return $stmt->fetchAll();        
     }
 
+    function createResidence($residenceObj) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+            residence(owner, title, description, pricePerDay, capacity, nBedrooms, 
+            nBathrooms, nBeds, type, address, city, country, latitude, longitude)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->execute(array(
+            $residenceObj['owner'],
+            $residenceObj['title'],
+            $residenceObj['description'],
+            $residenceObj['pricePerDay'],
+            $residenceObj['capacity'],
+            $residenceObj['nBedrooms'],
+            $residenceObj['nBathrooms'],
+            $residenceObj['nBeds'],
+            $residenceObj['type'],
+            $residenceObj['address'],
+            $residenceObj['city'],
+            $residenceObj['country'],
+            $residenceObj['latitude'],
+            $residenceObj['longitude']
+        ));
+    }
+
 
 ?>

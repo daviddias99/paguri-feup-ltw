@@ -5,8 +5,8 @@
     include_once('database/user_queries.php');
     include_once('database/residence_queries.php');
     include_once('database/map_queries.php');
+    include_once('geocoding.php');
 
-
-    print_r(getResidenceMapInfo(1));
+    print_r(getAddressInfo('Faculdade de engenharia da universidade do porto'));
 
 ?>
