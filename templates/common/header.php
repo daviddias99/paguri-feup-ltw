@@ -29,7 +29,7 @@
                         Register
                     </a>
                 <?php } else { ?>
-                    <a href="index.php">
+                    <a id="username" href="index.php">
                         <?= $username ?>
                     </a>
                     <a href="../actions/action_logout.php">
