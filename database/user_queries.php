@@ -9,11 +9,11 @@
         return $stmt->fetchAll();
     }
 
-    function getUserInfo($id) {
+    function getUserInfo($username) {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
-        $stmt->execute(array($id));
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE username = ?');
+        $stmt->execute(array($username));
         return $stmt->fetch();
     }
 
@@ -53,6 +53,38 @@
 
         return TRUE;
     }
+
+    function updateUserInfo($username, $email, $firstName, $lastName, $bio) {
+        global $dbh;
+
+        if (! userExists($username, $email)) return false;
+
+        $stmt = $dbh->prepare('UPDATE user
+                               SET email = ?,
+                                   firstName = ?,
+                                   lastName = ?,
+                                   biography = ?
+                               WHERE username = ? ');
+        $stmt->execute(array($email, $firstName, $lastName, $bio, $username));
+        return true;
+    }
+
+    function updateUserPassword($username, $password) {
+        global $dbh;
+
+        if (! userExists($username, null)) return false;
+
+        $options = ['cost' => 12];
+
+        $stmt = $dbh->prepare('UPDATE user SET password = ? WHERE username = ? ');
+
+        $stmt->execute(array(password_hash($password, PASSWORD_DEFAULT, $options), $username));
+
+        return true;
+    }
+
+
+
 
     function validLogin($username, $password) {
         global $dbh;
