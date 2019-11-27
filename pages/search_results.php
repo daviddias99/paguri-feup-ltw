@@ -3,7 +3,7 @@
     include_once('../templates/common/header.php');
     include_once('../templates/common/footer.php');
 
-    draw_header('search_results');
+    draw_header('search_results',NULL);
 
 ?>
 
@@ -31,12 +31,65 @@
 
             </section>
 
+            <section class="result">
+                <img src="../resources/house_image_test.jpeg">
+
+                <section class="info">
+                    <h1 class="title">Title</h1>
+                    <h2 class="type">Type</h2>
+                    <h3 class="location">Location</h2>
+                    <p class="info_description"> Description</p>
+                    <p class="info_ppd"> Price per Day </p>
+                </section>
+
+            </section>
+
+            <section class="result">
+                <img src="../resources/house_image_test.jpeg">
+
+                <section class="info">
+                    <h1 class="title">Title</h1>
+                    <h2 class="type">Type</h2>
+                    <h3 class="location">Location</h2>
+                    <p class="info_description"> Description</p>
+                    <p class="info_ppd"> Price per Day </p>
+                </section>
+
+            </section>
+
+            <section class="result">
+                <img src="../resources/house_image_test.jpeg">
+
+                <section class="info">
+                    <h1 class="title">Title</h1>
+                    <h2 class="type">Type</h2>
+                    <h3 class="location">Location</h2>
+                    <p class="info_description"> Description</p>
+                    <p class="info_ppd"> Price per Day </p>
+                </section>
+
+            </section>
+
+            <section class="result">
+                <img src="../resources/house_image_test.jpeg">
+
+                <section class="info">
+                    <h1 class="title">Title</h1>
+                    <h2 class="type">Type</h2>
+                    <h3 class="location">Location</h2>
+                    <p class="info_description"> Description</p>
+                    <p class="info_ppd"> Price per Day </p>
+                </section>
+
+            </section>
+
         </section>
 
     </section>
 
     <section id="right_side">
         <section id="map">
+            <img src="../resources/map_example.png"/>
         </section>
     </section>
 </section>
