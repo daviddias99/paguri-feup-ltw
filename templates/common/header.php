@@ -20,22 +20,37 @@
                 <img src="../resources/logo_tmp.png" height="50" width="50">
                 <p>paguri</p>
             </a>
-            <section id="signup">
-                <?php if ($username == NULL) { ?>
-                    <a href="login.php">
-                        Log in
-                    </a>
-                    <a href="register.php">
-                        Register
-                    </a>
-                <?php } else { ?>
-                    <a id="username" href="../pages/profile.php">
-                        <?= $username ?>
-                    </a>
-                    <a href="../actions/action_logout.php">
-                        Log out
-                    </a>
-                <?php } ?>
-            </section>
+            <nav>
+                <ul>
+                    <?php if ($username == NULL) { ?>
+                        <li>
+                            <a href="login.php">
+                                Log in
+                            </a>
+                        </li>
+                        <li>
+                            <a href="register.php">
+                                Register
+                            </a>
+                        </li>
+                    <?php } else { ?>
+                        <li>
+                            <a id="my-places" href="../pages/eheh.php">
+                                My places
+                            </a>
+                        </li>
+                        <li>
+                            <a id="username" href="../pages/profile.php">
+                                <?= $username ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../actions/action_logout.php">
+                                Log out
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </nav>
         </header>
     <?php } ?>

@@ -49,8 +49,8 @@ body #left_side {
 }
 
 body #left_side #search_results{
-    
-    
+
+
     height: 100vh;
     overflow-y: scroll;
     height: calc(100vh - 175px);
@@ -59,7 +59,7 @@ body #left_side #search_results{
 }
 
 body.search_results {
-    
+
     height: 100%;
     background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
@@ -68,7 +68,7 @@ body.search_results {
     grid-template-columns: auto;
     grid-template-rows: fit-content(3.5em) auto;
 
-    grid-template-areas: 
+    grid-template-areas:
     "header"
     "main"
     ;
@@ -150,11 +150,7 @@ body > header {
     padding-right: 1.4em;
 }
 
-body > header a {
-    color: white;
-    text-decoration: none;
 
-}
 
 #logo {
     display: flex;
@@ -173,13 +169,21 @@ body > header a {
     font-family: "Font Awesome 5 Free"; content: "\f2bd";
 }
 
-#signup {
+header nav {
+    color: white;
     font-size: 1.2em;
 }
 
-#signup a:first-child:after {
-    content: '|';
+header nav a {
+    color: white;
+    text-decoration: none;
 }
+
+header nav li {
+    display: inline;
+    padding: 0.5em;
+}
+
 
 /* Search Box */
 
