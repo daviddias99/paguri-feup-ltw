@@ -8,7 +8,7 @@
     $lastName = $_POST['lastName'];
     $password = $_POST['password'];
 
-    if (createUser($username, $email, $firstName, $lastName, $password, $password))
+    if (createUser($username, $email, $firstName, $lastName, $password))
         header('Location: ../pages/front_page.php');
     else
         header('Location: ../pages/register.php');

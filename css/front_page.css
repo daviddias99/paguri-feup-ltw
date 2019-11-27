@@ -215,3 +215,10 @@ body > header a {
     font-weight: 300;
 }
 
+#profile {
+    background-color: white;
+    margin: 1em auto;
+    width: 60em;
+    border-radius: 10px;
+    display: grid;
+}

@@ -17,7 +17,7 @@
     <body class=<?=$body_class?>>
         <header>
             <a href="front_page.php" id="logo">
-                <img src="resources/logo_tmp.png" height="50" width="50">
+                <img src="../resources/logo_tmp.png" height="50" width="50">
                 <p>paguri</p>
             </a>
             <section id="signup">
@@ -29,7 +29,7 @@
                         Register
                     </a>
                 <?php } else { ?>
-                    <a id="username" href="index.php">
+                    <a id="username" href="../pages/profile.php">
                         <?= $username ?>
                     </a>
                     <a href="../actions/action_logout.php">
