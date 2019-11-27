@@ -63,8 +63,10 @@ function addMarkers(event) {
             position: position,
             map: map,
             title: address,
-            icon: icons[type].icon
+            icon: icons[type].icon,
+            animation: google.maps.Animation.DROP
         });
+        newMarker.addListener('click', toggleBounce.bind(newMarker));
 
         addInfoWindow(newMarker);
 
@@ -76,6 +78,14 @@ function addMarkers(event) {
     initMapClusterer();
 }
 
+function toggleBounce() {
+    let marker = this;
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
 
 function addMarker(position) {
     if (map == null) return;
@@ -113,3 +123,20 @@ function setMapZoom(zoom) {
     if(map == null) return;
     map.setZoom(zoom);
 }
+
+function distanceBetweenPoints(coords1, coords2) {
+    let R = 6371e3; // earths radius in metres
+    
+    let ang1 = coords1.lat.toRadians();
+    let ang2 = coords2.lat.toRadians();
+    let latDiff = (coords2.lat-coords1.lat).toRadians();
+    let lngDiff = (coords2.lng-coords1.lng).toRadians();
+
+    let a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
+            Math.cos(ang1) * Math.cos(ang2) *
+            Math.sin(lngDiff/2) * Math.sin(lngDiff/2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c;
+}
+
