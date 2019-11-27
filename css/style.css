@@ -113,7 +113,7 @@ body.front_page {
 
 
 
-body.search_results .result {
+body #search_results .result {
 
     color: black;
     margin: 1em;
@@ -122,14 +122,22 @@ body.search_results .result {
     border-color: gray;
     border-top-style: solid;
     display: flex;
+    padding: 0.5em;
 
 }
 
-body.search_results .result img{
+body #search_results .result  > img{
 
-    border: 1px solid black;
+    border: 0px solid black;
     border-radius: 4px;
-    padding: 5px;
+    padding: 0px;
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
+
+}
+
+body #search_results .info{
+
+    margin-left: 1em;
 
 }
 
@@ -209,6 +217,7 @@ header nav li {
 #search_box form{
     display: flex;
     flex-direction: column;
+    
 
 }
 

@@ -18,6 +18,15 @@
         return $stmt->fetchAll();
     }
 
+    function getResidenceTypeWithID($typeID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT name FROM residenceType WHERE residenceTypeID = ?');
+        $stmt->execute(array($typeID));
+
+        return $stmt->fetch()['name'];
+    }
+
     function getResidenceInfo($residenceID) {
         global $dbh;
 
