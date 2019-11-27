@@ -69,6 +69,7 @@ function addMarkers(event) {
         newMarker.addListener('click', toggleBounce.bind(newMarker));
 
         addInfoWindow(newMarker);
+        newMarker.inCluster = true;
 
         return newMarker;
     });
@@ -76,6 +77,7 @@ function addMarkers(event) {
     moveMap(markers[0]);
     setMapZoom(18);
     initMapClusterer();
+    filterMarkersInRadius({lat: markers[0].getPosition().lat(), lng: markers[0].getPosition().lng()}, 5);
 }
 
 function toggleBounce() {
@@ -84,6 +86,10 @@ function toggleBounce() {
         marker.setAnimation(null);
     } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
+
+        setTimeout(function() {
+            marker.setAnimation(null);
+        }, 2000);
     }
 }
 
@@ -127,10 +133,10 @@ function setMapZoom(zoom) {
 function distanceBetweenPoints(coords1, coords2) {
     let R = 6371e3; // earths radius in metres
     
-    let ang1 = coords1.lat.toRadians();
-    let ang2 = coords2.lat.toRadians();
-    let latDiff = (coords2.lat-coords1.lat).toRadians();
-    let lngDiff = (coords2.lng-coords1.lng).toRadians();
+    let ang1 = toRadians(coords1.lat);
+    let ang2 = toRadians(coords2.lat);
+    let latDiff = toRadians(coords2.lat-coords1.lat);
+    let lngDiff = toRadians(coords2.lng-coords1.lng);
 
     let a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
             Math.cos(ang1) * Math.cos(ang2) *
@@ -140,3 +146,25 @@ function distanceBetweenPoints(coords1, coords2) {
     return R * c;
 }
 
+function toRadians(num) {
+    return num * (Math.PI / 180);
+}
+
+function filterMarkersInRadius(origin, radius) {
+    markers.forEach(function(marker) {
+        let marker_coords = marker.getPosition();
+        let dist = distanceBetweenPoints(origin, {lat:marker_coords.lat(), lng: marker_coords.lng()});
+        if (dist > radius) {
+            if (marker.inCluster) {
+                marker.inCluster = false;
+                map_clusterer.removeMarker(marker);
+            }
+        }
+        else {
+            if(!marker.inCluster) {
+                marker.inCluster = true;
+                map_clusterer.addMarker(marker);
+            }
+        }
+    });
+}
