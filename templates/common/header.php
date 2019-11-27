@@ -35,7 +35,7 @@
                         </li>
                     <?php } else { ?>
                         <li>
-                            <a id="my-places" href="../pages/eheh.php">
+                            <a id="my-places" href="../pages/owner_houses.php">
                                 My places
                             </a>
                         </li>
