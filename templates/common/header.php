@@ -17,7 +17,7 @@
     <body class=<?=$body_class?>>
         <header>
             <a href="front_page.php" id="logo">
-                <img src="resources/logo_tmp.png" height="50" width="50">
+                <img src="../resources/logo_temp.png" height="50" width="50">
                 <p>paguri</p>
             </a>
             <section id="signup">
