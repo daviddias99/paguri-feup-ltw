@@ -14,15 +14,16 @@ include_once('../database/residence_queries.php');
     <section class="result">
         <img src="../resources/house_image_test.jpeg">
 
-        <section class="info">
-            <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type"><?= $typeStr ?></h2>
-            <h3 class="info_location"><?= $residence['location'] ?></h3>
-            <p class="info_description"> <?= $residence['description'] ?></p>
-            <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
-            <p class="info_score">SCORE WIP </p>
-            <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-        </section>
+    
+        <h1 class="info_title"><?= $residence['title'] ?> </h1>
+        <h2 class="info_type"><?= $typeStr ?></h2>
+        <h2 class="info_location"><?= $residence['location'] ?></h3>
+        <p class="info_description">kdjnasd kajdnaksjd kjnadkjan kjnadsakjn kjnasda kjndaksjdnas kjndas dasdanskdajndaknd kajdsnakjnd <?= $residence['description'] ?></p>
+        <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
+        <p class="info_score">4.5 </p>
+        <p class="info_capacity"> <?= $residence['capacity'] ?></p>
+        <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+
 
     </section>
 <?php
@@ -57,11 +58,13 @@ function draw_left_side()
             <h2>Showing <?= count($result_residences) ?> resuls (Wow!) </h2>
         </header>
 
-        <section id="search_results">
+        <section id="results">
             <?php
-                foreach ($result_residences as $residence) {
-                    draw_residence_summary($residence);
-                }
+                // foreach ($result_residences as $residence) {
+                //     draw_residence_summary($residence);
+                // }
+
+                draw_residence_summary(($result_residences[0]))
                 ?>
 
         </section>

@@ -55,26 +55,7 @@ body.search_results #main {
 
 }
 
-/*Search results*/
-body.search_results .result {
 
-    color: black;
-    margin: 1em;
-    border-top: 1px;
-    border-width: 1px;
-    border-color: gray;
-    border-top-style: solid;
-    display: flex;
-
-}
-
-body.search_results .result img{
-
-    border: 1px solid black;
-    border-radius: 4px;
-    padding: 5px;
-
-}
 
 
 /*Header*/
