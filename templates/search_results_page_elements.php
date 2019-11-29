@@ -12,18 +12,22 @@ include_once('../database/residence_queries.php');
     ?>
 
     <section class="result">
-        <img src="../resources/house_image_test.jpeg">
 
-    
-        <h1 class="info_title"><?= $residence['title'] ?> </h1>
-        <h2 class="info_type"><?= $typeStr ?></h2>
-        <h2 class="info_location"><?= $residence['location'] ?></h3>
-        <p class="info_description">kdjnasd kajdnaksjd kjnadkjan kjnadsakjn kjnasda kjndaksjdnas kjndas dasdanskdajndaknd kajdsnakjnd <?= $residence['description'] ?></p>
-        <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
-        <p class="info_score">4.5 </p>
-        <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-        <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+        <section class="image">
+            <img src="../resources/house_image_test.jpeg">
+        </section>
 
+        <section class="info">
+            <h1 class="info_title"><?= $residence['title'] ?> </h1>
+            <h2 class="info_type"><?= $typeStr ?></h2>
+            <h2 class="info_location"><?= $residence['location'] ?></h3>
+                <p class="info_description">kdjnasd kajdnaksjd kjnadkjan kjnadsakjn kjnasda kjndaksjdnas kjndas dasdanskdajndaknd kajdsnakjnd <?= $residence['description'] ?></p>
+                <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
+                <p class="info_score">4.5 </p>
+                <p class="info_capacity"> <?= $residence['capacity'] ?></p>
+                <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+
+        </section>
 
     </section>
 <?php
@@ -39,7 +43,7 @@ function draw_main()
         <?php
             draw_left_side();
             draw_right_side();
-        ?>
+            ?>
 
     </section>
 
@@ -55,7 +59,7 @@ function draw_left_side()
 
         <header>
             <h1>Showing places near '<?= $_GET["location"] ?>'</h1>
-            <h2>Showing <?= count($result_residences) ?> resuls (Wow!) </h2>
+            <h2><?= count($result_residences) ?> resuls found (Wow!) </h2>
         </header>
 
         <section id="results">
@@ -64,7 +68,7 @@ function draw_left_side()
                 //     draw_residence_summary($residence);
                 // }
 
-                draw_residence_summary(($result_residences[0]))
+                draw_residence_summary(($result_residences[1]))
                 ?>
 
         </section>

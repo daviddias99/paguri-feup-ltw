@@ -12,6 +12,14 @@ html{
     height: 100%;
 }
 
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1em;
+}
+
 
 body{
     margin: 0;
@@ -55,7 +63,6 @@ body #left_side #results{
     overflow-y: scroll;
     height: calc(100vh - 175px);
     position: relative;
-
 }
 
 body.search_results {

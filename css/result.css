@@ -2,104 +2,96 @@
 body #results .result {
 
     color: black;
-    margin: 1em;
-    border-top: 1px;
-    border-width: 1px;
-    border-color: gray;
-    border-top-style: solid;
-    /* padding: 0.5em; */
+    margin: 0.5em;
+    border: 1px solid black;
 
-    height: 25em;
-    width: 100%;
 
-    /* grid settings */
+    height: 15em;
+    width: 98%;
 
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+body #main #left_side header h1{
+
+    margin: 0.5em;
+}
+
+body #main #left_side header h2{
+
+    margin: 1em; 
+}
+
+body #main #left_side header h2:before{
+
+    content: "\29BF";
+    margin-right: 5px;
+}
+
+
+body #results .result .image {
+
+    width: 35%;
+    height: 15em;
+    margin-right: 0.5em;
+    padding: 0.3em;
+}
+
+body #results .result .info {
+
+    width: 65%;
     display: grid;
-
-
-    /* grid-template-columns: 40% 25% 25% 10%;
-    grid-template-rows: 10% 20% 60% 10%;
-    grid-column-gap: 10px;
-
-
-    grid-template-areas:
-    ". type location rating"
-    "image title title price"
-    "image desc desc ."
-    "image nBedrooms nBeds ."; */
-
-        display: grid;
-        grid-template-columns: 1.7fr 0.9fr 1fr 0.4fr;
-        grid-template-rows: 0.4fr 0.5fr 0.6fr 3.5fr 0.6fr;
-        grid-template-areas: 
-        ". . . rating" 
-        ". type location ." 
-        "image title title price" 
-        "image desc desc ." 
-        "image nBedrooms nBeds .";
-      
-      
-    
-
+    grid-template-columns: 1.6fr 1.7fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
+    grid-template-areas: 
+    "type location rating" 
+    "title title ppd" 
+    "desc desc ." 
+    "nBedrooms nBeds .";
 }
 
-
-body #results .result  img{
-
-    grid-area: image;
-    border: 0px solid black;
-    border-radius: 4px;
-    padding: 0px;
-    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
-    height: auto;
-    width: auto;
-    max-width: 40em;
-    max-height: 25em;
-    align-content: center;
-}
-
-body #results .result .info_title {
-    grid-area: title;
-}
-
-body #results .result .info_type {
-    grid-area: type;
-    justify-content: right;
-}
-
-body #results .result .info_location {
-    grid-area: location;
-    justify-content: left;
-}
-
-body #results .result .info_description {
-    grid-area: desc;
-}
-
-body #results .result .info_ppd {
-    grid-area: price;
-}
-
-body #results .result .info_score {
-    grid-area: rating;
-}
-
-body #results .result .info_capacity {
-    grid-area: nBeds;
-}
-
-body #results .result .info_bedrooms {
-    grid-area: nBedrooms;
-}
-
-body #results .result h1{
-
+body #results .result .info .info_title { 
+    grid-area: title; 
     font-size: 2em;
+    margin: 0em;
+}
+
+body #results .result .info h2 {
+    font-size: 1.2em;
+    color: #4e4e4e;
+}
+
+
+body #results .result .info .info_description { grid-area: desc; }
+body #results .result .info .info_type { grid-area: type; }
+body #results .result .info .info_location { grid-area: location; }
+body #results .result .info .info_bedrooms { grid-area: nBedrooms; }
+body #results .result .info .info_capacity { grid-area: nBeds; }
+body #results .result .info .info_score {
+    grid-area: rating;
+    background-color: #475c7a;
+    color: white;
+    border: 1em solid #475c7a;
+    margin: 0;
+    justify-self: center;
     align-self: center;
 }
 
-body #results .result h2{
 
-    font-size: 0.8em;
+body #results .result .info .info_ppd { grid-area: ppd; }
+
+body #results .result img {
+
+    width:100%;
+    object-fit: cover;
+    height: 14.4em;
+
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+    /* border: 1px solid black; */
+
+    
+    
 }
-
