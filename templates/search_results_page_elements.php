@@ -2,6 +2,20 @@
 
 include_once('../database/residence_queries.php');
 
+
+function simplifyPrice($price){
+
+    if(number_format($price/1000000000,2)>= 1)
+        return number_format($price/1000000000,2) . 'B';
+    else if(number_format($price/1000000,3) >= 1)
+        return number_format($price/1000000,2) . 'M';
+    else if (number_format($price/1000,3) >= 1) 
+        return number_format($price / 1000,3) . 'K';
+    else
+        return $price;
+
+}
+
 ?>
 
 <?php function draw_residence_summary($residence)
@@ -26,13 +40,13 @@ include_once('../database/residence_queries.php');
                 // TODO Change this
                 $description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate eu tortor quis rutrum. Cras tincidunt turpis et euismod condimentum. Praesent eget tempus erat. Morbi id bibendum eros. Vivamus sit amet commodo nisl, et imperdiet est. Cras id lacus quis purus convallis dignissim luctus et ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet mauris tellus, non efficitur ante aliquam vitae.';
 
-                $descriptionTrimmed = strlen($description) > 160 ? substr($description,0,160)."..." : $description;
+                $descriptionTrimmed = strlen($description) > 180 ? substr($description,0,180)."..." : $description;
             ?>
-                <p class="info_description">  <?=$descriptionTrimmed ?></p>
-                <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
+                <p class="info_description">  <?="- ".$descriptionTrimmed ?></p>
+                <p class="info_ppd"><?=' &#8226 '.simplifyPrice($residence['pricePerDay']).'€ per day'?> </p>
                 <p class="info_score">4.5&#9733 </p>
-                <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-                <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+                <p class="info_capacity"> <?=' &#8226 '. $residence['capacity'].' Beds' ?></p>
+                <p class="info_bedrooms"> <?=' &#8226 '.$residence['nBedrooms'].' Bedrooms' ?></p>
 
         </section>
 
