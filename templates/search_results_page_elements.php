@@ -19,11 +19,18 @@ include_once('../database/residence_queries.php');
 
         <section class="info">
             <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type"><?= $typeStr ?></h2>
-            <h2 class="info_location"><?= $residence['location'] ?></h3>
-                <p class="info_description">kdjnasd kajdnaksjd kjnadkjan kjnadsakjn kjnasda kjndaksjdnas kjndas dasdanskdajndaknd kajdsnakjnd <?= $residence['description'] ?></p>
+            <h2 class="info_type_and_location"><?= $typeStr.' &#8226 '.$residence['location'] ?></h2>
+
+            <?php
+
+                // TODO Change this
+                $description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate eu tortor quis rutrum. Cras tincidunt turpis et euismod condimentum. Praesent eget tempus erat. Morbi id bibendum eros. Vivamus sit amet commodo nisl, et imperdiet est. Cras id lacus quis purus convallis dignissim luctus et ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet mauris tellus, non efficitur ante aliquam vitae.';
+
+                $descriptionTrimmed = strlen($description) > 160 ? substr($description,0,160)."..." : $description;
+            ?>
+                <p class="info_description">  <?=$descriptionTrimmed ?></p>
                 <p class="info_ppd"><?= $residence['pricePerDay'] ?> </p>
-                <p class="info_score">4.5 </p>
+                <p class="info_score">4.5&#9733 </p>
                 <p class="info_capacity"> <?= $residence['capacity'] ?></p>
                 <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
 
@@ -64,11 +71,11 @@ function draw_left_side()
 
         <section id="results">
             <?php
-                // foreach ($result_residences as $residence) {
-                //     draw_residence_summary($residence);
-                // }
+                foreach ($result_residences as $residence) {
+                    draw_residence_summary($residence);
+                }
 
-                draw_residence_summary(($result_residences[1]))
+                // draw_residence_summary(($result_residences[1]))
                 ?>
 
         </section>
