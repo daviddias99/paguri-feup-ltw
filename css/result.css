@@ -4,8 +4,6 @@ body #results .result {
     color: black;
     margin: 0.5em;
     border-top: 1px solid #cacaca;
-    /*border-right: 1px solid black;
-    border-left: 1px solid ; */
     border-bottom: 4px solid  #685d79;;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
 
@@ -59,12 +57,12 @@ body #results .result .info {
 
 body #results .result .info .info_title { 
     grid-area: title; 
-    font-size: 2em;
+    font-size: 1.5em;
     margin: 0em;
 }
 
 body #results .result .info h2 {
-    font-size: 1.2em;
+    font-size: 1em;
     color: #4e4e4e;
     margin-top: 1em;
     margin-bottom: 0em;
@@ -72,12 +70,16 @@ body #results .result .info h2 {
 
 body #results .result .info p {
 
-    font-size: 1.2em;
+    font-size: 1em;
     margin-top: 0em;
     text-align: justify;
     
 }
 
+body #results .result .info .info_description:before{
+
+    content:"- ";
+}
 
 body #results .result .info .info_description { 
     grid-area: desc; 
@@ -90,8 +92,27 @@ body #results .result .info .info_description {
 
 
 body #results .result .info .info_type_and_location { grid-area: type_and_location; }
+
+body #results .result .info .info_bedrooms:before { 
+    content:" \2022 ";
+}
+
 body #results .result .info .info_bedrooms { grid-area: nBedrooms; }
+
+body #results .result .info .info_bedrooms:after { 
+    content:" Bedroom";
+}
+
+body #results .result .info .info_capacity:before { 
+    content:" \2022 ";
+}
+
 body #results .result .info .info_capacity { grid-area: nBeds; }
+
+body #results .result .info .info_capacity:after {
+    content: ' Beds';
+}
+
 body #results .result .info .info_score {
     grid-area: rating;
     background-color: #475c7a;
@@ -102,10 +123,20 @@ body #results .result .info .info_score {
     align-self: center;
 }
 
+body #results .result .info .info_score:after {
+    content:"\2605";
+}
+
+body #results .result .info .info_ppd:before { 
+    content:" \2022 ";
+}
 
 body #results .result .info .info_ppd { 
     grid-area: ppd; 
-    /* justify-self: right; */
+}
+
+body #results .result .info .info_ppd:after { 
+    content:"€ per day";
 }
 
 body #results .result img {

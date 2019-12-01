@@ -10,14 +10,15 @@ html{
     --color-4: #685d79;
     --color-5: #475c7a;
     height: 100%;
+    font-size: 15px;
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 30px;
 }
 
 h2 {
-    font-size: 1em;
+    font-size: 18px;
 }
 
 

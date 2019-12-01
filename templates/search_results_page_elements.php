@@ -3,17 +3,17 @@
 include_once('../database/residence_queries.php');
 
 
-function simplifyPrice($price){
+function simplifyPrice($price)
+{
 
-    if(number_format($price/1000000000,2)>= 1)
-        return number_format($price/1000000000,2) . 'B';
-    else if(number_format($price/1000000,3) >= 1)
-        return number_format($price/1000000,2) . 'M';
-    else if (number_format($price/1000,3) >= 1) 
-        return number_format($price / 1000,3) . 'K';
+    if (number_format($price / 1000000000, 2) >= 1)
+        return number_format($price / 1000000000, 2) . 'B';
+    else if (number_format($price / 1000000, 3) >= 1)
+        return number_format($price / 1000000, 2) . 'M';
+    else if (number_format($price / 1000, 3) >= 1)
+        return number_format($price / 1000, 3) . 'K';
     else
         return $price;
-
 }
 
 ?>
@@ -22,7 +22,8 @@ function simplifyPrice($price){
 {
 
     $typeStr = getResidenceTypeWithID($residence['type']);
-
+    $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
+    $priceSimple = simplifyPrice($residence['pricePerDay'])
     ?>
 
     <section class="result">
@@ -33,20 +34,12 @@ function simplifyPrice($price){
 
         <section class="info">
             <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $typeStr.' &#8226 '.$residence['location'] ?></h2>
-
-            <?php
-
-                // TODO Change this
-                $description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate eu tortor quis rutrum. Cras tincidunt turpis et euismod condimentum. Praesent eget tempus erat. Morbi id bibendum eros. Vivamus sit amet commodo nisl, et imperdiet est. Cras id lacus quis purus convallis dignissim luctus et ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet mauris tellus, non efficitur ante aliquam vitae.';
-
-                $descriptionTrimmed = strlen($description) > 180 ? substr($description,0,180)."..." : $description;
-            ?>
-                <p class="info_description">  <?="- ".$descriptionTrimmed ?></p>
-                <p class="info_ppd"><?=' &#8226 '.simplifyPrice($residence['pricePerDay']).'€ per day'?> </p>
-                <p class="info_score">4.5&#9733 </p>
-                <p class="info_capacity"> <?=' &#8226 '. $residence['capacity'].' Beds' ?></p>
-                <p class="info_bedrooms"> <?=' &#8226 '.$residence['nBedrooms'].' Bedrooms' ?></p>
+            <h2 class="info_type_and_location"><?= $typeStr . ' &#8226 ' . $residence['location'] ?></h2>
+            <p class="info_description"> <?=$descriptionTrimmed ?></p>
+            <p class="info_ppd"><?=$priceSimple?></p>
+            <p class="info_score">4.5</p>
+            <p class="info_capacity"> <?=$residence['capacity']?></p>
+            <p class="info_bedrooms"> <?=$residence['nBedrooms']?></p>
 
         </section>
 
@@ -88,8 +81,6 @@ function draw_left_side()
                 foreach ($result_residences as $residence) {
                     draw_residence_summary($residence);
                 }
-
-                // draw_residence_summary(($result_residences[1]))
                 ?>
 
         </section>
@@ -103,7 +94,30 @@ function draw_right_side()
 
     <section id="right_side">
         <section id="filters">
+
+            <input id="nBeds" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1">
+            <label>
+                Check-in <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required>
+            </label>
+
+            <label>
+                Checkout <input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
+            </label>
             <section id="comodities">
+
+                <?php
+                    $commodities = getAllCommodities();
+                    foreach ($commodities as $commodity) {
+
+                        ?>
+
+                    <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+
+                <?php
+                    }
+
+
+                    ?>
 
             </section>
         </section>

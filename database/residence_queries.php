@@ -18,6 +18,15 @@
         return $stmt->fetchAll();
     }
 
+    function getAllCommodities() {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT name FROM commodity');
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
     function getResidenceTypeWithID($typeID) {
         global $dbh;
 
