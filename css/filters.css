@@ -1,0 +1,4 @@
+body #right_side #filters {
+    display: flex;
+    flex-direction: column;
+}

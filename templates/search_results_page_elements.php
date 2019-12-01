@@ -35,11 +35,11 @@ function simplifyPrice($price)
         <section class="info">
             <h1 class="info_title"><?= $residence['title'] ?> </h1>
             <h2 class="info_type_and_location"><?= $typeStr . ' &#8226 ' . $residence['location'] ?></h2>
-            <p class="info_description"> <?=$descriptionTrimmed ?></p>
-            <p class="info_ppd"><?=$priceSimple?></p>
+            <p class="info_description"> <?= $descriptionTrimmed ?></p>
+            <p class="info_ppd"><?= $priceSimple ?></p>
             <p class="info_score">4.5</p>
-            <p class="info_capacity"> <?=$residence['capacity']?></p>
-            <p class="info_bedrooms"> <?=$residence['nBedrooms']?></p>
+            <p class="info_capacity"> <?= $residence['capacity'] ?></p>
+            <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
 
         </section>
 
@@ -90,12 +90,28 @@ function draw_left_side()
 <?php }
 
 function draw_right_side()
-{ ?>
+{
+
+    $types = getResidenceTypes();
+    $commodities = getAllCommodities();
+
+    ?>
 
     <section id="right_side">
         <section id="filters">
 
-            <input id="nBeds" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1">
+            <label>
+                Location <input id="location" type="text" name="location" placeholder="<?= $_GET['location'] ?>" required>
+            </label>
+
+            <label>
+                #Beds <input id="nBeds" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1">
+            </label>
+
+            <label>
+                #Rooms <input id="nRooms" type="number" value="" min="0" max="10" step="1">
+            </label>
+
             <label>
                 Check-in <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required>
             </label>
@@ -103,23 +119,45 @@ function draw_right_side()
             <label>
                 Checkout <input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
             </label>
+
+            <label>
+                Price
+                <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1">
+                <input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1">
+            </label>
+
+            <label>
+                Rating
+                <input id="minRating" type="number" value="" min="0" max="10" step="1">
+                <input id="maxRating" type="number" value="" min="0" max="10" step="1">
+            </label>
+
+            <label>
+                Type
+                <select name="type">
+
+                    <?php foreach ($types as $type) { ?>
+
+                        <option value="<?= $type['name'] ?>"> <?= ucfirst($type['name']) ?>
+
+                        <?php } ?>
+
+                </select>
+            </label>
+
             <section id="comodities">
 
                 <?php
-                    $commodities = getAllCommodities();
-                    foreach ($commodities as $commodity) {
 
-                        ?>
+                    foreach ($commodities as $commodity) { ?>
 
                     <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
 
-                <?php
-                    }
 
-
-                    ?>
-
+                <?php } ?>
             </section>
+
+            <button> Filter </button>
         </section>
         <section id="map">
             <img src="../resources/map_example.png" />
