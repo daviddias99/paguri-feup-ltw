@@ -7,8 +7,8 @@ let info_windows = [];
 let map_clusters_img_path = "../js/google_maps/map_clusters/m";
 
 let start_position = {
-    lat: -34.397, 
-    lng: 150.644
+    lat: 41.177964, 
+    lng: -8.597730
 };
 
 let iconBase = '../js/google_maps/map_icons/';   
@@ -29,6 +29,8 @@ function initMap() {
     });
 
     fetchMarkersFromDB();
+
+
 }
 
 function fetchMarkersFromDB() {
@@ -74,10 +76,7 @@ function addMarkers(event) {
         return newMarker;
     });
 
-    moveMap(markers[0]);
-    setMapZoom(18);
     initMapClusterer();
-    filterMarkersInRadius({lat: markers[0].getPosition().lat(), lng: markers[0].getPosition().lng()}, 5);
 }
 
 function toggleBounce() {
@@ -120,9 +119,9 @@ function initMapClusterer() {
     map_clusterer = new MarkerClusterer(map, markers, {imagePath: map_clusters_img_path});
 }
 
-function moveMap(marker) {
+function moveMap(position) {
     if (map == null) return;
-    map.panTo(marker.getPosition());
+    map.panTo(position);
 }
 
 function setMapZoom(zoom) {
@@ -151,20 +150,31 @@ function toRadians(num) {
 }
 
 function filterMarkersInRadius(origin, radius) {
+
     markers.forEach(function(marker) {
+        if (origin == null) {
+            disableMarker(marker);
+            return;
+        }
         let marker_coords = marker.getPosition();
         let dist = distanceBetweenPoints(origin, {lat:marker_coords.lat(), lng: marker_coords.lng()});
-        if (dist > radius) {
-            if (marker.inCluster) {
-                marker.inCluster = false;
-                map_clusterer.removeMarker(marker);
-            }
-        }
-        else {
-            if(!marker.inCluster) {
-                marker.inCluster = true;
-                map_clusterer.addMarker(marker);
-            }
-        }
+        if (dist > radius)
+            disableMarker(marker);
+        else
+            enableMarker(marker);
     });
+}
+
+function enableMarker(marker) {
+    if(!marker.inCluster) {
+        marker.inCluster = true;
+        map_clusterer.addMarker(marker);
+    }
+}
+
+function disableMarker(marker) {
+    if (marker.inCluster) {
+        marker.inCluster = false;
+        map_clusterer.removeMarker(marker);
+    }
 }

@@ -1,8 +1,7 @@
 'use strict'
 
 let api_key = "AIzaSyD0_ruPYuzA1ntPaautYqVqtjOT96oNLSE";
-let latitudeBar = document.getElementById("latitude_bar");
-let longitudeBar = document.getElementById("longitude_bar");
+let search_radius = 10000; // 10km
 
 /* Variable used to store reference to return from setTimeout */
 let address_timeout;
@@ -14,32 +13,38 @@ function encodeForAjax(data) {
   }
 
 function updateAddressInfo(event) {
-   let response = JSON.parse(event.target.responseText);
+    let response = JSON.parse(event.target.responseText);
 
-   // TODO deal with many results found
+    // TODO deal with many results found?
 
-   switch(response.status) {
-     case "OK":
-        latitudeBar.value = response.results[0].geometry.location.lat;
-        longitudeBar.value = response.results[0].geometry.location.lng;
+    let coords = null;
+    switch(response.status) {
+      case "OK":
+        let best_result = response.results[0];
+
+        if(best_result == null) return;
+
+        coords = {
+          lat: best_result.geometry.location.lat,
+          lng: best_result.geometry.location.lng
+        }
         break;
     
       case "ZERO_RESULTS":
         console.log("No results found");
-        latitudeBar.value = "";
-        longitudeBar.value = "";
         break;
     
       case "INVALID_REQUEST":
         console.log("Invalid request");
-        latitudeBar.value = "";
-        longitudeBar.value = "";
         break;
 
       default:
-        latitudeBar.value = "";
-        longitudeBar.value = "";   
-   }
+    }
+
+    filterMarkersInRadius(coords, search_radius);
+    moveMap(coords);    
+    setMapZoom(18);
+
 }
 
 function getAddressInfo(address) {
@@ -61,8 +66,9 @@ function handleAddressChange(event) {
 
   let address = event.target.value;
   if (address.length == 0) return;
-  address_timeout = setTimeout(() => getAddressInfo(address), 2000);
+  address_timeout = setTimeout(() => getAddressInfo(address), 1000);
 }
 
-let addressBar = document.getElementById("address_bar");
+let addressBar = document.getElementById("location");
 addressBar.addEventListener("input", handleAddressChange);
+getAddressInfo(addressBar.value);

@@ -99,7 +99,7 @@ function draw_right_side()
         <section id="filters">
 
             <label>
-                Location <input id="location" type="text" name="location" placeholder="<?= $_GET['location'] ?>" required>
+                Location <input id="location" type="text" name="location" value="<?= $_GET['location'] ?>" required>
             </label>
 
             <label>
@@ -157,10 +157,11 @@ function draw_right_side()
 
             <button> Filter </button>
         </section>
-        <section id="map">
-            <img src="../resources/map_example.png" />
-        </section>
-    </section>
-<?php }
 
-?>
+        <?php draw_map(); ?>
+    </section>
+<?php } ?>
+
+<?php function draw_map() { ?>
+    <section id="map"></section>
+<?php } ?>
