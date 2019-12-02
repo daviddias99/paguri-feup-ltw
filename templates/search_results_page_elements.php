@@ -20,10 +20,8 @@ function simplifyPrice($price)
 
 <?php function draw_residence_summary($residence)
 {
-
-    $typeStr = getResidenceTypeWithID($residence['type']);
     $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
-    $priceSimple = simplifyPrice($residence['pricePerDay'])
+    $priceSimple = simplifyPrice($residence['pricePerDay']);
     ?>
 
     <section class="result">
@@ -34,7 +32,7 @@ function simplifyPrice($price)
 
         <section class="info">
             <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $typeStr . ' &#8226 ' . $residence['location'] ?></h2>
+            <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
             <p class="info_description"> <?= $descriptionTrimmed ?></p>
             <p class="info_ppd"><?= $priceSimple ?></p>
             <p class="info_score">4.5</p>
