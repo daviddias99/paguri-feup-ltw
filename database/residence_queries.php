@@ -1,10 +1,14 @@
 <?php
-    include_once('connection.php');
+    include_once('../database/connection.php');
 
     function getAllResidences() {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT * FROM residence');
+        $stmt = $dbh->prepare(
+            'SELECT residence.*, residencetype.name as type 
+            FROM residence JOIN residencetype
+            ON residence.type = residenceTypeID'
+        );
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -43,7 +47,8 @@
             'SELECT residence.*, residencetype.name as type
             FROM residence JOIN residencetype
             ON residence.type = residenceTypeID
-            WHERE residenceID = ?');
+            WHERE residenceID = ?'
+        );
 
         $stmt->execute(array($residenceID));
         return $stmt->fetch();
@@ -84,6 +89,32 @@
 
         $stmt->execute(array($residenceID));
         return $stmt->fetchAll();
+    }
+
+    function createResidence($residenceObj) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+            residence(owner, title, description, pricePerDay, capacity, nBedrooms, 
+            nBathrooms, nBeds, type, address, city, country, latitude, longitude)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->execute(array(
+            $residenceObj['owner'],
+            $residenceObj['title'],
+            $residenceObj['description'],
+            $residenceObj['pricePerDay'],
+            $residenceObj['capacity'],
+            $residenceObj['nBedrooms'],
+            $residenceObj['nBathrooms'],
+            $residenceObj['nBeds'],
+            $residenceObj['type'],
+            $residenceObj['address'],
+            $residenceObj['city'],
+            $residenceObj['country'],
+            $residenceObj['latitude'],
+            $residenceObj['longitude']
+        ));
     }
 
 

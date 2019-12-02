@@ -13,11 +13,11 @@ VALUES
     ('room'),
     ('castle');
 
-INSERT INTO residence(owner, title, description, pricePerDay, location, capacity, nBedrooms, nBathrooms, nBeds, type)
+INSERT INTO residence(owner, title, description, pricePerDay, capacity, nBedrooms, nBathrooms, nBeds, type, address, city, country, latitude, longitude)
 VALUES
-    (1, 'Planet Mars', 'The whole planet is your residence', 999999999, 'Planet Mars', 0, 0, 0, 0, 1),
-    (1, 'Mega Castle', 'very big castle', 1, 'Portugal', 24, 20, 18, 20, 4),
-    (2, 'Toca do bicho', 'shared room with me. come in come in, its freeeee', 0, 'Russia', 1, 0, 0, 1, 3);
+    (1, 'Planet Mars', 'The whole planet is your residence', 999999999, 0, 0, 0, 0, 1, 'Planet Mars Avenue 1', 'New Horizon', 'Mars', 41.177787, -8.597119),
+    (1, 'Mega Castle', 'very big castle', 1, 24, 20, 18, 20, 2, 'Rua do Castelo', 'Castelões', 'Portugal', 41.179399, -8.595388),
+    (2, 'Toca do bicho', 'shared room with me. come in come in, its freeeee', 0, 1, 0, 0, 1, 1, 'Generic Forest num. 14', 'oi', 'Russia', 41.176928, -8.594090);
 
 INSERT INTO reservation(lodge, customer, startDate, endDate, numPeople)
 VALUES
