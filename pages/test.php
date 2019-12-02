@@ -3,10 +3,10 @@
     <head>
         <title>Free houses</title>    
         <meta charset="UTF-8">
-        <link href="../google_maps_testing/map.css" rel="stylesheet">
-        <script src="../google_maps_testing/geocoding_ajax.js" defer></script>
-        <script src="../google_maps_testing/google_map.js" defer></script>
-        <script src="../google_maps_testing/map_clusters/markerclusterer.js" defer></script>
+        <link href="../js/google_maps/map.css" rel="stylesheet">
+        <script src="../js/google_maps/geocoding_ajax.js" defer></script>
+        <script src="../js/google_maps/google_map.js" defer></script>
+        <script src="../js/google_maps/map_clusters/markerclusterer.js" defer></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0_ruPYuzA1ntPaautYqVqtjOT96oNLSE&callback=initMap&language=en" async defer></script>
     </head>
     <body>
