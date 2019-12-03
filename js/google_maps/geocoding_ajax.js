@@ -22,7 +22,9 @@ function updateAddressInfo(event) {
       case "OK":
         let best_result = response.results[0];
 
-        if(best_result == null) return;
+        if(best_result == null) {
+          return;
+        }
 
         coords = {
           lat: best_result.geometry.location.lat,
@@ -71,4 +73,5 @@ function handleAddressChange(event) {
 
 let addressBar = document.getElementById("location");
 addressBar.addEventListener("input", handleAddressChange);
-getAddressInfo(addressBar.value);
+
+setTimeout(() => getAddressInfo(addressBar.value), 1000);

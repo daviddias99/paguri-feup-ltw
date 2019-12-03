@@ -29,8 +29,6 @@ function initMap() {
     });
 
     fetchMarkersFromDB();
-
-
 }
 
 function fetchMarkersFromDB() {
