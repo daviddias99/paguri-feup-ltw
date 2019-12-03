@@ -130,7 +130,7 @@ function setMapZoom(zoom) {
 }
 
 function distanceBetweenPoints(coords1, coords2) {
-    let R = 6371e3; // earths radius in metres
+    const EARTH_RADIUS = 6378; // km
     
     let ang1 = toRadians(coords1.lat);
     let ang2 = toRadians(coords2.lat);
@@ -142,7 +142,7 @@ function distanceBetweenPoints(coords1, coords2) {
             Math.sin(lngDiff/2) * Math.sin(lngDiff/2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    return R * c;
+    return EARTH_RADIUS * c;
 }
 
 function toRadians(num) {

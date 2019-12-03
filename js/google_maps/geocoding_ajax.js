@@ -1,7 +1,7 @@
 'use strict'
 
 let api_key = "AIzaSyD0_ruPYuzA1ntPaautYqVqtjOT96oNLSE";
-let search_radius = 10000; // 10km
+let search_radius = 2; //km
 
 /* Variable used to store reference to return from setTimeout */
 let address_timeout;
