@@ -16,7 +16,7 @@
     function getResidenceTypes() {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT name FROM residenceType');
+        $stmt = $dbh->prepare('SELECT residenceTypeID, name FROM residenceType');
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -100,21 +100,23 @@
             nBathrooms, nBeds, type, address, city, country, latitude, longitude)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
         $stmt->execute(array(
-            $residenceObj['owner'],
-            $residenceObj['title'],
-            $residenceObj['description'],
-            $residenceObj['pricePerDay'],
-            $residenceObj['capacity'],
-            $residenceObj['nBedrooms'],
-            $residenceObj['nBathrooms'],
-            $residenceObj['nBeds'],
-            $residenceObj['type'],
-            $residenceObj['address'],
-            $residenceObj['city'],
-            $residenceObj['country'],
-            $residenceObj['latitude'],
-            $residenceObj['longitude']
-        ));
+                $residenceObj['owner'],
+                $residenceObj['title'],
+                $residenceObj['description'],
+                $residenceObj['pricePerDay'],
+                $residenceObj['capacity'],
+                $residenceObj['nBedrooms'],
+                $residenceObj['nBathrooms'],
+                $residenceObj['nBeds'],
+                $residenceObj['type'],
+                $residenceObj['address'],
+                $residenceObj['city'],
+                $residenceObj['country'],
+                $residenceObj['latitude'],
+                $residenceObj['longitude']
+            ));
+        
+        return $stmt->rowCount() > 0;
     }
 
 
