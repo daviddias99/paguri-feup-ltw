@@ -1,20 +1,19 @@
 <?php
 
     // TODO authentication!!! api key ?
+    // shouldnt db insert fail when constrainsts fail?
+    // implement delete and put?
 
     include_once('./response_status.php');
 
     $request_method = $_SERVER['REQUEST_METHOD'];
     $accept_header = $_SERVER['HTTP_ACCEPT'];
 
-    $response = array(
-        'status' => ResponseStatus::NOT_IMPLEMENTED,
-        'msg' => 'Method not implemented.'
-    );
+    $response = array();
 
     if ($accept_header != 'application/json') {
-        $response['status'] = ResponseStatus::BAD_REQUEST;
-        $response['msg'] = 'Accept header must be application/json.';
+        $response['error'] = 'Accept header must be application/json.';
+        http_response_code(ResponseStatus::BAD_REQUEST);
         echo json_encode($response);
         die();
     }
@@ -22,16 +21,13 @@
     include_once("../database/residence_queries.php");
 
     if($request_method == 'GET') {
-
-        $response['status'] = ResponseStatus::OK;
-        $response['msg'] = 'Successfull request.';
         
         if(array_key_exists('id', $_GET)) {
             $info = getResidenceInfo($_GET['id']);
             
             if ($info == FALSE) {
-                $response['status'] = ResponseStatus::NOT_FOUND;
-                $response['msg'] = 'Did not find residence with given id';
+                $response['error'] = 'Did not find residence with given id.';
+                http_response_code(ResponseStatus::NOT_FOUND);
             }
             else {
                 $response['residence'] = $info;
@@ -42,10 +38,7 @@
         }
     }
 
-    else if ($request_method == 'POST') {
-
-        $response['status'] = ResponseStatus::CREATED;
-        $response['msg'] = 'Successfully created new residence.';
+    else if ($request_method == 'POST') {        
         
         $needed_keys = [
             'owner', 
@@ -66,8 +59,8 @@
 
         // check if all values are present
         if(!array_keys_exist($_POST, $needed_keys)) {
-            $response['status'] = ResponseStatus::BAD_REQUEST;
-            $response['msg'] = 'Missing values in request body.';
+            $response['error'] = 'Missing values in request body.';
+            http_response_code(ResponseStatus::BAD_REQUEST);
             echo json_encode($response);
             die();
         }
@@ -85,27 +78,34 @@
             }
         }
         if(!$valid_type){
-            $response['status'] = ResponseStatus::BAD_REQUEST;
-            $response['msg'] = 'Invalid residence type provided.';
+            $response['error'] = 'Residence type does not exist.';
+            http_response_code(ResponseStatus::BAD_REQUEST);
             echo json_encode($response);
             die();
         }
 
         $insert_op = createResidence($_POST);
         if ($insert_op == FALSE) {
-            $response['status'] = ResponseStatus::BAD_REQUEST;
-            $response['msg'] = 'Error inserting new residence.';
+            $response['error'] = 'Error inserting new residence.';
+            http_response_code(ResponseStatus::BAD_REQUEST);
         }
+
+        http_response_code(ResponseStatus::CREATED);
     }
 
     else if ($request_method == 'PUT') {
-        $response['status'] = ResponseStatus::METHOD_NOT_ALLOWED;
-        $response['msg'] = 'PUT method is not allowed.';
+        $response['error'] = 'PUT method is not allowed.';
+        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
     }
 
     else if ($request_method == 'DELETE') {
-        $response['status'] = ResponseStatus::METHOD_NOT_ALLOWED;
-        $response['msg'] = 'DELETE method is not allowed.';
+        $response['error'] = 'DELETE method is not allowed.';
+        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
+    }
+
+    else {
+        $response['error'] = 'Method not implemented.';
+        http_response_code(ResponseStatus::NOT_IMPLEMENTED);
     }
 
     echo json_encode($response, JSON_NUMERIC_CHECK);
