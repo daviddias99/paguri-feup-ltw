@@ -109,7 +109,7 @@ function draw_right_side()
         <section id="type">
             <label>
                 Type:
-                <select id="type" name="type">
+                <select id="housing_type" name="type">
 
                     <?php foreach ($types as $type) { ?>
 
@@ -122,8 +122,8 @@ function draw_right_side()
         </section>
 
         <section id="price">
-            <label> Price: <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
-                <label> to:<input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+            <label> Price: <input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+                <label> to:<input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
         </section>
 
         <section id="rating">
@@ -144,7 +144,7 @@ function draw_right_side()
                 <label>
         </section>
 
-        <button> Filter </button>
+        <button id="filter_button"> Filter </button>
     </section>
 <?php } ?>
 
