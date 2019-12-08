@@ -38,4 +38,11 @@
         return count( $keys ) === $count;
     }
 
+    function api_error($responseStatus, $errorMsg) {
+        $response = array('error' => $errorMsg); //['error'] = $errorMsg;
+        http_response_code($responseStatus);
+        echo json_encode($response);
+        die();
+    }
+
 ?>

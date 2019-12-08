@@ -13,10 +13,7 @@
     $response = array();
 
     if ($accept_header != 'application/json') {
-        $response['error'] = 'Accept header must be application/json.';
-        http_response_code(ResponseStatus::BAD_REQUEST);
-        echo json_encode($response);
-        die();
+        api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
     include_once("../database/residence_queries.php");
@@ -27,12 +24,10 @@
             $info = getResidenceInfo($_GET['id']);
             
             if ($info == FALSE) {
-                $response['error'] = 'Did not find residence with given id.';
-                http_response_code(ResponseStatus::NOT_FOUND);
+                api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
             }
-            else {
-                $response['residence'] = $info;
-            }
+
+            $response['residence'] = $info;
         }
         else {
             $response['residences'] = getAllResidences();
@@ -60,10 +55,7 @@
 
         // check if all values are present
         if(!array_keys_exist($_POST, $needed_keys)) {
-            $response['error'] = 'Missing values in request body.';
-            http_response_code(ResponseStatus::BAD_REQUEST);
-            echo json_encode($response);
-            die();
+            api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
         }
 
         //TODO check given values are not empty
@@ -79,30 +71,26 @@
             }
         }
         if(!$valid_type){
-            $response['error'] = 'Residence type does not exist.';
-            http_response_code(ResponseStatus::BAD_REQUEST);
-            echo json_encode($response);
-            die();
+            api_error(ResponseStatus::BAD_REQUEST, 'Residence type does not exist.');
         }
 
         $lastInsertId = createResidence($_POST);
         if ($lastInsertId == FALSE) {
-            $response['error'] = 'Error inserting new residence.';
-            http_response_code(ResponseStatus::BAD_REQUEST);
+            api_error(ResponseStatus::BAD_REQUEST, 'Error inserting new residence.');
         }
 
+        // remove url parameters
+        $request_uri = substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?"));
+
         http_response_code(ResponseStatus::CREATED);
-        $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; // are theses variables controllable by the user???
+        $actual_link = "http://$_SERVER[HTTP_HOST]$request_uri"; // are theses variables controllable by the user???
         header("Location: $actual_link?id=$lastInsertId");
     }
 
     else if ($request_method == 'PUT') {
 
         if(!array_key_exists('id', $_GET)) {
-            $response['error'] = 'Residence ID must be specified.';
-            http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
-            echo json_encode($response);
-            die();
+            api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
     }
@@ -110,18 +98,12 @@
     else if ($request_method == 'DELETE') {
 
         if(!array_key_exists('id', $_GET)) {
-            $response['error'] = 'Residence ID must be specified.';
-            http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
-            echo json_encode($response);
-            die();
+            api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
         $res = deleteResidence($_GET['id']);
         if ($res == FALSE) {
-            $response['error'] = 'Residence not found.';
-            http_response_code(ResponseStatus::NOT_FOUND);
-            echo json_encode($response);
-            die();
+            api_error(ResponseStatus::NOT_FOUND, 'Residence not found.');
         }
 
         $response['residence'] = $res;
