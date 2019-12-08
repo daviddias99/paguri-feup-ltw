@@ -72,7 +72,11 @@ function draw_left_side()
         <header>
             <h1>Showing places near '<?= $_GET["location"] ?>'</h1>
             <h2><?= count($result_residences) ?> resuls found (Wow!) </h2>
+            <label>
+                Location <input id="location" type="text" name="location" value="<?= $_GET['location'] ?>" required>
+            </label>
         </header>
+
 
         <section id="results">
             <?php
@@ -97,10 +101,11 @@ function draw_right_side()
 
     <section id="right_side">
         <section id="filters">
-            
+
             <h1 id="title">Filters</h1>
 
             <section id="more_filters">
+
 
                 <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
 
@@ -154,9 +159,12 @@ function draw_right_side()
 
             <button> Filter </button>
         </section>
-        <section id="map">
-        </section>
-    </section>
-<?php }
 
-?>
+        <?php draw_map(); ?>
+    </section>
+<?php } ?>
+
+<?php function draw_map()
+{ ?>
+    <section id="map"></section>
+<?php } ?>
