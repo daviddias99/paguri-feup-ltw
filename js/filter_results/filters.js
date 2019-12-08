@@ -1,6 +1,8 @@
+'use strict'
+
 class FilterState {
 
-    constructor(dateFrom,dateTo, priceFrom,priceTo,ratingFrom, ratingTo,type,nBeds,capacity,commodities){
+    constructor(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
 
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -16,7 +18,7 @@ class FilterState {
 
 }
 
-function getCurentFilterState(){
+function getCurentFilterState() {
 
     let nBeds = document.getElementById("nBeds").value
     let capacity = document.getElementById("capacity").value
@@ -27,17 +29,37 @@ function getCurentFilterState(){
     let priceTo = document.getElementById("maxPrice").value
     let ratingFrom = document.getElementById("minPrice").value
     let ratingTo = document.getElementById("maxPrice").value
+    let commodities = document.getElementsByName("commodity")
+    let commoditiesObj = {};
 
-    return new FilterState(dateFrom,dateTo,priceFrom,priceTo,ratingFrom,ratingTo,type,nBeds,capacity,null)
+    for (let i = 0; i < commodities.length; i++) {
+        let commodity = commodities[i];
+        commoditiesObj[commodity.value] = commodity.checked;
+    }
+
+    return new FilterState(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
 
-function filterUpdateHandler(){
+function updateSearchResults() {
+
+    let response = JSON.parse(this.responseText);
+
+}
+
+
+function filterUpdateHandler() {
 
     var filterState = getCurentFilterState();
 
-    console.log(filterState);
+    let request = new XMLHttpRequest();
+    let encodedData = encodeURIComponent(JSON.stringify(filterState));
+
+    request.onload = updateSearchResults;
+    request.open("get", "../ajax/residence_search.php?filter_data=" + encodedData);
+    request.send();
+
 }
 
 
-document.getElementById("filter_button").addEventListener("click",filterUpdateHandler);
+document.getElementById("filter_button").addEventListener("click", filterUpdateHandler);

@@ -138,7 +138,7 @@ function draw_right_side()
 
                     foreach ($commodities as $commodity) { ?>
 
-                    <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                    <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
 
                 <?php } ?>
                 <label>
