@@ -2,6 +2,9 @@
 
 include_once('../database/residence_queries.php');
 
+$types = getResidenceTypes();
+$commodities = getAllCommodities();
+$result_residences = getAllResidences();
 
 function simplifyPrice($price)
 {
@@ -16,34 +19,6 @@ function simplifyPrice($price)
         return $price;
 }
 
-?>
-
-<?php function draw_residence_summary($residence)
-{
-    $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
-    $priceSimple = simplifyPrice($residence['pricePerDay']);
-    ?>
-
-    <section class="result">
-
-        <section class="image">
-            <img src="../resources/house_image_test.jpeg">
-        </section>
-
-        <section class="info">
-            <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
-            <p class="info_description"> <?= $descriptionTrimmed ?></p>
-            <p class="info_ppd"><?= $priceSimple ?></p>
-            <p class="info_score">4.5</p>
-            <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-            <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
-
-        </section>
-
-    </section>
-<?php
-}
 ?>
 
 <?php
@@ -64,7 +39,7 @@ function draw_main()
 function draw_left_side()
 {
     // TODO: change this to reflect the search results
-    $result_residences = getAllResidences();
+    global $result_residences;
     ?>
 
     <section id="left_side">
@@ -93,73 +68,11 @@ function draw_left_side()
 
 function draw_right_side()
 {
-
-    $types = getResidenceTypes();
-    $commodities = getAllCommodities();
-
     ?>
 
     <section id="right_side">
-        <section id="filters">
 
-            <h1 id="title">Filters</h1>
-
-            <section id="more_filters">
-
-
-                <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
-
-                <label> Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
-
-
-            </section>
-
-            <section id="dates">
-                <label> From: <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required> </label>
-                <label> to:<input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
-            </section>
-
-            <section id="type">
-                <label>
-                    Type:
-                    <select id="type" name="type">
-
-                        <?php foreach ($types as $type) { ?>
-
-                            <option value="<?= $type['name'] ?>"> <?= ucfirst($type['name']) ?>
-
-                            <?php } ?>
-
-                    </select>
-                </label>
-            </section>
-
-            <section id="price">
-                <label> Price: <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
-                    <label> to:<input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
-            </section>
-
-            <section id="rating">
-                <label> Rating: <input id="minRating" type="number" value="" min="0" max="10" step="'0.5"> </label>
-                <label> to: <input id="maxRating" type="number" value="" min="0" max="10" step="0.5"> </label>
-            </section>
-
-
-            <section id="commodities">
-                <label> Commodities:
-                    <?php
-
-                        foreach ($commodities as $commodity) { ?>
-
-                        <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
-
-                    <?php } ?>
-                    <label>
-            </section>
-
-            <button> Filter </button>
-        </section>
-
+        <?php draw_filters() ?>
         <?php draw_map(); ?>
     </section>
 <?php } ?>
@@ -168,3 +81,97 @@ function draw_right_side()
 { ?>
     <section id="map"></section>
 <?php } ?>
+
+<?php function draw_filters()
+{
+    global $types;
+    global $commodities;
+    ?>
+    <section id="filters">
+
+        <h1 id="title">Filters</h1>
+
+        <section id="more_filters">
+
+
+            <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
+
+            <label> Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
+
+
+        </section>
+
+        <section id="dates">
+            <label> From: <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required> </label>
+            <label> to:<input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
+        </section>
+
+        <section id="type">
+            <label>
+                Type:
+                <select id="type" name="type">
+
+                    <?php foreach ($types as $type) { ?>
+
+                        <option value="<?= $type['name'] ?>"> <?= ucfirst($type['name']) ?>
+
+                        <?php } ?>
+
+                </select>
+            </label>
+        </section>
+
+        <section id="price">
+            <label> Price: <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+                <label> to:<input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+        </section>
+
+        <section id="rating">
+            <label> Rating: <input id="minRating" type="number" value="" min="0" max="10" step="'0.5"> </label>
+            <label> to: <input id="maxRating" type="number" value="" min="0" max="10" step="0.5"> </label>
+        </section>
+
+
+        <section id="commodities">
+            <label> Commodities:
+                <?php
+
+                    foreach ($commodities as $commodity) { ?>
+
+                    <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+
+                <?php } ?>
+                <label>
+        </section>
+
+        <button> Filter </button>
+    </section>
+<?php } ?>
+
+<?php function draw_residence_summary($residence)
+{
+    $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
+    $priceSimple = simplifyPrice($residence['pricePerDay']);
+    ?>
+
+    <section class="result">
+
+        <section class="image">
+            <img src="../resources/house_image_test.jpeg">
+        </section>
+
+        <section class="info">
+            <h1 class="info_title"><?= $residence['title'] ?> </h1>
+            <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
+            <p class="info_description"> <?= $descriptionTrimmed ?></p>
+            <p class="info_ppd"><?= $priceSimple ?></p>
+            <p class="info_score">4.5</p>
+            <p class="info_capacity"> <?= $residence['capacity'] ?></p>
+            <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+
+        </section>
+
+    </section>
+<?php
+}
+?>

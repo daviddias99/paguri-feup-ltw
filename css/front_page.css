@@ -59,6 +59,39 @@ body.search_results #main #right_side {
     padding-top: 0.5em;
 }
 
+body.search_results #main #left_side header{
+    display: grid;
+    grid-template-areas: 
+    "mainTitle mainTitle"
+    "resultsCnt searchBar"
+    ;
+
+    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+    
+}
+
+body.search_results #main #left_side header h1{
+    grid-area: mainTitle;
+
+}
+
+body.search_results #main #left_side header h2{
+    grid-area: resultsCnt;
+
+}
+
+body.search_results #main #left_side header label{
+    grid-area: searchBar;
+    align-self: center;
+    font-weight: 500;
+}
+
+
+body.search_results #main #left_side header input{
+    width: 75%;
+}
+
+
 
 /*Header*/
 
