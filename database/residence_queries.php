@@ -121,5 +121,18 @@
         return $dbh->lastInsertId();
     }
 
+    function deleteResidence($id) {
+        global $dbh;
+
+        $residence = getResidenceInfo($id);
+
+        if ($residence == FALSE) return FALSE;
+
+        $stmt = $dbh->prepare('DELETE FROM residence WHERE residenceID = ?');
+        $stmt->execute(array($id));
+
+        return $residence;
+    }
+
 
 ?>

@@ -92,18 +92,40 @@
         }
 
         http_response_code(ResponseStatus::CREATED);
-        $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; // are theses variables controllable by the user???
         header("Location: $actual_link?id=$lastInsertId");
     }
 
     else if ($request_method == 'PUT') {
-        $response['error'] = 'PUT method is not allowed.';
-        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
+
+        if(!array_key_exists('id', $_GET)) {
+            $response['error'] = 'Residence ID must be specified.';
+            http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
+            echo json_encode($response);
+            die();
+        }
+
     }
 
     else if ($request_method == 'DELETE') {
-        $response['error'] = 'DELETE method is not allowed.';
-        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
+
+        if(!array_key_exists('id', $_GET)) {
+            $response['error'] = 'Residence ID must be specified.';
+            http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
+            echo json_encode($response);
+            die();
+        }
+
+        $res = deleteResidence($_GET['id']);
+        if ($res == FALSE) {
+            $response['error'] = 'Residence not found.';
+            http_response_code(ResponseStatus::NOT_FOUND);
+            echo json_encode($response);
+            die();
+        }
+
+        $response['residence'] = $res;
+        http_response_code(ResponseStatus::OK);
     }
 
     else {
