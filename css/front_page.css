@@ -55,7 +55,9 @@ body.search_results #main {
 
 }
 
-
+body.search_results #main #right_side {
+    padding-top: 0.5em;
+}
 
 
 /*Header*/

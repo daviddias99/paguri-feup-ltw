@@ -1,4 +1,65 @@
 body #right_side #filters {
-    display: flex;
-    flex-direction: column;
+
+    width: 94%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.6fr 0.5fr;
+    grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
+    grid-gap: 0.5em;
+    grid-template-areas: 
+    "title . ."
+    "dates more_filters more_filters" 
+    "price rating type" 
+    "commodities commodities commodities"
+    "filter_bttn filter_bttn filter_bttn";
+    border-top: 1px solid #cacaca;
+    border-bottom: 4px solid  #475c7a;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    padding: 1em;
+    background-color: #fdfdfd;
+    align-items: center;
 }
+
+#right_side #filters input[type="number"] {
+
+    height: 0.5em;
+}
+
+#right_side #filters #rating input[type="number"] {
+
+    width: 3em;
+}
+
+#right_side #filters #more_filters input[type="number"] {
+
+    width: 3em;
+}
+
+#right_side #filters #price input[type="number"] {
+
+    width: 8em;
+}
+
+#right_side #filters #more_filters { 
+    grid-area: more_filters; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#right_side #filters #title {
+
+    grid-area: title;
+    margin: 0;
+    font-size: 2em;
+
+}
+
+  
+#right_side #filters #commodities { grid-area: commodities; }
+#right_side #filters #price { grid-area: price; }
+#right_side #filters #rating { grid-area: rating; }
+#right_side #filters #type { grid-area: type; }
+#right_side #filters #dates { grid-area: dates; }
+#right_side #filters button { grid-area: filter_bttn; }
+

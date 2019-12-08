@@ -6,6 +6,7 @@ body #results .result {
     border-top: 1px solid #cacaca;
     border-bottom: 4px solid  #685d79;;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #fdfdfd;
 
 
     height: 15em;
@@ -14,6 +15,23 @@ body #results .result {
     display: flex;
     flex-direction: row;
 
+
+}
+
+body #results .result:hover {
+
+    color: black;
+    margin: 0.5em;
+    border-top: 1px solid #cacaca;
+    border-bottom: 7px solid  #685d79;;
+    box-shadow: 0 6px 6px rgba(0,0,0,.2);
+
+
+    height: 15em;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
 
 }
 

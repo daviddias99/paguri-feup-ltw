@@ -97,68 +97,64 @@ function draw_right_side()
 
     <section id="right_side">
         <section id="filters">
+            
+            <h1 id="title">Filters</h1>
 
-            <label>
-                Location <input id="location" type="text" name="location" placeholder="<?= $_GET['location'] ?>" required>
-            </label>
+            <section id="more_filters">
 
-            <label>
-                #Beds <input id="nBeds" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1">
-            </label>
+                <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
 
-            <label>
-                #Rooms <input id="nRooms" type="number" value="" min="0" max="10" step="1">
-            </label>
-
-            <label>
-                Check-in <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required>
-            </label>
-
-            <label>
-                Checkout <input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
-            </label>
-
-            <label>
-                Price
-                <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1">
-                <input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1">
-            </label>
-
-            <label>
-                Rating
-                <input id="minRating" type="number" value="" min="0" max="10" step="1">
-                <input id="maxRating" type="number" value="" min="0" max="10" step="1">
-            </label>
-
-            <label>
-                Type
-                <select name="type">
-
-                    <?php foreach ($types as $type) { ?>
-
-                        <option value="<?= $type['name'] ?>"> <?= ucfirst($type['name']) ?>
-
-                        <?php } ?>
-
-                </select>
-            </label>
-
-            <section id="comodities">
-
-                <?php
-
-                    foreach ($commodities as $commodity) { ?>
-
-                    <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                <label> Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
 
 
-                <?php } ?>
+            </section>
+
+            <section id="dates">
+                <label> From: <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="" required> </label>
+                <label> to:<input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="" required>
+            </section>
+
+            <section id="type">
+                <label>
+                    Type:
+                    <select id="type" name="type">
+
+                        <?php foreach ($types as $type) { ?>
+
+                            <option value="<?= $type['name'] ?>"> <?= ucfirst($type['name']) ?>
+
+                            <?php } ?>
+
+                    </select>
+                </label>
+            </section>
+
+            <section id="price">
+                <label> Price: <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+                    <label> to:<input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+            </section>
+
+            <section id="rating">
+                <label> Rating: <input id="minRating" type="number" value="" min="0" max="10" step="'0.5"> </label>
+                <label> to: <input id="maxRating" type="number" value="" min="0" max="10" step="0.5"> </label>
+            </section>
+
+
+            <section id="commodities">
+                <label> Commodities:
+                    <?php
+
+                        foreach ($commodities as $commodity) { ?>
+
+                        <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+
+                    <?php } ?>
+                    <label>
             </section>
 
             <button> Filter </button>
         </section>
         <section id="map">
-            <img src="../resources/map_example.png" />
         </section>
     </section>
 <?php }
