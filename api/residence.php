@@ -3,6 +3,7 @@
     // TODO authentication!!! api key ?
     // shouldnt db insert fail when constrainsts fail?
     // implement delete and put?
+    // error field in response when succesfull?
 
     include_once('./response_status.php');
 
@@ -84,13 +85,15 @@
             die();
         }
 
-        $insert_op = createResidence($_POST);
-        if ($insert_op == FALSE) {
+        $lastInsertId = createResidence($_POST);
+        if ($lastInsertId == FALSE) {
             $response['error'] = 'Error inserting new residence.';
             http_response_code(ResponseStatus::BAD_REQUEST);
         }
 
         http_response_code(ResponseStatus::CREATED);
+        $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        header("Location: $actual_link?id=$lastInsertId");
     }
 
     else if ($request_method == 'PUT') {

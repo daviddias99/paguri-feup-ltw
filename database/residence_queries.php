@@ -116,7 +116,9 @@
                 $residenceObj['longitude']
             ));
         
-        return $stmt->rowCount() > 0;
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return $dbh->lastInsertId();
     }
 
 
