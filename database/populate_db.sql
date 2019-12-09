@@ -2,9 +2,9 @@ PRAGMA foreign_keys = ON;
 
 INSERT INTO user(userID,username,email,firstname,lastname,password,biography,photo)
 VALUES
-    (1,'daviddias99', 'david.luis.99@hotmail.com','David', 'Silva', 'pokemongo','Sou o que sou', NULL),
-    (2,'luispcunha', 'luis.cunha@yahoo.com','Luis', 'Cunha', 'escabeche','Não sou o que sou', NULL),
-    (3,'mario_gil', 'mario.gil@gmail.com','Mario', 'Gil', 'lcom','Talvez seja o que sou', NULL);
+    (1,'daviddias99', 'david.luis.99@hotmail.com','David', 'Silva', '$2y$12$lMlGIriSq2QA52B0Yq5SsO36rNvzJVimw63yJ.1ujroiVrG1cKC0.' ,'Sou o que sou', NULL),
+    (2,'luispcunha', 'luis.cunha@yahoo.com','Luis', 'Cunha', '$2y$12$lMlGIriSq2QA52B0Yq5SsO36rNvzJVimw63yJ.1ujroiVrG1cKC0.','Não sou o que sou', NULL),
+    (3,'mario_gil', 'mario.gil@gmail.com','Mario', 'Gil', '$2y$12$lMlGIriSq2QA52B0Yq5SsO36rNvzJVimw63yJ.1ujroiVrG1cKC0.','Talvez seja o que sou', NULL);
 
 INSERT INTO residencetype(name)
 VALUES
