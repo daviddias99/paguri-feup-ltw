@@ -15,7 +15,24 @@
                     <?php draw_house_type_options() ?>
                 </select>
             </label>
-
+            <label>
+                Location <input id="location" type="text" name="location" value="">
+            </label>
+            <label>
+                Description <textarea id="description" type="text" name="description" rows="6" cols="80"></textarea>
+            </label>
+            <label>
+                Capacity <input id="capacity" type="number" name="capacity" value="1" min="0" max="10" step="1">
+            </label>
+            <label>
+                Number of bedrooms <input id="num-bedrooms" type="number" name="num-bedrooms" value="1" min="0" max="10" step="1">
+            </label>
+            <label>
+                Number of bathrooms <input id="num-bathrooms" type="number" name="num-bathrooms" value="1" min="0" max="10" step="1">
+            </label>
+            <label>
+                Number of beds <input id="num-beds" type="number" name="num-beds" value="1" min="0" max="10" step="1">
+            </label>
             <input id="submit_button" type="submit" value="Add">
         </form>
     </section>
