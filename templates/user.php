@@ -8,7 +8,7 @@
 <?php } ?>
 
 <?php function draw_edit_profile($user) { ?>
-    <section id="search_box">
+    <section id="search_box" class="formCard">
         <h1>Update profile information</h1>
         <form action="../actions/action_edit_profile.php" method="post">
             <label>

@@ -94,9 +94,9 @@ function draw_right_side()
         <section id="more_filters">
 
 
-            <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
+            <label> Min. Beds: <input id="nBeds" type="number" value="1" min="0" max="10" step="1"> </label>
 
-            <label> Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
+            <label> Min. Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
 
 
         </section>
@@ -109,7 +109,7 @@ function draw_right_side()
         <section id="type">
             <label>
                 Type:
-                <select id="type" name="type">
+                <select id="housing_type" name="type">
 
                     <?php foreach ($types as $type) { ?>
 
@@ -122,29 +122,31 @@ function draw_right_side()
         </section>
 
         <section id="price">
-            <label> Price: <input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
-                <label> to:<input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+            <label> Price: <input id="minPrice" type="number" value="0" min="1" max="9999999999999" step="1"> </price>
+                <label> to:<input id="maxPrice" type="number" value="5000" min="1" max="9999999999999" step="1"> </price>
         </section>
 
         <section id="rating">
-            <label> Rating: <input id="minRating" type="number" value="" min="0" max="10" step="'0.5"> </label>
-            <label> to: <input id="maxRating" type="number" value="" min="0" max="10" step="0.5"> </label>
+            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="'0.5"> </label>
+            <label> to: <input id="maxRating" type="number" value="10" min="0" max="10" step="0.5"> </label>
         </section>
 
 
         <section id="commodities">
-            <label> Commodities:
+            Commodities:
                 <?php
 
                     foreach ($commodities as $commodity) { ?>
 
-                    <input type="checkbox" name="comomdity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                    <label>
+                        <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                    </label>
 
                 <?php } ?>
-                <label>
+                
         </section>
 
-        <button> Filter </button>
+        <button id="filter_button"> Filter </button>
     </section>
 <?php } ?>
 
@@ -152,6 +154,10 @@ function draw_right_side()
 {
     $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
     $priceSimple = simplifyPrice($residence['pricePerDay']);
+
+    if ($residence['rating'] == null)
+        $residence['rating'] = '-- ';
+
     ?>
 
     <section class="result">
@@ -165,7 +171,7 @@ function draw_right_side()
             <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
             <p class="info_description"> <?= $descriptionTrimmed ?></p>
             <p class="info_ppd"><?= $priceSimple ?></p>
-            <p class="info_score">4.5</p>
+            <p class="info_score"><?= $residence['rating'] ?></p>
             <p class="info_capacity"> <?= $residence['capacity'] ?></p>
             <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
 

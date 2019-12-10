@@ -1,16 +1,12 @@
 
+/* General */
 
-/*General*/
-html{
-
-
+html {
     --color-1: #fcbb6d;
     --color-2: #d8737f;
     --color-3: #ab6c82;
     --color-4: #685d79;
     --color-5: #475c7a;
-    height: 100%;
-    font-size: 15px;
 }
 
 h1 {
@@ -21,50 +17,72 @@ h2 {
     font-size: 18px;
 }
 
-
-body{
+body {
     margin: 0;
     font-family: 'Lato', sans-serif;
 }
 
-body > header {
+/* Site Header */
+
+
+
+#site_header  {
+
+    grid-area: header;
+    background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
+
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+
+    padding-right: 1.4em;
 }
 
-body > header h1 {
+#site_header h1 {
     margin: 0em;
 }
 
+#site_header a {
+    color: white;
+    text-decoration: none;
 
+}
 
-/*Search results*/
+#username:before {
+    font-family: "Font Awesome 5 Free"; content: "\f2bd";
+}
 
-body #main {
+#site_header nav {
+    color: white;
+    font-size: 1.2em;
+}
+
+#site_header nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#site_header nav li {
+    display: inline;
+    padding: 0.5em;
+}
+
+#logo {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-body #right_side {
-    width: 50%;
-    border-left: 1px solid black;
-    position: relative;
-
+#logo p {
+    margin: 0em;
+    font-size: 2em;
+    font-weight: bold;
 }
 
-body #left_side {
-    width: 50%;
-}
-
-body #left_side #results{
-
-
-    height: 100vh;
-    overflow-y: scroll;
-    height: calc(100vh - 175px);
-    position: relative;
-}
+/* Search Results Page*/
 
 body.search_results {
 
@@ -80,37 +98,92 @@ body.search_results {
     "header"
     "main"
     ;
-    overflow: hidden;
 }
 
 body.search_results #main {
 
     grid-area: main;
-    display: flex;
-    flex-direction: row;
-
-
     background-color: white;
     width: 85%;
+    display: flex;
+    flex-direction: row;
     margin-right: auto;
     margin-left: auto;
-    border-radius: 6px;
     margin-top: 1em;
+    border-radius: 6px;
 
 }
 
+/* Search results page right side*/
 
-body #right_side img  {
-    width: 97%;
+body.search_results #right_side {
+    width: 50%;
+    border-left: 1px solid black;
+    position: relative;
+    padding-top: 0.5em;
+}
+
+body.search_results #right_side #map {
+    height: 60%;
+    width: 100%;
     margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    margin-top:1em;
+}
+
+/* Search results page left side*/
+
+body.search_results #left_side {
+    width: 50%;
+}
+
+body.search_results #left_side header{
+    display: grid;
+    grid-template-areas:
+    "mainTitle mainTitle"
+    "resultsCnt searchBar"
+    ;
+
+    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+}
+
+
+body.search_results #left_side header h1{
+    grid-area: mainTitle;
+    margin: 0.5em;
 
 }
 
+body.search_results #left_side header h2{
+    grid-area: resultsCnt;
+    margin: 1em; 
+
+}
+
+body.search_results #left_side header h2:before{
+
+    content: "\29BF";
+    margin-right: 5px;
+}
+
+body.search_results #left_side header label{
+    grid-area: searchBar;
+    align-self: center;
+    font-weight: 500;
+}
+
+body.search_results #left_side header input{
+    width: 75%;
+}
+
+body.search_results #left_side #results{
+
+    height: 100vh;
+    overflow-y: scroll;
+    height: calc(100vh - 175px);
+    position: relative;
+}
+
+/* Front page page */
 
 body.front_page {
 
@@ -119,60 +192,9 @@ body.front_page {
 
 }
 
-/*Header*/
+/* Form Card */
 
-body > header {
-
-    grid-area: header;
-    background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
-
-    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    padding-right: 1.4em;
-}
-
-
-
-#logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#logo p {
-    margin: 0em;
-    font-size: 2em;
-    font-weight: bold;
-}
-
-#username:before {
-    font-family: "Font Awesome 5 Free"; content: "\f2bd";
-}
-
-header nav {
-    color: white;
-    font-size: 1.2em;
-}
-
-header nav a {
-    color: white;
-    text-decoration: none;
-}
-
-header nav li {
-    display: inline;
-    padding: 0.5em;
-}
-
-
-/* Search Box */
-
-#search_box{
+.formCard{
     margin: 3em auto;
     padding: 1em;
     width: 40em;
@@ -183,7 +205,13 @@ header nav li {
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
 }
 
-#search_box h1 {
+.formCard form{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.formCard h1 {
 
     display: inline-block;
     font-size: 2em;
@@ -191,51 +219,44 @@ header nav li {
 
 }
 
-#search_box form{
-    display: flex;
-    flex-direction: column;
-    
-
-}
-
-#search_box form #location{
+.formCard form #location{
     display: block;
     width: 100%;
 }
 
-#search_box form #dates{
+.formCard form #dates{
     display: flex;
     flex-direction: row;
 }
 
-#search_box input:focus {
+.formCard input:focus {
     outline: none !important;
 }
 
-#search_box input {
+.formCard input {
 
     height: 2em;
 }
 
-#search_box form > *{
+.formCard form > *{
 
     margin: 0.5em 0;
 }
 
-#search_box form input::placeholder{
+.formCard form input::placeholder{
     color: #AAAAAA
 }
 
-#search_box form #dates > * {
+.formCard form #dates > * {
     flex-grow: 1;
 }
 
-#search_box form #dates label > * {
+.formCard form #dates label > * {
     display: block;
 
 }
 
-#search_box form #submit_button {
+.formCard form #submit_button {
 
     background-color: var(--color-2);
     color: white;
@@ -245,22 +266,243 @@ header nav li {
 
 }
 
-#search_box form #submit_button:focus {
+.formCard form #submit_button:focus {
     box-shadow: 0 0 10px;
     outline: black
 }
 
-#search_box form #dates label > input {
+.formCard form #dates label > input {
 
     margin: 0;
     width: 100%;
 }
 
-#search_box form label {
+.formCard form label {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 0.9em;
     font-weight: 300;
 }
 
+/* Profile */
+
+#profile {
+    background-color: white;
+    margin: 1em auto;
+    width: 60em;
+    border-radius: 10px;
+    display: grid;
+}
+
+/* Search_results page filters */
+
+body.search_results #filters {
+
+    width: 94%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.6fr 0.5fr;
+    grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
+    grid-gap: 0.5em;
+    grid-template-areas: 
+    "title . ."
+    "dates more_filters more_filters" 
+    "price rating type" 
+    "commodities commodities commodities"
+    "filter_bttn filter_bttn filter_bttn";
+    border-top: 1px solid #cacaca;
+    border-bottom: 4px solid  #475c7a;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    padding: 1em;
+    background-color: #fdfdfd;
+    align-items: center;
+}
+
+body.search_results #filters input[type="number"] {
+
+    height: 0.5em;
+}
+
+body.search_results #filters #rating input[type="number"] {
+
+    width: 3em;
+}
+
+body.search_results #filters #more_filters input[type="number"] {
+
+    width: 3em;
+}
+
+body.search_results #filters #price input[type="number"] {
+
+    width: 8em;
+}
+
+body.search_results #filters #more_filters { 
+    grid-area: more_filters; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+body.search_results #filters #title {
+
+    grid-area: title;
+    margin: 0;
+    font-size: 2em;
+
+}
+
+  
+body.search_results #filters #commodities { grid-area: commodities; }
+body.search_results #filters #price { grid-area: price; }
+body.search_results #filters #rating { grid-area: rating; }
+body.search_results #filters #type { grid-area: type; }
+body.search_results #filters #dates { grid-area: dates; }
+body.search_results #filters button { grid-area: filter_bttn; }
+
+/*Search results page single result style and layout*/
+.result {
+
+    color: black;
+    margin: 0.5em;
+    border-top: 1px solid #cacaca;
+    border-bottom: 4px solid  #685d79;;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #fdfdfd;
 
 
+    height: 15em;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+ .result:hover {
+
+    color: black;
+    margin: 0.5em;
+    border-top: 1px solid #cacaca;
+    border-bottom: 7px solid  #685d79;;
+    box-shadow: 0 6px 6px rgba(0,0,0,.2);
+
+
+    height: 15em;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+ .result .image {
+
+    width: 35%;
+    height: 15em;
+    margin-right: 0.5em;
+    padding: 0.3em;
+}
+
+ .result .info {
+
+    width: 65%;
+    display: grid;
+    grid-template-columns: 2.1fr 2.3fr 0.5fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
+    grid-template-areas: 
+    "type_and_location type_and_location . rating rating" 
+    "title title title title ." 
+    "desc desc desc desc ." 
+    "nBedrooms nBeds ppd ppd ppd";
+}
+
+ .result .info .info_title { 
+    grid-area: title; 
+    font-size: 1.5em;
+    margin: 0em;
+}
+
+ .result .info h2 {
+    font-size: 1em;
+    color: #4e4e4e;
+    margin-top: 1em;
+    margin-bottom: 0em;
+}
+
+ .result .info p {
+
+    font-size: 1em;
+    margin-top: 0em;
+    text-align: justify;
+    
+}
+
+ .result .info .info_description:before{
+
+    content:"- ";
+}
+
+ .result .info .info_description { 
+    grid-area: desc; 
+    overflow: hidden;
+    width: 100%;
+    height: 4.0em;
+    margin-top: 0.5em;
+}
+
+ .result .info .info_type_and_location { grid-area: type_and_location; }
+
+ .result .info .info_bedrooms:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_bedrooms { grid-area: nBedrooms; }
+
+ .result .info .info_bedrooms:after { 
+    content:" Bedroom";
+}
+
+ .result .info .info_capacity:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_capacity { grid-area: nBeds; }
+
+ .result .info .info_capacity:after {
+    content: ' Beds';
+}
+
+ .result .info .info_score {
+    grid-area: rating;
+    background-color: #475c7a;
+    color: white;
+    border: 1em solid #475c7a;
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+}
+
+ .result .info .info_score:after {
+    content:"\2605";
+}
+
+ .result .info .info_ppd:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_ppd { 
+    grid-area: ppd; 
+}
+
+ .result .info .info_ppd:after { 
+    content:"€ per day";
+}
+
+ .result img {
+
+    width:100%;
+    object-fit: cover;
+    height: 14.4em;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+}
