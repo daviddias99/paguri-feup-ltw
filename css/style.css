@@ -185,7 +185,7 @@ body.front_page {
 
 }
 
-/* Search Box */
+/* Form Card */
 
 .formCard{
     margin: 3em auto;
@@ -198,17 +198,17 @@ body.front_page {
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
 }
 
+.formCard form{
+    display: flex;
+    flex-direction: column;
+
+}
+
 .formCard h1 {
 
     display: inline-block;
     font-size: 2em;
     margin-top: 0em;
-
-}
-
-.formCard form{
-    display: flex;
-    flex-direction: column;
 
 }
 
@@ -276,6 +276,8 @@ body.front_page {
     font-weight: 300;
 }
 
+/* Profile */
+
 #profile {
     background-color: white;
     margin: 1em auto;
@@ -283,4 +285,71 @@ body.front_page {
     border-radius: 10px;
     display: grid;
 }
+
+/* Search_results page filters */
+
+body.search_results #filters {
+
+    width: 94%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.6fr 0.5fr;
+    grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
+    grid-gap: 0.5em;
+    grid-template-areas: 
+    "title . ."
+    "dates more_filters more_filters" 
+    "price rating type" 
+    "commodities commodities commodities"
+    "filter_bttn filter_bttn filter_bttn";
+    border-top: 1px solid #cacaca;
+    border-bottom: 4px solid  #475c7a;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    padding: 1em;
+    background-color: #fdfdfd;
+    align-items: center;
+}
+
+body.search_results #filters input[type="number"] {
+
+    height: 0.5em;
+}
+
+body.search_results #filters #rating input[type="number"] {
+
+    width: 3em;
+}
+
+body.search_results #filters #more_filters input[type="number"] {
+
+    width: 3em;
+}
+
+body.search_results #filters #price input[type="number"] {
+
+    width: 8em;
+}
+
+body.search_results #filters #more_filters { 
+    grid-area: more_filters; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+body.search_results #filters #title {
+
+    grid-area: title;
+    margin: 0;
+    font-size: 2em;
+
+}
+
+  
+body.search_results #filters #commodities { grid-area: commodities; }
+body.search_results #filters #price { grid-area: price; }
+body.search_results #filters #rating { grid-area: rating; }
+body.search_results #filters #type { grid-area: type; }
+body.search_results #filters #dates { grid-area: dates; }
+body.search_results #filters button { grid-area: filter_bttn; }
 
