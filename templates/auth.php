@@ -1,5 +1,5 @@
 <?php function draw_login() { ?>
-    <section id="search_box">
+    <section id="search_box" class="formCard">
         <h1>Login</h1>
         <form action="../actions/action_login.php" method="post">
 
@@ -16,7 +16,7 @@
 <?php } ?>
 
 <?php function draw_register() { ?>
-    <section id="search_box">
+    <section id="search_box" class="formCard">
         <h1>Register</h1>
         <form action="../actions/action_register.php" method="post">
             <label>

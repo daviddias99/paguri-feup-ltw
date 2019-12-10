@@ -1,7 +1,7 @@
 
 <?php function draw_search_box() { ?>
 
-    <section id="search_box">
+    <section id="search_box" class="formCard">
         <h1>Your dream vacation, one click away... And also an html form filling away.</h1>
         <form action="search_results.php" method="get">
             <label>
