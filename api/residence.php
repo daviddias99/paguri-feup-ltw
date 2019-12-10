@@ -38,12 +38,6 @@
 
         check_residence_values($_POST);
         
-        if(!userExistsById($_POST['owner']))
-            api_error(ResponseStatus::BAD_REQUEST, 'Given user does not exist.');
-        
-        if(!getResidenceTypeWithID($_POST['type']))
-            api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
-        
         $lastInsertId = createResidence($_POST);
         if ($lastInsertId == FALSE) {
             api_error(ResponseStatus::BAD_REQUEST, 'Error inserting new residence.');
@@ -58,14 +52,18 @@
     }
 
     else if ($request_method == 'PUT') {
-
-        //parse_str(file_get_contents("php://input"), $_DELETE);
-        //print_r($_DELETE);
-
+        
         if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
+        
+        if (getResidenceInfo($_GET['id']) == FALSE) {
+            api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
+        }
 
+        check_residence_values($_GET);
+
+        
     }
 
     else if ($request_method == 'DELETE') {
@@ -76,7 +74,7 @@
 
         $res = deleteResidence($_GET['id']);
         if ($res == FALSE) {
-            api_error(ResponseStatus::NOT_FOUND, 'Residence not found.');
+            api_error(ResponseStatus::NOT_FOUND, 'Residence does not exist.');
         }
 
         $response['residence'] = $res;
@@ -89,6 +87,7 @@
     }
 
     echo json_encode($response, JSON_NUMERIC_CHECK);
+
 
     function check_residence_values($values) {  
         
@@ -127,6 +126,12 @@
             if (!is_numeric($values[$num_key]))
                 api_error(ResponseStatus::BAD_REQUEST, "$num_key must be a numeric value.");
         }
+
+        if(!userExistsById($values['owner']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Given user does not exist.');
+        
+        if(!getResidenceTypeWithID($values['type']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
     }
 
 ?>
