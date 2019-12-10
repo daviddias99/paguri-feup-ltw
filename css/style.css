@@ -149,12 +149,20 @@ body.search_results #left_side header{
 
 body.search_results #left_side header h1{
     grid-area: mainTitle;
+    margin: 0.5em;
 
 }
 
 body.search_results #left_side header h2{
     grid-area: resultsCnt;
+    margin: 1em; 
 
+}
+
+body.search_results #left_side header h2:before{
+
+    content: "\29BF";
+    margin-right: 5px;
 }
 
 body.search_results #left_side header label{
@@ -174,7 +182,6 @@ body.search_results #left_side #results{
     height: calc(100vh - 175px);
     position: relative;
 }
-
 
 /* Front page page */
 
@@ -353,3 +360,149 @@ body.search_results #filters #type { grid-area: type; }
 body.search_results #filters #dates { grid-area: dates; }
 body.search_results #filters button { grid-area: filter_bttn; }
 
+/*Search results page single result style and layout*/
+.result {
+
+    color: black;
+    margin: 0.5em;
+    border-top: 1px solid #cacaca;
+    border-bottom: 4px solid  #685d79;;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #fdfdfd;
+
+
+    height: 15em;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+ .result:hover {
+
+    color: black;
+    margin: 0.5em;
+    border-top: 1px solid #cacaca;
+    border-bottom: 7px solid  #685d79;;
+    box-shadow: 0 6px 6px rgba(0,0,0,.2);
+
+
+    height: 15em;
+    width: 98%;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+ .result .image {
+
+    width: 35%;
+    height: 15em;
+    margin-right: 0.5em;
+    padding: 0.3em;
+}
+
+ .result .info {
+
+    width: 65%;
+    display: grid;
+    grid-template-columns: 2.1fr 2.3fr 0.5fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
+    grid-template-areas: 
+    "type_and_location type_and_location . rating rating" 
+    "title title title title ." 
+    "desc desc desc desc ." 
+    "nBedrooms nBeds ppd ppd ppd";
+}
+
+ .result .info .info_title { 
+    grid-area: title; 
+    font-size: 1.5em;
+    margin: 0em;
+}
+
+ .result .info h2 {
+    font-size: 1em;
+    color: #4e4e4e;
+    margin-top: 1em;
+    margin-bottom: 0em;
+}
+
+ .result .info p {
+
+    font-size: 1em;
+    margin-top: 0em;
+    text-align: justify;
+    
+}
+
+ .result .info .info_description:before{
+
+    content:"- ";
+}
+
+ .result .info .info_description { 
+    grid-area: desc; 
+    overflow: hidden;
+    width: 100%;
+    height: 4.0em;
+    margin-top: 0.5em;
+}
+
+ .result .info .info_type_and_location { grid-area: type_and_location; }
+
+ .result .info .info_bedrooms:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_bedrooms { grid-area: nBedrooms; }
+
+ .result .info .info_bedrooms:after { 
+    content:" Bedroom";
+}
+
+ .result .info .info_capacity:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_capacity { grid-area: nBeds; }
+
+ .result .info .info_capacity:after {
+    content: ' Beds';
+}
+
+ .result .info .info_score {
+    grid-area: rating;
+    background-color: #475c7a;
+    color: white;
+    border: 1em solid #475c7a;
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+}
+
+ .result .info .info_score:after {
+    content:"\2605";
+}
+
+ .result .info .info_ppd:before { 
+    content:" \2022 ";
+}
+
+ .result .info .info_ppd { 
+    grid-area: ppd; 
+}
+
+ .result .info .info_ppd:after { 
+    content:"€ per day";
+}
+
+ .result img {
+
+    width:100%;
+    object-fit: cover;
+    height: 14.4em;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+}
