@@ -3,19 +3,20 @@
     include_once('../database/user_queries.php');
 
     $username = $_POST['username'];
+    $newUsername = $_POST['newUsername'];
     $email = $_POST['email'];
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $bio = $_POST['bio'];
-    $password = $_POST['password'];
-    $pwConfirmation = $_POST['pwConfirmation'];
 
+    updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio);
 
-
-    updateUserInfo($username, $email, $firstName, $lastName, $bio);
+    $_SESSION['username'] = $newUsername;
 
     if ($password === $pwConfirmation)
         updateUserPassword($username, $password);
 
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Updated profile');
+
+    header('Location: ../pages/profile.php');
 ?>

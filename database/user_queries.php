@@ -54,18 +54,19 @@
         return TRUE;
     }
 
-    function updateUserInfo($username, $email, $firstName, $lastName, $bio) {
+    function updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio) {
         global $dbh;
 
         if (! userExists($username, $email)) return false;
 
         $stmt = $dbh->prepare('UPDATE user
-                               SET email = ?,
+                               SET username = ?,
+                                   email = ?,
                                    firstName = ?,
                                    lastName = ?,
                                    biography = ?
                                WHERE username = ? ');
-        $stmt->execute(array($email, $firstName, $lastName, $bio, $username));
+        $stmt->execute(array($newUsername, $email, $firstName, $lastName, $bio, $username));
         return true;
     }
 
