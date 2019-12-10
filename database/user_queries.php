@@ -83,9 +83,6 @@
         return true;
     }
 
-
-
-
     function validLogin($username, $password) {
         global $dbh;
 
@@ -97,5 +94,48 @@
             return true;
 
         return false;
+    }
+
+    function insertProfilePicture($username, $title) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT photo FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+        $id = $stmt->fetch()['photo'];
+
+        if ($id == 0) {
+            $stmt = $dbh->prepare('INSERT INTO profilePicture(title) VALUES (?)');
+            $stmt->execute(array($title));
+
+            $id = $dbh->lastInsertId();
+
+            $stmt = $dbh->prepare('UPDATE user SET photo = ? WHERE username = ?');
+            $stmt->execute(array($id, $username));
+        } else {
+            $stmt = $dbh->prepare('UPDATE profilePicture SET title = ? WHERE id = ?');
+            $stmt->exec(array($title, $id));
+        }
+
+        return $id;
+    }
+
+    function removeProfilePicture($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT photo FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+        $id = $stmt->fetch()['photo'];
+
+        if ($id == 0)
+            return 0;
+
+
+        $stmt = $dbh->prepare('UPDATE user SET photo = 0 WHERE username = ?');
+        $stmt->execute(array($username));
+
+        $stmt = $dbh->prepare('DELETE FROM profilePicture WHERE id = ?');
+        $stmt->exec(array($id));
+
+        return $id;
     }
 ?>

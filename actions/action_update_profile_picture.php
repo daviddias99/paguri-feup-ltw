@@ -2,15 +2,6 @@
     include_once('../includes/config.php');
     include_once('../database/user_queries.php');
 
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $bio = $_POST['bio'];
-    $password = $_POST['password'];
-    $pwConfirmation = $_POST['pwConfirmation'];
-
-
 
     // Generate filenames for original, small and medium files
     $originalFileName = "images/profile/originals/$id.jpg";

@@ -22,6 +22,10 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+.profile_pic {
+   border-radius: 50%;
+}
+
 /* Site Header */
 
 
@@ -155,7 +159,7 @@ body.search_results #left_side header h1{
 
 body.search_results #left_side header h2{
     grid-area: resultsCnt;
-    margin: 1em; 
+    margin: 1em;
 
 }
 
@@ -303,10 +307,10 @@ body.search_results #filters {
     grid-template-columns: 1.1fr 0.6fr 0.5fr;
     grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
     grid-gap: 0.5em;
-    grid-template-areas: 
+    grid-template-areas:
     "title . ."
-    "dates more_filters more_filters" 
-    "price rating type" 
+    "dates more_filters more_filters"
+    "price rating type"
     "commodities commodities commodities"
     "filter_bttn filter_bttn filter_bttn";
     border-top: 1px solid #cacaca;
@@ -337,8 +341,8 @@ body.search_results #filters #price input[type="number"] {
     width: 8em;
 }
 
-body.search_results #filters #more_filters { 
-    grid-area: more_filters; 
+body.search_results #filters #more_filters {
+    grid-area: more_filters;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -352,7 +356,7 @@ body.search_results #filters #title {
 
 }
 
-  
+
 body.search_results #filters #commodities { grid-area: commodities; }
 body.search_results #filters #price { grid-area: price; }
 body.search_results #filters #rating { grid-area: rating; }
@@ -410,15 +414,15 @@ body.search_results #filters button { grid-area: filter_bttn; }
     display: grid;
     grid-template-columns: 2.1fr 2.3fr 0.5fr 0.5fr 0.5fr;
     grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
-    grid-template-areas: 
-    "type_and_location type_and_location . rating rating" 
-    "title title title title ." 
-    "desc desc desc desc ." 
+    grid-template-areas:
+    "type_and_location type_and_location . rating rating"
+    "title title title title ."
+    "desc desc desc desc ."
     "nBedrooms nBeds ppd ppd ppd";
 }
 
- .result .info .info_title { 
-    grid-area: title; 
+ .result .info .info_title {
+    grid-area: title;
     font-size: 1.5em;
     margin: 0em;
 }
@@ -435,7 +439,7 @@ body.search_results #filters button { grid-area: filter_bttn; }
     font-size: 1em;
     margin-top: 0em;
     text-align: justify;
-    
+
 }
 
  .result .info .info_description:before{
@@ -443,8 +447,8 @@ body.search_results #filters button { grid-area: filter_bttn; }
     content:"- ";
 }
 
- .result .info .info_description { 
-    grid-area: desc; 
+ .result .info .info_description {
+    grid-area: desc;
     overflow: hidden;
     width: 100%;
     height: 4.0em;
@@ -453,17 +457,17 @@ body.search_results #filters button { grid-area: filter_bttn; }
 
  .result .info .info_type_and_location { grid-area: type_and_location; }
 
- .result .info .info_bedrooms:before { 
+ .result .info .info_bedrooms:before {
     content:" \2022 ";
 }
 
  .result .info .info_bedrooms { grid-area: nBedrooms; }
 
- .result .info .info_bedrooms:after { 
+ .result .info .info_bedrooms:after {
     content:" Bedroom";
 }
 
- .result .info .info_capacity:before { 
+ .result .info .info_capacity:before {
     content:" \2022 ";
 }
 
@@ -487,15 +491,15 @@ body.search_results #filters button { grid-area: filter_bttn; }
     content:"\2605";
 }
 
- .result .info .info_ppd:before { 
+ .result .info .info_ppd:before {
     content:" \2022 ";
 }
 
- .result .info .info_ppd { 
-    grid-area: ppd; 
+ .result .info .info_ppd {
+    grid-area: ppd;
 }
 
- .result .info .info_ppd:after { 
+ .result .info .info_ppd:after {
     content:"€ per day";
 }
 

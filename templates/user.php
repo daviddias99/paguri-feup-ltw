@@ -1,6 +1,6 @@
 <?php function draw_profile($user) { ?>
     <section id='profile'>
-        <img id='profile_pic' src="../resources/default-profile-pic.jpg" height="150" width="150">
+        <img class='profile_pic' src="../images/profile/thumbnails_medium/<?=$user['photo']?>.jpg">
         <h1>Hello, <?=$user['firstName']?> <?=$user['lastName']?>!</h1>
         <a href="edit_profile.php">Edit profile</a>
         <p><?=$user['biography']?></p>
@@ -10,6 +10,16 @@
 <?php function draw_edit_profile($user) { ?>
     <section id="search_box" class="formCard">
         <h1>Update profile information</h1>
+
+        <form action="../actions/action_update_profile_picture.php" method="post" enctype="multipart/form-data">
+            <label> Profile picture
+                    <input type="file" name="picture">
+            </label>
+            <input id="submit_button" type="submit" value="Upload">
+        </form>
+        <form action="../actions/action_remove_profile_picture.php" method="post">
+            <input id="submit_button" type="submit" value="Remove">
+        </form>
         <form action="../actions/action_edit_profile.php" method="post">
             <label>
                 Username <input id="username" type="text" name="username" value=<?= $user['username']?>>

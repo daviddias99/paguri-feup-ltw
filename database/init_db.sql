@@ -17,7 +17,12 @@ CREATE TABLE user(
     lastName TEXT NOT NULL,
     password TEXT NOT NULL,
     biography TEXT,
-    photo TEXT
+    photo INTEGER DEFAULT 0 REFERENCES profilePicture
+);
+
+CREATE TABLE profilePicture(
+  id INTEGER CONSTRAINT profilePicturePK PRIMARY KEY,
+  title TEXT NOT NULL
 );
 
 CREATE TABLE residencetype(
