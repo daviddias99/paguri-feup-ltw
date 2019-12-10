@@ -115,13 +115,27 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
                              FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
                              GROUP BY lodge) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
-            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  )  AND typeStr = ?  AND rating >= ? AND rating <= ? -- AND  ( rating BETWEEN ? AND ?  )
+            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? --AND  ( rating BETWEEN ? AND ?  )
             '
     );
 
-    // $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice, $type,$minRating,$maxRating));
-    echo $minRating . '-' . $maxRating;
-    $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type,$minRating,$maxRating));
+
+    // $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type, $minRating, $maxRating));
+    $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type));
+
+    return $stmt->fetchAll();
+}
+
+function getResidencesRatings() {
+    global $dbh;
+
+    $stmt = $dbh->prepare(
+        'SELECT lodge, avg(rating) as rating
+         FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+        GROUP BY lodge'
+            
+    );
+
     $stmt->execute();
 
     return $stmt->fetchAll();

@@ -40,12 +40,50 @@ function getCurentFilterState() {
     return new FilterState(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
+function buildResidenceHTML(property){
+
+    let resultHTML = "";
+
+    resultHTML = 
+        '<section class="result">' +    
+        '<section class="image">' +
+        '<img src="../resources/house_image_test.jpeg">' +
+        '</section>' +  
+        '<section class="info">' + 
+        '<h1 class="info_title">' + property['title'] + '</h1>' +
+        '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
+        '<p class="info_description">'  + 'teste' + '</p>' +
+        '<p class="info_ppd">' + 'teste' +'</p>' +
+        '<p class="info_score">'+ property['rating']+'</p>' +
+        '<p class="info_capacity">' + property['capacity']+'</p>' +
+        '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+        '</section>' +
+        '</section>' 
+
+    return resultHTML;
+}
+
+function buildResidenceListHTML(properties){
+
+
+    let innerHTML = "";
+
+    for(let i = 0; i < properties.length;i++){
+
+        innerHTML += buildResidenceHTML(properties[i]);
+
+    }
+
+    return innerHTML;
+}
+
 
 function updateSearchResults() {
 
-    console.log(this.responseText);
+    // Array that contains the properties that match the filters
     let response = JSON.parse(this.responseText);
-
+    let results_section = document.getElementById("results");
+    results_section.innerHTML =  buildResidenceListHTML(response);
 }
 
 
