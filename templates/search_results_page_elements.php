@@ -94,9 +94,9 @@ function draw_right_side()
         <section id="more_filters">
 
 
-            <label> Beds: <input id="nBeds" type="number" value="" min="0" max="10" step="1"> </label>
+            <label> Min. Beds: <input id="nBeds" type="number" value="1" min="0" max="10" step="1"> </label>
 
-            <label> Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
+            <label> Min. Capacity: <input id="capacity" type="number" value="<?= $_GET['guest_cnt'] ?>" min="0" max="10" step="1"> </label>
 
 
         </section>
@@ -122,13 +122,13 @@ function draw_right_side()
         </section>
 
         <section id="price">
-            <label> Price: <input id="minPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
-                <label> to:<input id="maxPrice" type="number" value="" min="0" max="9999999999999" step="1"> </price>
+            <label> Price: <input id="minPrice" type="number" value="0" min="1" max="9999999999999" step="1"> </price>
+                <label> to:<input id="maxPrice" type="number" value="5000" min="1" max="9999999999999" step="1"> </price>
         </section>
 
         <section id="rating">
-            <label> Rating: <input id="minRating" type="number" value="" min="0" max="10" step="'0.5"> </label>
-            <label> to: <input id="maxRating" type="number" value="" min="0" max="10" step="0.5"> </label>
+            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="'0.5"> </label>
+            <label> to: <input id="maxRating" type="number" value="10" min="0" max="10" step="0.5"> </label>
         </section>
 
 

@@ -43,6 +43,7 @@ function getCurentFilterState() {
 
 function updateSearchResults() {
 
+    console.log(this.responseText);
     let response = JSON.parse(this.responseText);
 
 }
@@ -55,6 +56,7 @@ function filterUpdateHandler() {
     let request = new XMLHttpRequest();
     let encodedData = encodeURIComponent(JSON.stringify(filterState));
 
+    console.log(filterState);
     request.onload = updateSearchResults;
     request.open("get", "../ajax/residence_search.php?filter_data=" + encodedData);
     request.send();

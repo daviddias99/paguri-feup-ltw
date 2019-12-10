@@ -91,6 +91,21 @@
         return $stmt->fetchAll();
     }
 
+    function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minRating, $maxRating) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'SELECT *
+            FROM residence JOIN residenceType ON residence.type = residenceType.residenceTypeID
+            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND residenceType.name = ?
+            COLLATE NOCASE
+            ');
+        
+        $stmt->execute(array($capacity,$nBeds,$minPrice,$maxPrice,$type));
+
+        return $stmt->fetchAll();
+    }
+
     function createResidence($residenceObj) {
         global $dbh;
 
@@ -116,6 +131,3 @@
             $residenceObj['longitude']
         ));
     }
-
-
-?>
