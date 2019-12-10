@@ -1,9 +1,17 @@
 <?php
 
-    include_once('../database/residence_queries.php');
+include_once('../database/residence_queries.php');
 
-    $filter_data = json_decode($_GET['filter_data'],true);
+$filter_data = json_decode($_GET['filter_data'], true);
 
-    $residences = getResidencesWith($filter_data['capacity'],$filter_data['nBeds'],$filter_data['type'],$filter_data['priceFrom'],$filter_data['priceTo'],null,null);
+$residences = getResidencesWith(
+    $filter_data['capacity'],
+    $filter_data['nBeds'],
+    $filter_data['type'],
+    $filter_data['priceFrom'],
+    $filter_data['priceTo'],
+    $filter_data['ratingFrom'],
+    $filter_data['ratingTo']
+);
 
-?>
+echo json_encode($residences);

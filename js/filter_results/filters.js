@@ -27,8 +27,8 @@ function getCurentFilterState() {
     let type = document.getElementById("housing_type").value
     let priceFrom = document.getElementById("minPrice").value
     let priceTo = document.getElementById("maxPrice").value
-    let ratingFrom = document.getElementById("minPrice").value
-    let ratingTo = document.getElementById("maxPrice").value
+    let ratingFrom = document.getElementById("minRating").value
+    let ratingTo = document.getElementById("maxRating").value
     let commodities = document.getElementsByName("commodity")
     let commoditiesObj = {};
 
@@ -56,7 +56,6 @@ function filterUpdateHandler() {
     let request = new XMLHttpRequest();
     let encodedData = encodeURIComponent(JSON.stringify(filterState));
 
-    console.log(filterState);
     request.onload = updateSearchResults;
     request.open("get", "../ajax/residence_search.php?filter_data=" + encodedData);
     request.send();

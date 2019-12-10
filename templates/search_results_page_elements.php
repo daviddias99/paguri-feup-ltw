@@ -133,15 +133,17 @@ function draw_right_side()
 
 
         <section id="commodities">
-            <label> Commodities:
+            Commodities:
                 <?php
 
                     foreach ($commodities as $commodity) { ?>
 
-                    <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                    <label>
+                        <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                    </label>
 
                 <?php } ?>
-                <label>
+                
         </section>
 
         <button id="filter_button"> Filter </button>
@@ -152,6 +154,10 @@ function draw_right_side()
 {
     $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
     $priceSimple = simplifyPrice($residence['pricePerDay']);
+
+    if ($residence['rating'] == null)
+        $residence['rating'] = '-- ';
+
     ?>
 
     <section class="result">
@@ -165,7 +171,7 @@ function draw_right_side()
             <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
             <p class="info_description"> <?= $descriptionTrimmed ?></p>
             <p class="info_ppd"><?= $priceSimple ?></p>
-            <p class="info_score"><?=$residence['rating']?></p>
+            <p class="info_score"><?= $residence['rating'] ?></p>
             <p class="info_capacity"> <?= $residence['capacity'] ?></p>
             <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
 
