@@ -1,9 +1,8 @@
 <?php
 
-    // TODO authentication!!! api key ?
-    // shouldnt db insert fail when constrainsts fail?
+    // TODO authentication with sessions
     // implement delete and put?
-    // error field in response when succesfull?
+    // how to get info from PUT and DELETE?
 
     include_once('./response_status.php');
 
@@ -17,6 +16,7 @@
     }
 
     include_once("../database/residence_queries.php");
+    include_once("../database/user_queries.php");
 
     if($request_method == 'GET') {
         
@@ -34,46 +34,16 @@
         }
     }
 
-    else if ($request_method == 'POST') {        
+    else if ($request_method == 'POST') {
+
+        check_residence_values($_POST);
         
-        $needed_keys = [
-            'owner', 
-            'title', 
-            'description', 
-            'pricePerDay',
-            'capacity',
-            'nBedrooms',
-            'nBathrooms',
-            'nBeds',
-            'type',
-            'address',
-            'city',
-            'country',
-            'latitude',
-            'longitude'
-        ];
-
-        // check if all values are present
-        if(!array_keys_exist($_POST, $needed_keys)) {
-            api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
-        }
-
-        //TODO check given values are not empty
-
-        // check given type is valid
-        $residence_types = getResidenceTypes();
-        $valid_type = FALSE;
-        foreach($residence_types as $type) {
-            if ($type['name'] == $_POST['type']) {
-                $valid_type = TRUE;
-                $_POST['type'] = $type['residenceTypeID'];
-                break;
-            }
-        }
-        if(!$valid_type){
-            api_error(ResponseStatus::BAD_REQUEST, 'Residence type does not exist.');
-        }
-
+        if(!userExistsById($_POST['owner']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Given user does not exist.');
+        
+        if(!getResidenceTypeWithID($_POST['type']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
+        
         $lastInsertId = createResidence($_POST);
         if ($lastInsertId == FALSE) {
             api_error(ResponseStatus::BAD_REQUEST, 'Error inserting new residence.');
@@ -88,6 +58,9 @@
     }
 
     else if ($request_method == 'PUT') {
+
+        //parse_str(file_get_contents("php://input"), $_DELETE);
+        //print_r($_DELETE);
 
         if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
@@ -116,5 +89,44 @@
     }
 
     echo json_encode($response, JSON_NUMERIC_CHECK);
+
+    function check_residence_values($values) {  
+        
+        $needed_keys = [
+            'owner', 
+            'title', 
+            'description', 
+            'pricePerDay',
+            'capacity',
+            'nBedrooms',
+            'nBathrooms',
+            'nBeds',
+            'type',
+            'address',
+            'city',
+            'country',
+            'latitude',
+            'longitude'
+        ];
+
+        if(!array_keys_exist($values, $needed_keys)) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
+        }
+
+        $numeric_keys = [
+            'pricePerDay',
+            'capacity',
+            'nBedrooms',
+            'nBathrooms',
+            'nBeds',
+            'latitude',
+            'longitude'
+        ];
+
+        foreach($numeric_keys as $num_key) {
+            if (!is_numeric($values[$num_key]))
+                api_error(ResponseStatus::BAD_REQUEST, "$num_key must be a numeric value.");
+        }
+    }
 
 ?>

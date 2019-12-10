@@ -37,7 +37,8 @@
         $stmt = $dbh->prepare('SELECT name FROM residenceType WHERE residenceTypeID = ?');
         $stmt->execute(array($typeID));
 
-        return $stmt->fetch()['name'];
+        $res = $stmt->fetch();
+        return $res === FALSE ? FALSE : $res['name'];
     }
 
     function getResidenceInfo($residenceID) {
@@ -99,23 +100,30 @@
             residence(owner, title, description, pricePerDay, capacity, nBedrooms, 
             nBathrooms, nBeds, type, address, city, country, latitude, longitude)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $stmt->execute(array(
-                $residenceObj['owner'],
-                $residenceObj['title'],
-                $residenceObj['description'],
-                $residenceObj['pricePerDay'],
-                $residenceObj['capacity'],
-                $residenceObj['nBedrooms'],
-                $residenceObj['nBathrooms'],
-                $residenceObj['nBeds'],
-                $residenceObj['type'],
-                $residenceObj['address'],
-                $residenceObj['city'],
-                $residenceObj['country'],
-                $residenceObj['latitude'],
-                $residenceObj['longitude']
-            ));
         
+        try{
+            $stmt->execute(array(
+                    $residenceObj['owner'],
+                    $residenceObj['title'],
+                    $residenceObj['description'],
+                    $residenceObj['pricePerDay'],
+                    $residenceObj['capacity'],
+                    $residenceObj['nBedrooms'],
+                    $residenceObj['nBathrooms'],
+                    $residenceObj['nBeds'],
+                    $residenceObj['type'],
+                    $residenceObj['address'],
+                    $residenceObj['city'],
+                    $residenceObj['country'],
+                    $residenceObj['latitude'],
+                    $residenceObj['longitude']
+                )
+            );
+        }
+        catch(PDOException $Exception) {
+            return FALSE;
+        }
+
         if ($stmt->rowCount() <= 0) return FALSE;
 
         return $dbh->lastInsertId();

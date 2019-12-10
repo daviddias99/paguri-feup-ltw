@@ -49,6 +49,14 @@
         return ($stmt->fetch() === FALSE ? FALSE : TRUE);
     }
 
+    function userExistsById($userid) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
+        $stmt->execute(array($userid));
+        return ($stmt->fetch() === FALSE ? FALSE : TRUE);
+    }
+
     function createUserByObj($userObj) {
         global $dbh;
 
