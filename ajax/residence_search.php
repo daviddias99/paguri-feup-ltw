@@ -15,3 +15,4 @@ $residences = getResidencesWith(
 );
 
 echo json_encode($residences);
+

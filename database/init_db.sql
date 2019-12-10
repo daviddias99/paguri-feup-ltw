@@ -22,7 +22,7 @@ CREATE TABLE user(
 
 CREATE TABLE residencetype(
     residenceTypeID INTEGER CONSTRAINT residenceTypePK PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE
+    name TEXT NOT NULL UNIQUE COLLATE NOCASE
 );
 
 CREATE TABLE residence(
@@ -36,7 +36,7 @@ CREATE TABLE residence(
     nBathrooms INTEGER CHECK(nBathrooms>=0),
     nBeds INTEGER CHECK(nBeds>=0),
     type INTEGER NOT NULL REFERENCES residenceType,
-    address TEXT NOT NULL,
+    address TEXT NOT NULL ,
     city TEXT NOT NULL,
     country TEXT NOT NULL,
     latitude REAL NOT NULL,
