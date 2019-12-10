@@ -3,24 +3,14 @@
     include_once('../database/user_queries.php');
 
     $username = $_POST['username'];
-    $email = $_POST['email'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $bio = $_POST['bio'];
-    $password = $_POST['password'];
-    $pwConfirmation = $_POST['pwConfirmation'];
 
+    $oldPhotoID = updateProfilePicture($username, 'default.jpg');
 
-
-    // Generate filenames for original, small and medium files
-    $originalFileName = "images/profile/originals/$id.jpg";
-    $smallFileName = "images/profile/thumbnails_small/$id.jpg";
-    $mediumFileName = "images/profile/thumbnails_medium/$id.jpg";
-
-    updateUserInfo($username, $email, $firstName, $lastName, $bio);
-
-    if ($password === $pwConfirmation)
-        updateUserPassword($username, $password);
+    if ($oldPhotoID !== 'default.jpg') {
+        unlink("../images/users/originals/$oldPhotoID");
+        unlink("../images/users/thumbnails_small/$oldPhotoID");
+        unlink("../images/users/thumbnails_medium/$oldPhotoID");
+    }
 
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

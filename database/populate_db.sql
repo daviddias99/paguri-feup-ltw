@@ -1,9 +1,5 @@
 PRAGMA foreign_keys = ON;
 
-INSERT INTO profilePicture(id, title)
-VALUES
-    (0, 'Default profile picture.');
-
 INSERT INTO user(userID,username,email,firstname,lastname,password,biography)
 VALUES
     (1,'daviddias99', 'david.luis.99@hotmail.com','David', 'Silva', '$2y$12$lMlGIriSq2QA52B0Yq5SsO36rNvzJVimw63yJ.1ujroiVrG1cKC0.' ,'Sou o que sou'),
