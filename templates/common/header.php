@@ -11,7 +11,6 @@
         <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet">
-        <link href="../css/front_page.css" rel="stylesheet">
         <link href="../css/result.css" rel="stylesheet">
         <link href="../css/filters.css" rel="stylesheet">
     </head>

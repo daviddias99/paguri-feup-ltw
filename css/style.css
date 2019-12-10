@@ -1,16 +1,9 @@
-
-
-/*General*/
-html{
-
-
+html {
     --color-1: #fcbb6d;
     --color-2: #d8737f;
     --color-3: #ab6c82;
     --color-4: #685d79;
     --color-5: #475c7a;
-    height: 100%;
-    font-size: 15px;
 }
 
 h1 {
@@ -21,25 +14,16 @@ h2 {
     font-size: 18px;
 }
 
-
-body{
+body {
     margin: 0;
     font-family: 'Lato', sans-serif;
 }
 
-body > header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
 
 body > header h1 {
     margin: 0em;
 }
 
-
-
-/*Search results*/
 
 body #main {
     display: flex;
@@ -57,6 +41,9 @@ body #left_side {
     width: 50%;
 }
 
+
+/* Search Results */
+
 body #left_side #results{
 
 
@@ -65,6 +52,7 @@ body #left_side #results{
     height: calc(100vh - 175px);
     position: relative;
 }
+
 
 body.search_results {
 
@@ -112,6 +100,8 @@ body #right_side img  {
 }
 
 
+
+
 body.front_page {
 
     background: url('../resources/oporto.jpg') no-repeat center center fixed;
@@ -135,6 +125,48 @@ body > header {
     padding-right: 1.4em;
 }
 
+
+body > header a {
+    color: white;
+    text-decoration: none;
+
+}
+
+body.search_results #main #right_side {
+    padding-top: 0.5em;
+}
+
+body.search_results #main #left_side header{
+    display: grid;
+    grid-template-areas:
+    "mainTitle mainTitle"
+    "resultsCnt searchBar"
+    ;
+
+    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+
+}
+
+body.search_results #main #left_side header h1{
+    grid-area: mainTitle;
+
+}
+
+body.search_results #main #left_side header h2{
+    grid-area: resultsCnt;
+
+}
+
+body.search_results #main #left_side header label{
+    grid-area: searchBar;
+    align-self: center;
+    font-weight: 500;
+}
+
+
+body.search_results #main #left_side header input{
+    width: 75%;
+}
 
 
 #logo {
@@ -194,7 +226,7 @@ header nav li {
 #search_box form{
     display: flex;
     flex-direction: column;
-    
+
 
 }
 
@@ -262,5 +294,11 @@ header nav li {
     font-weight: 300;
 }
 
-
+#profile {
+    background-color: white;
+    margin: 1em auto;
+    width: 60em;
+    border-radius: 10px;
+    display: grid;
+}
 
