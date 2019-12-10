@@ -24,9 +24,7 @@ body {
 
 /* Site Header */
 
-#site_header h1 {
-    margin: 0em;
-}
+
 
 #site_header  {
 
@@ -42,11 +40,46 @@ body {
     padding-right: 1.4em;
 }
 
+#site_header h1 {
+    margin: 0em;
+}
 
 #site_header a {
     color: white;
     text-decoration: none;
 
+}
+
+#username:before {
+    font-family: "Font Awesome 5 Free"; content: "\f2bd";
+}
+
+#site_header nav {
+    color: white;
+    font-size: 1.2em;
+}
+
+#site_header nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#site_header nav li {
+    display: inline;
+    padding: 0.5em;
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo p {
+    margin: 0em;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 /* Search Results Page*/
@@ -81,20 +114,60 @@ body.search_results #main {
 
 }
 
+/* Search results page right side*/
+
 body.search_results #right_side {
     width: 50%;
     border-left: 1px solid black;
     position: relative;
-
+    padding-top: 0.5em;
 }
+
+body.search_results #right_side #map {
+    height: 60%;
+    width: 100%;
+    margin: auto;
+    margin-top:1em;
+}
+
+/* Search results page left side*/
 
 body.search_results #left_side {
     width: 50%;
 }
 
+body.search_results #left_side header{
+    display: grid;
+    grid-template-areas:
+    "mainTitle mainTitle"
+    "resultsCnt searchBar"
+    ;
+
+    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+}
+
+
+body.search_results #left_side header h1{
+    grid-area: mainTitle;
+
+}
+
+body.search_results #left_side header h2{
+    grid-area: resultsCnt;
+
+}
+
+body.search_results #left_side header label{
+    grid-area: searchBar;
+    align-self: center;
+    font-weight: 500;
+}
+
+body.search_results #left_side header input{
+    width: 75%;
+}
 
 body.search_results #left_side #results{
-
 
     height: 100vh;
     overflow-y: scroll;
@@ -111,78 +184,6 @@ body.front_page {
     background-size:     cover;                      /* <------ */
 
 }
-
-
-
-body.search_results #main #right_side {
-    padding-top: 0.5em;
-}
-
-body.search_results #main #left_side header{
-    display: grid;
-    grid-template-areas:
-    "mainTitle mainTitle"
-    "resultsCnt searchBar"
-    ;
-
-    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
-
-}
-
-body.search_results #main #left_side header h1{
-    grid-area: mainTitle;
-
-}
-
-body.search_results #main #left_side header h2{
-    grid-area: resultsCnt;
-
-}
-
-body.search_results #main #left_side header label{
-    grid-area: searchBar;
-    align-self: center;
-    font-weight: 500;
-}
-
-
-body.search_results #main #left_side header input{
-    width: 75%;
-}
-
-
-#logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#logo p {
-    margin: 0em;
-    font-size: 2em;
-    font-weight: bold;
-}
-
-#username:before {
-    font-family: "Font Awesome 5 Free"; content: "\f2bd";
-}
-
-header nav {
-    color: white;
-    font-size: 1.2em;
-}
-
-header nav a {
-    color: white;
-    text-decoration: none;
-}
-
-header nav li {
-    display: inline;
-    padding: 0.5em;
-}
-
 
 /* Search Box */
 
