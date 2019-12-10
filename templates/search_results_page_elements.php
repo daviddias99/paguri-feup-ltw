@@ -165,7 +165,7 @@ function draw_right_side()
             <h2 class="info_type_and_location"><?= $residence['type'] . ' &#8226 ' . $residence['address'] ?></h2>
             <p class="info_description"> <?= $descriptionTrimmed ?></p>
             <p class="info_ppd"><?= $priceSimple ?></p>
-            <p class="info_score">4.5</p>
+            <p class="info_score"><?=$residence['rating']?></p>
             <p class="info_capacity"> <?= $residence['capacity'] ?></p>
             <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
 
