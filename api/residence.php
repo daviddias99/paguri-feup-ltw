@@ -32,6 +32,8 @@
         else {
             $response['residences'] = getAllResidences();
         }
+
+        echo json_encode($response, JSON_NUMERIC_CHECK);
     }
 
     else if ($request_method == 'POST') {
@@ -40,7 +42,7 @@
         
         $lastInsertId = createResidence($_POST);
         if ($lastInsertId == FALSE) {
-            api_error(ResponseStatus::BAD_REQUEST, 'Error inserting new residence.');
+            api_error(ResponseStatus::INTERNAL_SERVER_ERROR, 'There was an error while inserting the new residence.');
         }
 
         // remove url parameters
@@ -63,7 +65,12 @@
 
         check_residence_values($_GET);
 
+        $updatedRes = updateResidence($_GET);
+        if ($updatedRes == FALSE) {
+            api_error(ResponseStatus::INTERNAL_SERVER_ERROR, 'There was an error while updating the residence.');
+        }
         
+        http_response_code(ResponseStatus::NO_CONTENT);
     }
 
     else if ($request_method == 'DELETE') {
@@ -72,21 +79,22 @@
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
-        $res = deleteResidence($_GET['id']);
-        if ($res == FALSE) {
-            api_error(ResponseStatus::NOT_FOUND, 'Residence does not exist.');
+        if (getResidenceInfo($_GET['id']) == FALSE) {
+            api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
         }
 
-        $response['residence'] = $res;
-        http_response_code(ResponseStatus::OK);
+        $deletedRes = deleteResidence($_GET['id']);
+        if ($deletedRes == FALSE) {
+            api_error(ResponseStatus::INTERNAL_SERVER_ERROR, 'There was an error while deleting the residence.');
+        }
+
+        http_response_code(ResponseStatus::NO_CONTENT);
     }
 
     else {
         $response['error'] = 'Method not implemented.';
         http_response_code(ResponseStatus::NOT_IMPLEMENTED);
     }
-
-    echo json_encode($response, JSON_NUMERIC_CHECK);
 
 
     function check_residence_values($values) {  

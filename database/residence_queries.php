@@ -1,5 +1,7 @@
 <?php
     include_once('../database/connection.php');
+    include_once('../database/comment_queries.php');
+    include_once('../database/reservation_queries.php');
 
     function getAllResidences() {
         global $dbh;
@@ -63,22 +65,6 @@
         return $stmt->fetchAll();
     }
 
-    function getResidenceComments($residenceID) {
-        global $dbh;
-
-        $stmt = $dbh->prepare('SELECT * FROM comment WHERE lodge = ?');
-        $stmt->execute(array($residenceID));
-        return $stmt->fetchAll();
-    }
-
-    function getCommentReplies($commentID) {
-        global $dbh;
-
-        $stmt = $dbh->prepare('SELECT * FROM reply WHERE parent = ?');
-        $stmt->execute(array($commentID));
-        return $stmt->fetchAll();
-    }
-
     function getResidenceCommodities($residenceID) {
         global $dbh;
 
@@ -129,17 +115,112 @@
         return $dbh->lastInsertId();
     }
 
-    function deleteResidence($id) {
+    function deleteResidence($residenceID) {
         global $dbh;
 
-        $residence = getResidenceInfo($id);
-
+        $residence = getResidenceInfo($residenceID);
         if ($residence == FALSE) return FALSE;
 
+        deleteResidencePhotos($residenceID);
+        deleteResidenceCommodities($residenceID);
+        deleteResidenceAvailabilities($residenceID);
+        deleteResidenceReservations($residenceID);
+
         $stmt = $dbh->prepare('DELETE FROM residence WHERE residenceID = ?');
-        $stmt->execute(array($id));
+        try {
+            $stmt->execute(array($residenceID));
+        }
+        catch(PDOException $Exception) {
+            return FALSE;
+        }
 
         return $residence;
+    }
+
+    function deleteResidencePhotos($residenceID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('DELETE FROM residencePhoto WHERE lodge = ?');
+        $stmt->execute(array($residenceID));
+    }
+    
+    function deleteResidenceComments($residenceID) {
+        $comments = getResidenceComments($residenceID);
+        foreach($comments as $comment) {
+            deleteComment($comment['commentID']);
+        }
+    }
+
+    function deleteResidenceCommodities($residenceID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('DELETE FROM residenceHasCommodity WHERE lodge = ?');
+        $stmt->execute(array($residenceID));
+    }
+
+    function deleteResidenceAvailabilities($residenceID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('DELETE FROM availability WHERE lodge = ?');
+        $stmt->execute(array($residenceID));
+    }
+
+    function deleteResidenceReservations($residenceID) {
+        $reservations = getResidenceReservations($residenceID);
+        foreach($reservations as $reservation) {
+            deleteReservation($reservation['reservationID']);
+        }
+    }
+
+    function updateResidence($updatedRes) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'UPDATE residence
+                SET owner = ?,
+                    title = ?,
+                    description = ?,
+                    pricePerDay = ?,
+                    capacity = ?,
+                    nBedrooms = ?,
+                    nBathrooms = ?,
+                    nBeds = ?,
+                    type = ?,
+                    address = ?,
+                    city = ?,
+                    country = ?,
+                    latitude = ?,
+                    longitude = ?                
+            WHERE residenceID = ?');
+
+        try {
+
+            $stmt->execute(array(
+                    $updatedRes['owner'],
+                    $updatedRes['title'],
+                    $updatedRes['description'],
+                    $updatedRes['pricePerDay'],
+                    $updatedRes['capacity'],
+                    $updatedRes['nBedrooms'],
+                    $updatedRes['nBathrooms'],
+                    $updatedRes['nBeds'],
+                    $updatedRes['type'],
+                    $updatedRes['address'],
+                    $updatedRes['city'],
+                    $updatedRes['country'],
+                    $updatedRes['latitude'],
+                    $updatedRes['longitude'],
+                    $updatedRes['id']
+                )
+            );
+        }
+        catch(PDOException $Exception) {
+            return FALSE;
+        }
+
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return TRUE;        
     }
 
 
