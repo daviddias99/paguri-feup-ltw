@@ -43,6 +43,7 @@ function updateAddressInfo(event) {
       default:
     }
 
+    filterResidencesInRadius(coords,search_radius);
     filterMarkersInRadius(coords, search_radius);
     moveMap(coords);    
     setMapZoom(18);
@@ -62,16 +63,26 @@ function getAddressInfo(address) {
   request.send();
 }
 
-function handleAddressChange(event) {
 
-  clearTimeout(address_timeout);
+function buildResultsHeaderHTML(results_header,address){
 
-  let address = event.target.value;
-  if (address.length == 0) return;
-  address_timeout = setTimeout(() => getAddressInfo(address), 1000);
+  let h1 = document.createElement("h1");
+  h1.innerHTML = "Showing places near '" + address + "'" ;
+
+  results_header.replaceChild(h1,results_header.firstElementChild);
+
 }
 
-let addressBar = document.getElementById("location");
-addressBar.addEventListener("input", handleAddressChange);
+function handleAddressChange(event) {
 
-setTimeout(() => getAddressInfo(addressBar.value), 1000);
+  let address = document.getElementById('location').value;  
+  buildResultsHeaderHTML(document.getElementById("results_header"),address);
+
+  if (address.length == 0) return;
+  address_timeout = setTimeout(() => getAddressInfo(address), 1000);
+
+}
+
+handleAddressChange();
+document.getElementById("filter_button").addEventListener("click", handleAddressChange);
+document.getElementById("search_button").addEventListener("click", handleAddressChange);

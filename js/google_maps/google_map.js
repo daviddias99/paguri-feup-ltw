@@ -1,5 +1,7 @@
 'use strict'
 
+import('../filter_results/filters.js');
+
 let map;
 let map_clusterer;
 let markers = [];
@@ -161,6 +163,11 @@ function filterMarkersInRadius(origin, radius) {
         else
             enableMarker(marker);
     });
+}
+
+function filterResidencesInRadius(origin,radius){
+
+    filterUpdateHandler(origin,radius);
 }
 
 function enableMarker(marker) {

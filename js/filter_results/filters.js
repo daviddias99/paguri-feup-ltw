@@ -18,7 +18,7 @@ class FilterState {
 
 }
 
-function getCurentFilterState() {
+function getCurrentFilterState() {
 
     let nBeds = document.getElementById("nBeds").value
     let capacity = document.getElementById("capacity").value
@@ -40,11 +40,31 @@ function getCurentFilterState() {
     return new FilterState(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
+function simplifyPrice(price) {
+
+    if ((price / 1000000000).toFixed(2) >= 1)
+        return (price / 1000000000).toFixed(2) + 'B';
+    else if ((price / 1000000).toFixed(3) >= 1)
+        return (price / 1000000).toFixed(3) + 'M';
+    else if ((price / 1000).toFixed(3) >= 1)
+        return (price / 1000).toFixed(3) + 'K';
+    else
+        return price;
+}
+
+
 function buildResidenceHTML(property){
+
+    let descriptionTrimmed =property['description'].length > 180 ? property['description'].substr(0, 180) + "..." : property['description'];
+    let priceSimple = simplifyPrice(property['pricePerDay']);
 
     let resultHTML = "";
 
+    if (property['rating'] == null)
+        property['rating'] = '-- ';
+
     resultHTML = 
+        '<a href="../pages/place.php?id=' + property['residenceID'] + '">' +
         '<section class="result">' +    
         '<section class="image">' +
         '<img src="../resources/house_image_test.jpeg">' +
@@ -52,53 +72,63 @@ function buildResidenceHTML(property){
         '<section class="info">' + 
         '<h1 class="info_title">' + property['title'] + '</h1>' +
         '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
-        '<p class="info_description">'  + 'teste' + '</p>' +
-        '<p class="info_ppd">' + 'teste' +'</p>' +
+        '<p class="info_description">'  + descriptionTrimmed + '</p>' +
+        '<p class="info_ppd">' + priceSimple +'</p>' +
         '<p class="info_score">'+ property['rating']+'</p>' +
         '<p class="info_capacity">' + property['capacity']+'</p>' +
         '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
         '</section>' +
-        '</section>' 
+        '</section>' +
+        '</a>'    
 
     return resultHTML;
 }
 
 function buildResidenceListHTML(properties){
 
-
     let innerHTML = "";
 
-    for(let i = 0; i < properties.length;i++){
-
+    for(let i = 0; i < properties.length;i++)
         innerHTML += buildResidenceHTML(properties[i]);
-
-    }
 
     return innerHTML;
 }
 
+function buildResultCountHeader(results_header,count){
+
+    let h2 = document.createElement("h2");
+    h2.innerHTML = count + " results found (Wow!)" ;
+  
+    results_header.replaceChild(h2,results_header.firstElementChild.nextSibling);
+  
+    return results_header;
+  
+  }
 
 function updateSearchResults() {
 
+    let results_section = document.getElementById("results");
+    results_section.innerHTML = "";
+
     // Array that contains the properties that match the filters
     let response = JSON.parse(this.responseText);
-    let results_section = document.getElementById("results");
+
+    buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
 }
 
 
-function filterUpdateHandler() {
+function filterResidencesInRadius(coords, radius) {
 
-    var filterState = getCurentFilterState();
+    var filterState = getCurrentFilterState();
+    var location = {coords: coords, radius: radius};
 
     let request = new XMLHttpRequest();
-    let encodedData = encodeURIComponent(JSON.stringify(filterState));
+    let encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
+    let encodedLocationData = encodeURIComponent(JSON.stringify(location));
 
     request.onload = updateSearchResults;
-    request.open("get", "../ajax/residence_search.php?filter_data=" + encodedData);
+    request.open("get", "../ajax/residence_search.php?filter_data=" + encodedFilterData + '&location_data=' + encodedLocationData);
     request.send();
 
 }
-
-
-document.getElementById("filter_button").addEventListener("click", filterUpdateHandler);
