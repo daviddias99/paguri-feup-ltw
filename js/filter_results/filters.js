@@ -92,16 +92,26 @@ function buildResidenceListHTML(properties){
     return innerHTML;
 }
 
+function buildResultCountHeader(results_header,count){
+
+    let h2 = document.createElement("h2");
+    h2.innerHTML = count + " results found (Wow!)" ;
+  
+    results_header.replaceChild(h2,results_header.firstElementChild.nextSibling);
+  
+    return results_header;
+  
+  }
 
 function updateSearchResults() {
 
     let results_section = document.getElementById("results");
     results_section.innerHTML = "";
+
     // Array that contains the properties that match the filters
     let response = JSON.parse(this.responseText);
 
-    console.log(this.response);
-    
+    buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
 }
 

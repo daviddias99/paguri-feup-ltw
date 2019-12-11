@@ -32,7 +32,7 @@ function residenceHasCommodities($residence, $filterCommodities)
     return true;
 }
 
-function filterResidencesWithCommodities($filter_commodities, $residences)
+function filterResidencesByCommodities($filter_commodities, $residences)
 {
 
     $resultResidences = [];
@@ -75,7 +75,7 @@ function isResidenceInLocation($residence,$location_data){
     return distanceBetweenPoints(['lat' => $residence['latitude'],'lng' => $residence[ 'longitude']],$location_data['coords']) <= $location_data['radius'];
 }
 
-function filterResidencesFromLocation($location_data, $residences)
+function filterResidencesByLocation($location_data, $residences)
 {
 
     $resultResidences = [];
@@ -94,19 +94,8 @@ function filterResidencesFromLocation($location_data, $residences)
 $filter_data = json_decode($_GET['filter_data'], true);
 $location_data = json_decode($_GET['location_data'], true);
 
-$residences = getResidencesWith(
-    $filter_data['capacity'],
-    $filter_data['nBeds'],
-    $filter_data['type'],
-    $filter_data['priceFrom'],
-    $filter_data['priceTo'],
-    $filter_data['ratingFrom'],
-    $filter_data['ratingTo']
-);
-
-// echo count($residences);
-
-$residences = filterResidencesWithCommodities($filter_data['commodities'], $residences);
-$residences = filterResidencesFromLocation($location_data, $residences);
+$residences = getResidencesWith($filter_data['capacity'],$filter_data['nBeds'],$filter_data['type'],$filter_data['priceFrom'],$filter_data['priceTo'],$filter_data['ratingFrom'],$filter_data['ratingTo']);
+$residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
+$residences = filterResidencesByLocation($location_data, $residences);
 
 echo json_encode($residences);

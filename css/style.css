@@ -139,11 +139,19 @@ body.search_results #left_side {
 body.search_results #left_side header{
     display: grid;
     grid-template-areas:
-    "mainTitle mainTitle"
-    "resultsCnt searchBar"
+    "mainTitle mainTitle ."
+    "resultsCnt searchBar search_button"
     ;
 
     box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+}
+
+body.search_results #left_side header button{
+    grid-area: search_button;
+    margin: 0.5em;
+    align-self: center;
+    height: 2.5em;
+
 }
 
 
