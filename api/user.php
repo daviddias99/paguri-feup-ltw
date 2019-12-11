@@ -33,6 +33,15 @@
             
             $response['user'] = $info;
         }
+        else if(array_key_exists('email', $_GET)) {
+            $info = getUserInfoByEmail($_GET['email']);
+            
+            if ($info == FALSE) {
+                api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given email.');
+            }
+            
+            $response['user'] = $info;
+        }
         else {
             $response['users'] = getAllUsers();
         }
@@ -56,16 +65,6 @@
         http_response_code(ResponseStatus::CREATED);
         $actual_link = "http://$_SERVER[HTTP_HOST]$request_uri";
         header("Location: $actual_link?id=$lastInsertId");
-    }
-
-    else if ($request_method == 'PUT') {
-        $response['error'] = 'PUT method is not allowed.';
-        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
-    }
-
-    else if ($request_method == 'DELETE') {
-        $response['error'] = 'DELETE method is not allowed.';
-        http_response_code(ResponseStatus::METHOD_NOT_ALLOWED);
     }
 
     else {

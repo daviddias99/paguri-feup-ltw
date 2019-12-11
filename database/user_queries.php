@@ -25,6 +25,14 @@
         return $stmt->fetch();
     }
 
+    function getUserInfoByEmail($email) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE email = ?');
+        $stmt->execute(array($email));
+        return $stmt->fetch();
+    }
+
     function getUserEmail($username) {
         global $dbh;
 
