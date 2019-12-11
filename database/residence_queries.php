@@ -108,19 +108,28 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 {
     global $dbh;
 
+    // Some injection safety for the rating variables. Since the query is not working properly we need this workaround
+    if(!is_int($minRating) || !is_int($maxRating)){
+        $minRating = 0;
+        $maxRating = 10;
+    }
+
+    if($minRating < 0)
+        $minRating = 0;
+    if($maxRating > 10)
+        $maxRating = 10;
+
     $stmt = $dbh->prepare(
         'SELECT residence.*, residencetype.name as typeStr , rating
-        FROM residence JOIN residencetype ON residence.type = residenceTypeID 
-                        LEFT OUTER JOIN (SELECT lodge, avg(rating) as rating
+        FROM residence JOIN residencetype 
+                        ON residence.type = residenceTypeID 
+                       JOIN (SELECT lodge, avg(rating) as rating
                              FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
-                             GROUP BY lodge) as avgRatingPerResidence
+                             GROUP BY lodge
+                            ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
-            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? -- AND  ( rating BETWEEN ? AND ?  )
-            '
-    );
+            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? and (rating BETWEEN ' . $minRating . ' AND ' . $maxRating .')');
 
-
-    // $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type, $minRating, $maxRating));
     $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type));
 
     return $stmt->fetchAll();

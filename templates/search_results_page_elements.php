@@ -127,7 +127,7 @@ function draw_right_side()
         </section>
 
         <section id="rating">
-            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="'0.5"> </label>
+            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="0.5"> </label>
             <label> to: <input id="maxRating" type="number" value="10" min="0" max="10" step="0.5"> </label>
         </section>
 

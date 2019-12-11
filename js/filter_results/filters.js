@@ -92,11 +92,13 @@ function buildResidenceListHTML(properties){
 
 function updateSearchResults() {
 
+    let results_section = document.getElementById("results");
+    results_section.innerHTML = "";
     // Array that contains the properties that match the filters
     let response = JSON.parse(this.responseText);
 
     console.log(this.response);
-    let results_section = document.getElementById("results");
+    
     results_section.innerHTML =  buildResidenceListHTML(response);
 }
 
