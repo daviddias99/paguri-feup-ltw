@@ -1,20 +1,19 @@
-
 /* General */
-
 html {
     --color-1: #fcbb6d;
     --color-2: #d8737f;
     --color-3: #ab6c82;
     --color-4: #685d79;
     --color-5: #475c7a;
+    --color-6: #e6e7e9;
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 2em;
 }
 
 h2 {
-    font-size: 18px;
+    font-size: 1.5em;
 }
 
 body {
@@ -27,11 +26,7 @@ body {
 }
 
 /* Site Header */
-
-
-
 #site_header  {
-
     grid-area: header;
     background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
 
@@ -199,17 +194,14 @@ body.search_results #left_side #results{
     position: relative;
 }
 
-/* Front page page */
+/* Front page */
 
 body.front_page {
-
     background: url('../resources/oporto.jpg') no-repeat center center fixed;
-    background-size:     cover;                      /* <------ */
-
+    background-size: cover;
 }
 
 /* Form Card */
-
 .formCard{
     margin: 3em auto;
     padding: 1em;
@@ -221,7 +213,7 @@ body.front_page {
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
 }
 
-.formCard form{
+.formCard form {
     display: flex;
     flex-direction: column;
 
@@ -526,8 +518,11 @@ body.user_profile {
     padding: 1em;
     border-radius: 8px;
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
+}
+
+#profile {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 3fr;
+    grid-template-columns: auto auto auto auto;
     grid-template-rows: min-content auto min-content min-content;
     grid-template-areas: "image image image name"
                          "image image image info"
@@ -535,48 +530,144 @@ body.user_profile {
                          "about about about about";
 }
 
-.card h1 { grid-area: name; }
+#profile h1 {
+    margin-top: 1.8em;
+    grid-area: name;
+ }
 
-.card img {
+#profile img {
+    display: block;
     grid-area: image;
-    margin: 2em 3em;
+    margin: 2em auto;
 }
 
-.card ul {
+#profile ul {
     grid-area: info;
     display: flex;
     flex-direction: column;
     list-style-type: none;
     padding: 0em;
+    margin: 0em;
 }
 
-.card li {
-    margin: 0.5em;
+#profile li {
+    display: inline;
+    margin: 0.2em;
     margin-left: 0em;
 }
 
-.card li p {
-    display: inline;
-    margin-left: 1em;
+#profile li em {
+    font-style: normal;
+    font-weight: bold;
+    color: var(--color-2);
 }
 
-.card a { grid-area: button; }
+#profile li p {
+    margin: 0.5em 0em;
+}
+
+#profile .button {
+    grid-area: button;
+}
 
 .button {
-    background-color: #d8737f;
-    border-radius: 8%;
+    background-color: var(--color-2);
+    border-radius: 10px;
+    border-style: none;
     color: white;
     text-decoration: none;
-    padding: 0.4em 0em;
+    padding: 0.4em 0.6em;
     width: auto;
     display: block;
     text-align: center;
     font-size: 1.2em;
 }
 
+.button:hover {
+    position: relative;
+    top: -3px;
+    box-shadow: 0px 3px 0px 1px var(--color-3);
+    cursor: pointer;
+}
+
+.button:active {
+    opacity: 0.4;
+}
+
 #about_me {
     margin-top: 1.5em;
+    padding: 1em;
     grid-area: about;
-    background-color: #b0b0b0;
+    border-radius: 10px;
+    background-color: var(--color-6);
 }
+
+#about_me h2 {
+    color: var(--color-2);
+    font-weight: bold;
+    margin-top: 0em;
+}
+
+#about_me p {
+    margin-bottom: 0em;
+}
+
+#search_box {
+    width: 40em;
+}
+
+#search_box h1 {
+    margin: 0.2em;
+}
+
+#search_box form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto min-content;
+    grid-template-areas: "location location location location"
+                         "check-in check-in check-out check-out"
+                         "guests guests . ."
+                         "submit submit submit submit";
+}
+
+.form_entry {
+    margin: 0.6em;
+    display: flex;
+    flex-direction: column;
+}
+
+#search_box h1 {
+    grid-area: title;
+}
+
+#search_box #location {
+    grid-area: location;
+}
+
+#search_box #check_in {
+    grid-area: check-in;
+    margin-right: 0;
+}
+
+#search_box #check_out {
+    grid-area: check-out;
+    margin-left: 0;
+}
+
+#search_box #guests {
+    grid-area: guests;
+}
+
+#search_box #submit_button {
+    grid-area: submit;
+    margin: 0.6em;
+}
+
+
+
+
+
+
+
+
 

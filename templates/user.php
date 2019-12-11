@@ -7,13 +7,13 @@
             <h1><?=$user['firstName']?> <?=$user['lastName']?></h1>
             <ul id="info">
                 <li>
-                    <em>Username:</em><p><?=$user['username']?>
+                    <em>Username</em><p><?=$user['username']?>
                 </li>
                 <li>
-                    <em>Email:</em><p><?=$user['email']?>
+                    <em>Email</em><p><?=$user['email']?>
                 </li>
                 <li>
-                    <em>Password:</em><p><?=$user['password']?>
+                    <em>Password</em><p><?=$user['password']?>
                 </li>
             </ul>
 
@@ -22,7 +22,7 @@
             <?php } ?>
 
             <section id="about_me" />
-                <h2>About me:</h2>
+                <h2>About me</h2>
                 <p><?=$user['biography']?></p>
             </section>
         </section>
@@ -30,23 +30,10 @@
     }
 ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php function draw_edit_profile($user) { ?>
-    <section id="search_box" class="formCard">
+<?php
+    function draw_edit_profile($user) {
+?>
+    <section class="card" id="search_box" >
         <h1>Update profile information</h1>
 
         <form action="../actions/action_update_profile_picture.php" method="post" enctype="multipart/form-data">
@@ -61,7 +48,7 @@
             <input id="submit_button" type="submit" value="Remove">
         </form>
         <form action="../actions/action_edit_profile.php" method="post">
-            <input id="username" type="hidden" name="username" value=<?= $user['username']?> />
+            <input  type="hidden" name="username" value=<?= $user['username']?> />
             <label>
                 Username <input id="username" type="text" name="newUsername" value=<?= $user['username']?>>
             </label>
@@ -87,5 +74,7 @@
             <input id="submit_button" type="submit" value="Update">
         </form>
     </section>
-<?php } ?>
+<?php
+    }
+?>
 

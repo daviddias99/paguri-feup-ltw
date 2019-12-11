@@ -9,12 +9,9 @@
         die("User not logged in!");
 
     $username = $_SESSION['username'];
-
-    draw_header('search_results', $username);
-
     $user = getUserInfo($username);
 
+    draw_header('user_profile');
     draw_edit_profile($user);
-
     draw_footer();
 ?>
