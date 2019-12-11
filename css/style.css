@@ -63,14 +63,27 @@ body {
     text-decoration: none;
 }
 
-#site_header ul {
+#site_header nav ul {
+    padding: 0em;
     margin: 0em;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
 }
 
 #site_header nav li {
-    display: inline;
-    padding: 0.5em;
+    padding-left: 1.4em;
 }
+
+#site_header nav a img {
+    margin-right: 0.5em;
+}
+
+#site_header nav a {
+    display: flex;
+    align-items: center;
+}
+
 
 #logo {
     display: flex;
