@@ -527,12 +527,12 @@ body.user_profile {
     border-radius: 8px;
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
     grid-template-rows: min-content auto min-content min-content;
-    grid-template-areas: "image name"
-                         "image info"
-                         "button info"
-                         "about about";
+    grid-template-areas: "image image image name"
+                         "image image image info"
+                         ". button . info"
+                         "about about about about";
 }
 
 .card h1 { grid-area: name; }
@@ -564,15 +564,18 @@ body.user_profile {
 
 .button {
     background-color: #d8737f;
-    border-radius: 10%;
+    border-radius: 8%;
     color: white;
     text-decoration: none;
-    padding: 0em;
+    padding: 0.4em 0em;
     width: auto;
     display: block;
+    text-align: center;
+    font-size: 1.2em;
 }
 
 #about_me {
+    margin-top: 1.5em;
     grid-area: about;
     background-color: #b0b0b0;
 }
