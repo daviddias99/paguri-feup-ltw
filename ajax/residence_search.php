@@ -104,6 +104,8 @@ $residences = getResidencesWith(
     $filter_data['ratingTo']
 );
 
+// echo count($residences);
+
 $residences = filterResidencesWithCommodities($filter_data['commodities'], $residences);
 $residences = filterResidencesFromLocation($location_data, $residences);
 

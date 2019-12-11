@@ -123,12 +123,12 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         'SELECT residence.*, residencetype.name as typeStr , rating
         FROM residence JOIN residencetype 
                         ON residence.type = residenceTypeID 
-                       JOIN (SELECT lodge, avg(rating) as rating
+                       LEFT JOIN (SELECT lodge, avg(rating) as rating
                              FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
                              GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
-            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? and (rating BETWEEN ' . $minRating . ' AND ' . $maxRating .')');
+            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? and ( (rating BETWEEN ' . $minRating . ' AND ' . $maxRating .') or (rating IS NULL))');
 
     $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type));
 

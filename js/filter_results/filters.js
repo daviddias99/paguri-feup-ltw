@@ -60,6 +60,9 @@ function buildResidenceHTML(property){
 
     let resultHTML = "";
 
+    if (property['rating'] == null)
+        property['rating'] = '-- ';
+
     resultHTML = 
         '<section class="result">' +    
         '<section class="image">' +
