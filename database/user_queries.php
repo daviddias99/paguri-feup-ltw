@@ -83,9 +83,6 @@
         return true;
     }
 
-
-
-
     function validLogin($username, $password) {
         global $dbh;
 
@@ -97,5 +94,25 @@
             return true;
 
         return false;
+    }
+
+    function getUserPhotoID($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT photo FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        return $stmt->fetch()['photo'];
+    }
+
+    function updateProfilePicture($username, $photoID) {
+        global $dbh;
+
+        $oldPhotoID = getUserPhotoID($username);
+
+        $stmt = $dbh->prepare('UPDATE user SET photo = ? WHERE username = ?');
+        $stmt->execute(array($photoID, $username));
+
+        return $oldPhotoID;
     }
 ?>

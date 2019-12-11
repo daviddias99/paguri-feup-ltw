@@ -10,8 +10,6 @@
     $password = $_POST['password'];
     $pwConfirmation = $_POST['pwConfirmation'];
 
-
-
     updateUserInfo($username, $email, $firstName, $lastName, $bio);
 
     if ($password === $pwConfirmation)
