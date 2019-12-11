@@ -51,11 +51,6 @@ body {
 #site_header a {
     color: white;
     text-decoration: none;
-
-}
-
-#username:before {
-    font-family: "Font Awesome 5 Free"; content: "\f2bd";
 }
 
 #site_header nav {

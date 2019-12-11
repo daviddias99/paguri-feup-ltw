@@ -29,8 +29,8 @@
     $square = min($width, $height);  // size length of the maximum square
 
     // Create and save a small square thumbnail
-    $small = imagecreatetruecolor(80, 80);
-    imagecopyresized($small, $original, 0, 0, ($width>$square)?($width-$square)/2:0, ($height>$square)?($height-$square)/2:0,80, 80, $square, $square);
+    $small = imagecreatetruecolor(40, 40);
+    imagecopyresized($small, $original, 0, 0, ($width>$square)?($width-$square)/2:0, ($height>$square)?($height-$square)/2:0,40, 40, $square, $square);
     imagejpeg($small, $smallFileName);
 
     // Create and save a medium square thumbnail

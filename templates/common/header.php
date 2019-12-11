@@ -1,5 +1,7 @@
-<?php function draw_header($body_class, $username)
-{ ?>
+<?php function draw_header($body_class, $username) {
+    $photo = getUserPhotoID($username);
+    $photoPath = "../images/users/thumbnails_small/$photo";
+?>
     <!DOCTYPE html>
     <html lang="en-US">
 
@@ -40,6 +42,7 @@
                         </li>
                         <li>
                             <a id="username" href="../pages/profile.php">
+                                <img class="profile_pic" src=<?=$photoPath?> alt="<?=$username?>'s profile picture." />
                                 <?= $username ?>
                             </a>
                         </li>
