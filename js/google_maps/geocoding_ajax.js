@@ -43,6 +43,7 @@ function updateAddressInfo(event) {
       default:
     }
 
+    filterResidencesInRadius(coords,search_radius);
     filterMarkersInRadius(coords, search_radius);
     moveMap(coords);    
     setMapZoom(18);
@@ -64,9 +65,11 @@ function getAddressInfo(address) {
 
 function handleAddressChange(event) {
 
+  event.target.value = document.getElementById('location').value;  
+  let address = event.target.value;
+
   clearTimeout(address_timeout);
 
-  let address = event.target.value;
   if (address.length == 0) return;
   address_timeout = setTimeout(() => getAddressInfo(address), 1000);
 }
@@ -75,3 +78,4 @@ let addressBar = document.getElementById("location");
 addressBar.addEventListener("input", handleAddressChange);
 
 setTimeout(() => getAddressInfo(addressBar.value), 1000);
+document.getElementById("filter_button").addEventListener("click", handleAddressChange);

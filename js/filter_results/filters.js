@@ -18,7 +18,7 @@ class FilterState {
 
 }
 
-function getCurentFilterState() {
+function getCurrentFilterState() {
 
     let nBeds = document.getElementById("nBeds").value
     let capacity = document.getElementById("capacity").value
@@ -93,28 +93,25 @@ function buildResidenceListHTML(properties){
 function updateSearchResults() {
 
     // Array that contains the properties that match the filters
-    // let response = JSON.parse(this.responseText);
+    let response = JSON.parse(this.responseText);
 
-    console.log(this.responseText);
-    // let results_section = document.getElementById("results");
-    // results_section.innerHTML =  buildResidenceListHTML(response);
+    console.log(this.response);
+    let results_section = document.getElementById("results");
+    results_section.innerHTML =  buildResidenceListHTML(response);
 }
 
 
-function filterUpdateHandler() {
+function filterResidencesInRadius(coords, radius) {
 
-    var filterState = getCurentFilterState();
-
-    console.log(filterState);
+    var filterState = getCurrentFilterState();
+    var location = {coords: coords, radius: radius};
 
     let request = new XMLHttpRequest();
-    let encodedData = encodeURIComponent(JSON.stringify(filterState));
+    let encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
+    let encodedLocationData = encodeURIComponent(JSON.stringify(location));
 
     request.onload = updateSearchResults;
-    request.open("get", "../ajax/residence_search.php?filter_data=" + encodedData);
+    request.open("get", "../ajax/residence_search.php?filter_data=" + encodedFilterData + '&location_data=' + encodedLocationData);
     request.send();
 
 }
-
-
-document.getElementById("filter_button").addEventListener("click", filterUpdateHandler);
