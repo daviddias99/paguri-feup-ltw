@@ -5,16 +5,10 @@
     include_once('../templates/user.php');
     include_once('../database/user_queries.php');
 
-    if (! isset($_SESSION['username']))
-        die("User not logged in!");
-
-    $username = $_SESSION['username'];
-
-    draw_header('search_results', $username);
-
+    $username = $_GET['id'];
     $user = getUserInfo($username);
 
-    draw_profile($user);
-
+    draw_header('user_profile');
+    draw_user($user);
     draw_footer();
 ?>

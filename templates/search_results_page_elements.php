@@ -143,7 +143,7 @@ function draw_right_side()
                     </label>
 
                 <?php } ?>
-                
+
         </section>
 
         <button id="filter_button"> Filter </button>
@@ -160,24 +160,22 @@ function draw_right_side()
 
     ?>
 
-    <section class="result">
-
-        <section class="image">
-            <img src="../resources/house_image_test.jpeg">
+    <a href="../pages/place.php?id=<?=$residence['residenceID']?>">
+        <section class="result">
+            <section class="image">
+                <img src="../resources/house_image_test.jpeg">
+            </section>
+            <section class="info">
+                <h1 class="info_title"><?= $residence['title'] ?> </h1>
+                <h2 class="info_type_and_location"><?= $residence['typeStr'] . ' &#8226 ' . $residence['address'] ?></h2>
+                <p class="info_description"> <?= $descriptionTrimmed ?></p>
+                <p class="info_ppd"><?= $priceSimple ?></p>
+                <p class="info_score"><?= $residence['rating'] ?></p>
+                <p class="info_capacity"> <?= $residence['capacity'] ?></p>
+                <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
+            </section>
         </section>
-
-        <section class="info">
-            <h1 class="info_title"><?= $residence['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $residence['typeStr'] . ' &#8226 ' . $residence['address'] ?></h2>
-            <p class="info_description"> <?= $descriptionTrimmed ?></p>
-            <p class="info_ppd"><?= $priceSimple ?></p>
-            <p class="info_score"><?= $residence['rating'] ?></p>
-            <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-            <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
-
-        </section>
-
-    </section>
+    </a>
 <?php
 }
 ?>

@@ -1,18 +1,49 @@
-<?php function draw_profile($user) { ?>
-    <section id='profile'>
-        <img class='profile_pic' src="../images/users/thumbnails_medium/<?=$user['photo']?>">
-        <h1>Hello, <?=$user['firstName']?> <?=$user['lastName']?>!</h1>
-        <a href="edit_profile.php">Edit profile</a>
-        <p><?=$user['biography']?></p>
-        <?php if (isset($_SESSION['messages'])) {?>
-                <section id="messages">
-                <?php foreach($_SESSION['messages'] as $message) { ?>
-                    <div class="<?=$message['type']?>"><?=$message['content']?></div>
-                <?php } ?>
-                </section>
-        <?php unset($_SESSION['messages']); } ?>
-    </section>
-<?php } ?>
+<?php
+    function draw_user($user) {
+        $userLoggedIn = isset($_SESSION['username']) and $_SESSION['username'] == $user['username'];
+?>
+        <section class="card" id='profile'>
+            <img class='profile_pic' src="../images/users/thumbnails_medium/<?=$user['photo']?>">
+            <h1><?=$user['firstName']?> <?=$user['lastName']?></h1>
+            <ul id="info">
+                <li>
+                    <em>Username:</em><p><?=$user['username']?>
+                </li>
+                <li>
+                    <em>Email:</em><p><?=$user['email']?>
+                </li>
+                <li>
+                    <em>Password:</em><p><?=$user['password']?>
+                </li>
+            </ul>
+
+            <?php if ($userLoggedIn) { ?>
+                    <a class="button" href="edit_profile.php">Edit profile</a>
+            <?php } ?>
+
+            <section id="about_me" />
+                <h2>About me:</h2>
+                <p><?=$user['biography']?></p>
+            </section>
+        </section>
+<?php
+    }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <?php function draw_edit_profile($user) { ?>
     <section id="search_box" class="formCard">
