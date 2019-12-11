@@ -60,7 +60,8 @@
     function createUserByObj($userObj) {
         global $dbh;
 
-        if (userExists($userObj['username'], $userObj['email'])) return FALSE;
+        if (userExists($userObj['username'], $userObj['email'])) 
+            return FALSE;
 
         $options = ['cost' => 12];
 
@@ -73,7 +74,9 @@
             password_hash($userObj['password'], PASSWORD_DEFAULT, $options
         )));
 
-        return TRUE;
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return $dbh->lastInsertId();
     }
 
     function createUser($username, $email, $firstName, $lastName, $password) {

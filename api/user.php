@@ -8,10 +8,7 @@
     $response = array();
 
     if ($accept_header != 'application/json') {
-        $response['error'] = 'Accept header must be application/json.';
-        http_response_code(ResponseStatus::BAD_REQUEST);
-        echo json_encode($response);
-        die();
+        api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
     include_once("../database/user_queries.php");
@@ -22,57 +19,43 @@
             $info = getUserInfoById($_GET['id']);
             
             if ($info == FALSE) {
-                $response['error'] = 'Did not find user with given id.';
-                http_response_code(ResponseStatus::NOT_FOUND);
+                api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given id.');
             }
-            else {
-                $response['user'] = $info;
-            }
+
+            $response['user'] = $info;
         }
         else if(array_key_exists('username', $_GET)) {
             $info = getUserInfo($_GET['username']);
             
             if ($info == FALSE) {
-                $response['error'] = 'Did not find user with given username.';
-                http_response_code(ResponseStatus::NOT_FOUND);
+                api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given username.');
             }
-            else {
-                $response['user'] = $info;
-            }
+            
+            $response['user'] = $info;
         }
         else {
             $response['users'] = getAllUsers();
         }
+
+        echo json_encode($response, JSON_NUMERIC_CHECK);
     }
 
-    else if ($request_method == 'POST') {        
+    else if ($request_method == 'POST') {  
         
-        // TODO password being sent in plaintext to api. IS THIS SECURE???
-        $needed_keys = [
-            'username', 
-            'email', 
-            'firstName', 
-            'lastName',
-            'password'
-        ];
+        check_user_values($_POST);
 
-        // check if all values are present
-        if(!array_keys_exist($_POST, $needed_keys)) {
-            $response['error'] = 'Missing values in request body.';
-            http_response_code(ResponseStatus::BAD_REQUEST);
-            echo json_encode($response);
-            die();
+        $lastInsertId = createUserByObj($_POST);
+        if ($lastInsertId == FALSE) {
+            api_error(ResponseStatus::INTERNAL_SERVER_ERROR, 'Error while creating new user.');
         }
 
-        // TODO check repeated user
-
-        $insert_op = createUserByObj($_POST);
-        if ($insert_op == FALSE) {
-            $response['error'] = 'Error inserting new user.';
-            http_response_code(ResponseStatus::BAD_REQUEST);
-        }
+        // remove url parameters
+        $question_mark_pos = strpos($_SERVER["REQUEST_URI"], "?");
+        $request_uri = $question_mark_pos == FALSE ? $_SERVER["REQUEST_URI"] : substr($_SERVER["REQUEST_URI"], 0, $question_mark_pos);
 
         http_response_code(ResponseStatus::CREATED);
+        $actual_link = "http://$_SERVER[HTTP_HOST]$request_uri";
+        header("Location: $actual_link?id=$lastInsertId");
     }
 
     else if ($request_method == 'PUT') {
@@ -90,6 +73,25 @@
         http_response_code(ResponseStatus::NOT_IMPLEMENTED);
     }
 
-    echo json_encode($response, JSON_NUMERIC_CHECK);
+    function check_user_values($values) {  
+        
+        $needed_keys = [
+            'username', 
+            'email', 
+            'firstName', 
+            'lastName',
+            'password'
+        ];
+
+        if(!array_keys_exist($values, $needed_keys)) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
+        }
+
+        if(userExists($values['username'], $values['email']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Username and/or email already in use.');
+        
+        if (strlen($values['password']) < 6)
+            api_error(ResponseStatus::BAD_REQUEST, 'Password must have at least 6 characters.');
+    }
 
 ?>

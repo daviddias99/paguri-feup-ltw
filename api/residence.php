@@ -46,10 +46,11 @@
         }
 
         // remove url parameters
-        $request_uri = substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "?"));
+        $question_mark_pos = strpos($_SERVER["REQUEST_URI"], "?");
+        $request_uri = $question_mark_pos == FALSE ? $_SERVER["REQUEST_URI"] : substr($_SERVER["REQUEST_URI"], 0, $question_mark_pos);
 
         http_response_code(ResponseStatus::CREATED);
-        $actual_link = "http://$_SERVER[HTTP_HOST]$request_uri"; // are theses variables controllable by the user???
+        $actual_link = "http://$_SERVER[HTTP_HOST]$request_uri";
         header("Location: $actual_link?id=$lastInsertId");
     }
 
