@@ -17,7 +17,7 @@ CREATE TABLE user(
     lastName TEXT NOT NULL,
     password TEXT NOT NULL,
     biography TEXT,
-    photo TEXT
+    photo TEXT DEFAULT 'default.jpg'
 );
 
 CREATE TABLE residencetype(

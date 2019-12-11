@@ -17,6 +17,22 @@
         return $stmt->fetch();
     }
 
+    function getUserInfoById($id) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
+        $stmt->execute(array($id));
+        return $stmt->fetch();
+    }
+
+    function getUserInfoByEmail($email) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE email = ?');
+        $stmt->execute(array($email));
+        return $stmt->fetch();
+    }
+
     function getUserEmail($username) {
         global $dbh;
 
@@ -41,6 +57,36 @@
         return ($stmt->fetch() === FALSE ? FALSE : TRUE);
     }
 
+    function userExistsById($userid) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
+        $stmt->execute(array($userid));
+        return ($stmt->fetch() === FALSE ? FALSE : TRUE);
+    }
+
+    function createUserByObj($userObj) {
+        global $dbh;
+
+        if (userExists($userObj['username'], $userObj['email'])) 
+            return FALSE;
+
+        $options = ['cost' => 12];
+
+        $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute(array(
+            $userObj['username'], 
+            $userObj['email'], 
+            $userObj['firstName'], 
+            $userObj['lastName'], 
+            password_hash($userObj['password'], PASSWORD_DEFAULT, $options
+        )));
+
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return $dbh->lastInsertId();
+    }
+
     function createUser($username, $email, $firstName, $lastName, $password) {
         global $dbh;
 
@@ -54,18 +100,19 @@
         return TRUE;
     }
 
-    function updateUserInfo($username, $email, $firstName, $lastName, $bio) {
+    function updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio) {
         global $dbh;
 
         if (! userExists($username, $email)) return false;
 
         $stmt = $dbh->prepare('UPDATE user
-                               SET email = ?,
+                               SET username = ?,
+                                   email = ?,
                                    firstName = ?,
                                    lastName = ?,
                                    biography = ?
                                WHERE username = ? ');
-        $stmt->execute(array($email, $firstName, $lastName, $bio, $username));
+        $stmt->execute(array($newUsername, $email, $firstName, $lastName, $bio, $username));
         return true;
     }
 
@@ -83,9 +130,6 @@
         return true;
     }
 
-
-
-
     function validLogin($username, $password) {
         global $dbh;
 
@@ -97,5 +141,25 @@
             return true;
 
         return false;
+    }
+
+    function getUserPhotoID($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT photo FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        return $stmt->fetch()['photo'];
+    }
+
+    function updateProfilePicture($username, $photoID) {
+        global $dbh;
+
+        $oldPhotoID = getUserPhotoID($username);
+
+        $stmt = $dbh->prepare('UPDATE user SET photo = ? WHERE username = ?');
+        $stmt->execute(array($photoID, $username));
+
+        return $oldPhotoID;
     }
 ?>

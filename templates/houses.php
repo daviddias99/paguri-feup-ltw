@@ -15,10 +15,11 @@
                     <?php draw_house_type_options() ?>
                 </select>
             </label>
+            <?php draw_commodity_checkboxes() ?>
             <label>
                 Location <input id="location" type="text" name="location" value="">
             </label>
-            <label>
+         <!--   <label>
                 Description <textarea id="description" type="text" name="description" rows="6" cols="80"></textarea>
             </label>
             <label>
@@ -32,7 +33,7 @@
             </label>
             <label>
                 Number of beds <input id="num-beds" type="number" name="num-beds" value="1" min="0" max="10" step="1">
-            </label>
+            </label> -->
             <input id="submit_button" type="submit" value="Add">
         </form>
     </section>
@@ -44,7 +45,22 @@
 
         foreach ($types as $type) {
 ?>
-            <option value=<?=$type['name']?>><?=$type['name']?></option>
+            <option value=<?=$type['name']?>><?=ucfirst($type['name'])?></option>
+<?php
+        }
+    }
+?>
+
+
+<?php
+    function draw_commodity_checkboxes() {
+        $commodities = getAllCommodities();
+
+        foreach ($commodities as $commodity) {
+?>
+            <label>
+                <input type="checkbox" name="commodities[]" value=<?=$commodity['name']?>> <?=ucfirst($commodity['name'])?>
+            </label>
 <?php
         }
     }
