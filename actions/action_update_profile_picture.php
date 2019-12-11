@@ -2,9 +2,18 @@
     include_once('../includes/config.php');
     include_once('../database/user_queries.php');
 
+    $tmpPath = $_FILES['image']['tmp_name'];
+    $supportedFormats = array(IMAGETYPE_JPEG => '.jpg', IMAGETYPE_PNG => '.png');
+
+    $imgType = exif_imagetype($tmpPath);
+    $extension = $supportedFormats[$imgType];
+
+    if ($extension == null)
+        die();
+
     $username = $_POST['username'];
 
-    $photoID = "$username.jpg";
+    $photoID = sha1_file($tmpPath) . $extension;
     $oldPhotoID = updateProfilePicture($username, $photoID);
 
     if ($oldPhotoID !== $photoID and $oldPhotoID !== 'default.jpg') {
@@ -19,10 +28,18 @@
     $mediumFileName = "../images/users/thumbnails_medium/$photoID";
 
     // Move the uploaded file to its final destination
-    move_uploaded_file($_FILES['image']['tmp_name'], $originalFileName);
+    move_uploaded_file($tmpPath, $originalFileName);
 
-    // Crete an image representation of the original image
-    $original = imagecreatefromjpeg($originalFileName);
+
+    // Create an image representation of the original image
+    switch ($imgType) {
+        case IMAGETYPE_JPEG:
+            $original = imagecreatefromjpeg($originalFileName);
+            break;
+        case IMAGETYPE_PNG:
+            $original = imagecreatefrompng($originalFileName);
+            break;
+    }
 
     $width = imagesx($original);     // width of the original image
     $height = imagesy($original);    // height of the original image
@@ -31,12 +48,21 @@
     // Create and save a small square thumbnail
     $small = imagecreatetruecolor(40, 40);
     imagecopyresized($small, $original, 0, 0, ($width>$square)?($width-$square)/2:0, ($height>$square)?($height-$square)/2:0,40, 40, $square, $square);
-    imagejpeg($small, $smallFileName);
 
     // Create and save a medium square thumbnail
     $medium = imagecreatetruecolor(256, 256);
     imagecopyresized($medium, $original, 0, 0, ($width>$square)?($width-$square)/2:0, ($height>$square)?($height-$square)/2:0,256, 256, $square, $square);
-    imagejpeg($medium, $mediumFileName);
+
+    switch ($imgType) {
+        case IMAGETYPE_JPEG:
+            imagejpeg($small, $smallFileName);
+            imagejpeg($medium, $mediumFileName);
+            break;
+        case IMAGETYPE_PNG:
+            imagepng($small, $smallFileName);
+            imagepng($medium, $mediumFileName);
+            break;
+    }
 
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

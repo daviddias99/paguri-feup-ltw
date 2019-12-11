@@ -63,6 +63,10 @@ body {
     text-decoration: none;
 }
 
+#site_header ul {
+    margin: 0em;
+}
+
 #site_header nav li {
     display: inline;
     padding: 0.5em;

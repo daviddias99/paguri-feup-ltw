@@ -1,6 +1,11 @@
-<?php function draw_header($body_class, $username) {
-    $photo = getUserPhotoID($username);
-    $photoPath = "../images/users/thumbnails_small/$photo";
+<?php
+    include_once('../database/user_queries.php');
+
+    function draw_header($body_class, $username) {
+        if ($username != null) {
+            $photo = getUserPhotoID($username);
+            $photoPath = "../images/users/thumbnails_small/$photo";
+        }
 ?>
     <!DOCTYPE html>
     <html lang="en-US">
