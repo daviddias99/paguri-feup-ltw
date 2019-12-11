@@ -4,6 +4,13 @@
         <h1>Hello, <?=$user['firstName']?> <?=$user['lastName']?>!</h1>
         <a href="edit_profile.php">Edit profile</a>
         <p><?=$user['biography']?></p>
+        <?php if (isset($_SESSION['messages'])) {?>
+                <section id="messages">
+                <?php foreach($_SESSION['messages'] as $message) { ?>
+                    <div class="<?=$message['type']?>"><?=$message['content']?></div>
+                <?php } ?>
+                </section>
+        <?php unset($_SESSION['messages']); } ?>
     </section>
 <?php } ?>
 
@@ -23,8 +30,9 @@
             <input id="submit_button" type="submit" value="Remove">
         </form>
         <form action="../actions/action_edit_profile.php" method="post">
+            <input id="username" type="hidden" name="username" value=<?= $user['username']?> />
             <label>
-                Username <input id="username" type="text" name="username" value=<?= $user['username']?>>
+                Username <input id="username" type="text" name="newUsername" value=<?= $user['username']?>>
             </label>
             <label>
                 Email <input id="email" type="text" name="email" value=<?= $user['email']?>>
