@@ -109,15 +109,9 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
     global $dbh;
 
     // Some injection safety for the rating variables. Since the query is not working properly we need this workaround
-    if(!is_int($minRating) || !is_int($maxRating)){
-        $minRating = 0;
-        $maxRating = 10;
-    }
-
-    if($minRating < 0)
-        $minRating = 0;
-    if($maxRating > 10)
-        $maxRating = 10;
+    
+    $minRating = floatval($minRating);
+    $maxRating = floatval($maxRating);
 
     $stmt = $dbh->prepare(
         'SELECT residence.*, residencetype.name as typeStr , rating
