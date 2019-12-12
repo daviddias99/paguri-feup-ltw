@@ -8,7 +8,7 @@
     $username = $_GET['id'];
     $user = getUserInfo($username);
 
-    draw_header('user_profile');
+    draw_header('user_profile', null);
     draw_user($user);
     draw_footer();
 ?>

@@ -4,7 +4,7 @@
     include_once('../templates/common/footer.php');
     include_once('../templates/front_page_elements.php');
 
-    draw_header('front_page');
+    draw_header('front_page', null);
     draw_search_box();
     draw_footer();
 ?>

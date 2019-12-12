@@ -663,20 +663,8 @@ body.user_profile {
     margin: 0.6em;
 }
 
-
-
 textarea {
     resize: none;
-}
-
-
-#edit_profile {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas: "title title"
-                         "image info-form"
-                         ". info-form"
 }
 
 #edit_profile h1 {
@@ -684,40 +672,37 @@ textarea {
     margin: 1em;
 }
 
-#edit_profile img {
-    display: block;
-    grid-area: image;
-    margin: 2em;
+#edit_profile #profile_info {
+    display: grid;
+    grid-template-columns: min-content min-content 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: "image image username email"
+                         "image image first-name last-name"
+                         "image image bio bio"
+                         "choose-photo remove-photo bio bio"
+                         "submit submit submit submit";
 }
 
-#edit_profile #profile_info {
-    grid-area: info-form;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: "username email"
-                         "first-name last-name"
-                         "bio bio"
-                         "submit submit";
+
+#edit_profile #profile_info img {
+    margin: 1em 2em;
+    grid-area: image;
+    justify-self: center;
 }
 
 #edit_profile #profile_info #username {
-    margin-right: 0;
     grid-area: username;
 }
 
 #edit_profile #profile_info #email {
-    margin-left: 0;
     grid-area: email;
 }
 
 #edit_profile #profile_info #first_name {
-    margin-right: 0;
     grid-area: first-name;
 }
 
 #edit_profile #profile_info #last_name {
-    margin-left: 0;
     grid-area: last-name;
 }
 
@@ -725,8 +710,19 @@ textarea {
     grid-area: bio;
 }
 
+#edit_profile #profile_info #chosse_foto {
+    grid-area: choose-photo;
+}
+
+#edit_profile #profile_info #remove_photo {
+    grid-area: remove-photo;
+}
+
 #edit_profile #profile_info #submit_button {
     grid-area: submit;
+}
+
+#edit_profile .button {
     margin: 0.4em;
 }
 
@@ -735,3 +731,17 @@ input[type='file'] {
 }
 
 
+
+#edit_profile #change_password {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "pw pw-conf"
+                         "submit submit";
+}
+
+#edit_profile #change_password #password { grid-area: pw }
+
+#edit_profile #change_password #pw_conf { grid-area: pw-conf }
+
+#edit_profile #change_password .button { grid-area: submit }

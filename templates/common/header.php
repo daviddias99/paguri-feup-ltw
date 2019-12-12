@@ -1,7 +1,7 @@
 <?php
     include_once('../database/user_queries.php');
 
-    function draw_header($body_class) {
+    function draw_header($body_class, $scripts) {
         $loggedIn = isset($_SESSION['username']);
 
         if ($loggedIn) {
@@ -19,6 +19,9 @@
             <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
             <link href="../css/style.css" rel="stylesheet">
+            <?php if ($scripts != null) foreach ($scripts as $script) { ?>
+                     <script src="../js/<?=$script?>" defer></script>
+            <?php } ?>
         </head>
 
         <body class=<?=$body_class?>>
