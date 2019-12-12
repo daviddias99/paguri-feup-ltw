@@ -665,9 +665,73 @@ body.user_profile {
 
 
 
+textarea {
+    resize: none;
+}
 
 
+#edit_profile {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "title title"
+                         "image info-form"
+                         ". info-form"
+}
 
+#edit_profile h1 {
+    grid-area: title;
+    margin: 1em;
+}
 
+#edit_profile img {
+    display: block;
+    grid-area: image;
+    margin: 2em;
+}
+
+#edit_profile #profile_info {
+    grid-area: info-form;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "username email"
+                         "first-name last-name"
+                         "bio bio"
+                         "submit submit";
+}
+
+#edit_profile #profile_info #username {
+    margin-right: 0;
+    grid-area: username;
+}
+
+#edit_profile #profile_info #email {
+    margin-left: 0;
+    grid-area: email;
+}
+
+#edit_profile #profile_info #first_name {
+    margin-right: 0;
+    grid-area: first-name;
+}
+
+#edit_profile #profile_info #last_name {
+    margin-left: 0;
+    grid-area: last-name;
+}
+
+#edit_profile #profile_info #bio {
+    grid-area: bio;
+}
+
+#edit_profile #profile_info #submit_button {
+    grid-area: submit;
+    margin: 0.4em;
+}
+
+input[type='file'] {
+    display: none;
+}
 
 
