@@ -179,9 +179,6 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         $residence = getResidenceInfo($residenceID);
         if ($residence == FALSE) return FALSE;
 
-        deleteResidencePhotos($residenceID);
-        deleteResidenceCommodities($residenceID);
-        deleteResidenceAvailabilities($residenceID);
         deleteResidenceReservations($residenceID);
 
         $stmt = $dbh->prepare('DELETE FROM residence WHERE residenceID = ?');
