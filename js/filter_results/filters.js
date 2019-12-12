@@ -64,7 +64,7 @@ function buildResidenceHTML(property){
         property['rating'] = '-- ';
 
     resultHTML = 
-        '<a href="../pages/place.php?id=' + property['residenceID'] + '">' +
+        '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
         '<section class="result">' +    
         '<section class="image">' +
         '<img src="../resources/house_image_test.jpeg">' +

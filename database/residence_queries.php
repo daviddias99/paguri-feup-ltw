@@ -173,6 +173,7 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         return $dbh->lastInsertId();
     }
 
+
     function deleteResidence($residenceID) {
         global $dbh;
 

@@ -207,6 +207,11 @@ body.search_results #left_side #results{
     position: relative;
 }
 
+body.search_results #left_side #results a{
+
+    text-decoration: none;
+}
+
 /* Front page page */
 
 body.front_page {
@@ -409,6 +414,7 @@ body.search_results #filters button { grid-area: filter_bttn; }
     flex-direction: row;
 
 }
+
 
  .result .image {
 
