@@ -13,7 +13,7 @@
 
 <?php function draw_not_found() { ?>
 
-    <section id="not_found_card" >
+    <section id="not_found_card" class="card">
         <h1> Page not found :( </h1>
     </section>
 
