@@ -30,7 +30,13 @@ function initMap() {
         zoom: 8
     });
 
-    fetchMarkersFromDB();
+    const path = window.location.pathname;
+    if (path.search("search_results.php") != -1) {
+        fetchMarkersFromDB();
+    }
+    else if (path.search("add_house.php") != -1) {
+        console.log("add house page");
+    }
 }
 
 function fetchMarkersFromDB() {
@@ -38,6 +44,19 @@ function fetchMarkersFromDB() {
     request.onload = addMarkers;
     request.open("get", "../ajax/residences_markers.php");
     request.send();
+}
+
+function addMarker(location, title) {
+    let newMarker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: title,
+        animation: google.maps.Animation.DROP
+    });
+    newMarker.addListener('click', toggleBounce.bind(newMarker));
+    addInfoWindow(newMarker);
+
+    markers.push(newMarker);
 }
 
 function addMarkers(event) {
@@ -90,15 +109,6 @@ function toggleBounce() {
             marker.setAnimation(null);
         }, 2000);
     }
-}
-
-function addMarker(position) {
-    if (map == null) return;
-
-    markers.push(new google.maps.Marker({
-        position: position,
-        map: map
-    }));
 }
 
 function addInfoWindow(marker) {
@@ -182,4 +192,10 @@ function disableMarker(marker) {
         marker.inCluster = false;
         map_clusterer.removeMarker(marker);
     }
+}
+
+function clearMarkers() {
+    for(let i = 0; i < markers.length; i++)
+        markers[i].setMap(null);
+    markers = [];
 }

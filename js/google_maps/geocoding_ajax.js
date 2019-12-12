@@ -18,10 +18,9 @@ function updateAddressInfo(event) {
     // TODO deal with many results found?
 
     let coords = null;
+    const best_result = response.results[0];
     switch(response.status) {
       case "OK":
-        let best_result = response.results[0];
-
         if(best_result == null) {
           return;
         }
@@ -34,20 +33,63 @@ function updateAddressInfo(event) {
     
       case "ZERO_RESULTS":
         console.log("No results found");
-        break;
+        return;
     
       case "INVALID_REQUEST":
         console.log("Invalid request");
-        break;
+        return;
 
       default:
-    }
+        return;
+    }    
 
-    filterResidencesInRadius(coords,search_radius);
-    filterMarkersInRadius(coords, search_radius);
+    if (path.search("search_results.php") != -1) {
+      filterResidencesInRadius(coords, search_radius);
+      filterMarkersInRadius(coords, search_radius);      
+    }
+    else if (path.search("add_house.php") != -1) {
+
+      const title = document.getElementById("title").value || "New residence";
+      const addressInfo = parseAddressInfo(best_result);
+      
+      const markerInfo = {
+        title: title,
+        position: coords,
+        city: addressInfo.city,
+        country: addressInfo.country
+      }
+
+      clearMarkers();
+      addMarker(coords, title);
+      
+      // fill forms with city, country, lat, lng
+      document.getElementById("latitude").value = markerInfo.position.lat;
+      document.getElementById("longitude").value = markerInfo.position.lng;
+      document.getElementById("city").value = markerInfo.city;
+      document.getElementById("country").value = markerInfo.country;
+
+    }
     moveMap(coords);    
     setMapZoom(18);
 
+}
+
+function parseAddressInfo(geocoding_info) {
+  let addressInfo = {
+    city: "",
+    country: ""
+  };
+
+  geocoding_info.address_components.forEach(function (address_component) {
+    if (address_component.types.find(type => type === "locality"))
+    addressInfo.city = address_component.long_name;
+
+    if (address_component.types.find(type => type === "country"))
+    addressInfo.country = address_component.long_name;
+    
+  });
+
+  return addressInfo;
 }
 
 function getAddressInfo(address) {
@@ -73,16 +115,29 @@ function buildResultsHeaderHTML(results_header,address){
 
 }
 
-function handleAddressChange(event) {
+function handleAddressChangeClick(event) {
 
   let address = document.getElementById('location').value;  
   buildResultsHeaderHTML(document.getElementById("results_header"),address);
 
   if (address.length == 0) return;
-  address_timeout = setTimeout(() => getAddressInfo(address), 1000);
-
+  getAddressInfo(address);
 }
 
-handleAddressChange();
-document.getElementById("filter_button").addEventListener("click", handleAddressChange);
-document.getElementById("search_button").addEventListener("click", handleAddressChange);
+function handleAddressChangeInput(event) {
+  clearTimeout(address_timeout);
+
+  const address = event.target.value;
+  if (address.length == 0) return;
+  address_timeout = setTimeout(() => getAddressInfo(address), 1000);
+}
+
+const path = window.location.pathname;
+if (path.search("search_results.php") != -1) {
+  handleAddressChange();
+  document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
+  document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
+}
+else if (path.search("add_house.php") != -1) {
+    document.getElementById("location").addEventListener("input", handleAddressChangeInput);
+}
