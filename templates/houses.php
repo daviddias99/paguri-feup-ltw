@@ -36,6 +36,7 @@
             </label> -->
             <input id="submit_button" type="submit" value="Add">
         </form>
+        <section id="map"></section>
     </section>
 <?php } ?>
 
