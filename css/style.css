@@ -19,6 +19,10 @@ h2 {
 body {
     margin: 0;
     font-family: 'Lato', sans-serif;
+
+    height: 100%;
+    background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
+    background-size:     cover;                      /* <------ */
 }
 
 .profile_pic {
@@ -95,11 +99,22 @@ body {
 
 /* Search Results Page*/
 
+
+#main {
+    background-color: white;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    height: 100%;
+}
+
 body.search_results {
 
-    height: 100%;
-    background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
-    background-size:     cover;                      /* <------ */
+
     display: grid;
 
     grid-template-columns: auto;
@@ -115,7 +130,7 @@ body.search_results #main {
 
     grid-area: main;
     background-color: white;
-    width: 85%;
+    width: 95%;
     display: flex;
     flex-direction: row;
     margin-right: auto;
@@ -123,6 +138,11 @@ body.search_results #main {
     margin-top: 1em;
     border-radius: 6px;
 
+}
+
+body.residence_page #main {
+
+    padding: 1em;
 }
 
 /* Search results page right side*/
@@ -140,6 +160,18 @@ body.search_results #right_side #map {
     margin: auto;
     margin-top:1em;
 }
+
+body.residence_page #map {
+    height: 60%;
+    width: 100%;
+}
+
+#residence_info {
+
+    background-color: white;
+}
+
+
 
 /* Search results page left side*/
 
