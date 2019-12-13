@@ -19,6 +19,7 @@
             <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
             <link href="../css/style.css" rel="stylesheet">
+            <link href="../css/responsive.css" rel="stylesheet">
             <?php if ($scripts != null) foreach ($scripts as $script) { ?>
                      <script src="../js/<?=$script?>" defer></script>
             <?php } ?>

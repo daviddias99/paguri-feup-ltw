@@ -5,9 +5,9 @@
     include_once('../templates/auth.php');
 
     if (isset($_SESSION['username']))
-        draw_header('front_page', $_SESSION['username']);
-    else   
-        draw_header('front_page', NULL);
+        die("User logged in!");
+
+    draw_header('front_page', null);
     draw_login();
     draw_footer();
 ?>

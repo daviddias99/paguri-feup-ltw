@@ -30,7 +30,7 @@ body {
     grid-area: header;
     background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
 
-    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
+    box-shadow: 0px 7px 16px -2px rgba(0,0,0,0.58);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -199,96 +199,6 @@ body.search_results #left_side #results{
 body.front_page {
     background: url('../resources/oporto.jpg') no-repeat center center fixed;
     background-size: cover;
-}
-
-/* Form Card */
-.formCard{
-    margin: 3em auto;
-    padding: 1em;
-    width: 40em;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
-}
-
-.formCard form {
-    display: flex;
-    flex-direction: column;
-
-}
-
-.formCard h1 {
-
-    display: inline-block;
-    font-size: 2em;
-    margin-top: 0em;
-
-}
-
-.formCard form #location{
-    display: block;
-    width: 100%;
-}
-
-.formCard form #dates{
-    display: flex;
-    flex-direction: row;
-}
-
-.formCard input:focus {
-    outline: none !important;
-}
-
-.formCard input {
-
-    height: 2em;
-}
-
-.formCard form > *{
-
-    margin: 0.5em 0;
-}
-
-.formCard form input::placeholder{
-    color: #AAAAAA
-}
-
-.formCard form #dates > * {
-    flex-grow: 1;
-}
-
-.formCard form #dates label > * {
-    display: block;
-
-}
-
-.formCard form #submit_button {
-
-    background-color: var(--color-2);
-    color: white;
-    border-radius: 4px;
-    border: none;
-    font-family: 'Roboto Condensed', sans-serif;
-
-}
-
-.formCard form #submit_button:focus {
-    box-shadow: 0 0 10px;
-    outline: black
-}
-
-.formCard form #dates label > input {
-
-    margin: 0;
-    width: 100%;
-}
-
-.formCard form label {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 0.9em;
-    font-weight: 300;
 }
 
 /* Search_results page filters */
@@ -520,6 +430,27 @@ body.user_profile {
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
 }
 
+.formCard {
+    width: 40em;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3em auto;
+    border-radius: 8px;
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
+}
+
+.formCard a {
+    text-decoration: none;
+    color: var(--color-2);
+    font-weight: bold;
+}
+
+.formCard a:hover {
+    text-decoration: underline;
+}
+
 #profile {
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -613,7 +544,8 @@ body.user_profile {
 }
 
 #search_box {
-    width: 40em;
+    display: block;
+    padding: 1em;
 }
 
 #search_box h1 {
@@ -730,7 +662,6 @@ textarea {
     display: none;
 }
 
-
 #edit_profile #change_password {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -744,3 +675,39 @@ textarea {
 #edit_profile #change_password #pw_conf { grid-area: pw-conf }
 
 #edit_profile #change_password .button { grid-area: submit }
+
+#login form {
+    display: flex;
+    flex-direction: column;
+}
+
+#register form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "username username"
+                         "email email"
+                         "first-name last-name"
+                         "password confirm-password"
+                         "submit submit";
+}
+
+#register #username { grid-area: username; }
+
+#register #password { grid-area: password; }
+
+#register #email { grid-area: email; }
+
+#register #first_name { grid-area: first-name; }
+
+#register #last_name { grid-area: last-name; }
+
+#register #password { grid-area: password; }
+
+#register #conf_password { grid-area: confirm-password; }
+
+#register .button { grid-area: submit; }
+
+#login .button, #register .button {
+    margin: 0.5em;
+}
