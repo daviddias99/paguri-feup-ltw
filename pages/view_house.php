@@ -70,7 +70,7 @@ $rating = ($rating == null) ? '--' : $rating;
 
 
 // Draw the page
-draw_header('residence_page');
+draw_header('residence_page',NULL);
 add_slideshow_includes();
 draw();
 draw_footer();
