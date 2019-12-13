@@ -17,6 +17,22 @@
         return $stmt->fetch();
     }
 
+    function getUserInfoById($id) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
+        $stmt->execute(array($id));
+        return $stmt->fetch();
+    }
+
+    function getUserInfoByEmail($email) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE email = ?');
+        $stmt->execute(array($email));
+        return $stmt->fetch();
+    }
+
     function getUserEmail($username) {
         global $dbh;
 
@@ -39,6 +55,36 @@
         $stmt = $dbh->prepare('SELECT * FROM user WHERE username = ? OR email = ?');
         $stmt->execute(array($username, $email));
         return ($stmt->fetch() === FALSE ? FALSE : TRUE);
+    }
+
+    function userExistsById($userid) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE userID = ?');
+        $stmt->execute(array($userid));
+        return ($stmt->fetch() === FALSE ? FALSE : TRUE);
+    }
+
+    function createUserByObj($userObj) {
+        global $dbh;
+
+        if (userExists($userObj['username'], $userObj['email'])) 
+            return FALSE;
+
+        $options = ['cost' => 12];
+
+        $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute(array(
+            $userObj['username'], 
+            $userObj['email'], 
+            $userObj['firstName'], 
+            $userObj['lastName'], 
+            password_hash($userObj['password'], PASSWORD_DEFAULT, $options
+        )));
+
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return $dbh->lastInsertId();
     }
 
     function createUser($username, $email, $firstName, $lastName, $password) {

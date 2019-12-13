@@ -11,7 +11,7 @@
             </label>
             <label>
                 Type
-                <select name="type">
+                <select id="house_type" name="type">
                     <?php draw_house_type_options() ?>
                 </select>
             </label>
@@ -34,8 +34,13 @@
             <label>
                 Number of beds <input id="num-beds" type="number" name="num-beds" value="1" min="0" max="10" step="1">
             </label> -->
+            <input id="latitude" type="hidden">
+            <input id="longitude" type="hidden">
+            <input id="city" type="hidden">
+            <input id="country" type="hidden">
             <input id="submit_button" type="submit" value="Add">
         </form>
+        <section id="map"></section>
     </section>
 <?php } ?>
 

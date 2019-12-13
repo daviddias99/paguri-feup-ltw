@@ -4,20 +4,7 @@ include_once('../database/residence_queries.php');
 
 $types = getResidenceTypes();
 $commodities = getAllCommodities();
-$result_residences = getAllResidences();
 
-function simplifyPrice($price)
-{
-
-    if (number_format($price / 1000000000, 2) >= 1)
-        return number_format($price / 1000000000, 2) . 'B';
-    else if (number_format($price / 1000000, 3) >= 1)
-        return number_format($price / 1000000, 2) . 'M';
-    else if (number_format($price / 1000, 3) >= 1)
-        return number_format($price / 1000, 3) . 'K';
-    else
-        return $price;
-}
 
 ?>
 
@@ -38,27 +25,24 @@ function draw_main()
 
 function draw_left_side()
 {
-    // TODO: change this to reflect the search results
-    global $result_residences;
     ?>
 
     <section id="left_side">
 
-        <header>
-            <h1>Showing places near '<?= $_GET["location"] ?>'</h1>
-            <h2><?= count($result_residences) ?> resuls found (Wow!) </h2>
+        <header id="results_header">
+            <h1></h1>
+            <h2></h2>
             <label>
                 Location <input id="location" type="text" name="location" value="<?= $_GET['location'] ?>" required>
             </label>
+            <button id="search_button">
+                Search
+            </button>
+
         </header>
 
 
         <section id="results">
-            <?php
-                foreach ($result_residences as $residence) {
-                    draw_residence_summary($residence);
-                }
-                ?>
 
         </section>
 
@@ -127,55 +111,25 @@ function draw_right_side()
         </section>
 
         <section id="rating">
-            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="'0.5"> </label>
+            <label> Rating: <input id="minRating" type="number" value="0" min="0" max="10" step="0.5"> </label>
             <label> to: <input id="maxRating" type="number" value="10" min="0" max="10" step="0.5"> </label>
         </section>
 
 
         <section id="commodities">
             Commodities:
-                <?php
+            <?php
 
-                    foreach ($commodities as $commodity) { ?>
+                foreach ($commodities as $commodity) { ?>
 
-                    <label>
-                        <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
-                    </label>
+                <label>
+                    <input type="checkbox" name="commodity" value="<?= $commodity['name'] ?>"> <?= ucfirst($commodity['name']) ?>
+                </label>
 
-                <?php } ?>
+            <?php } ?>
 
         </section>
 
         <button id="filter_button"> Filter </button>
     </section>
 <?php } ?>
-
-<?php function draw_residence_summary($residence)
-{
-    $descriptionTrimmed = strlen($residence['description']) > 180 ? substr($residence['description'], 0, 180) . "..." : $residence['description'];
-    $priceSimple = simplifyPrice($residence['pricePerDay']);
-
-    if ($residence['rating'] == null)
-        $residence['rating'] = '-- ';
-
-    ?>
-
-    <a href="../pages/place.php?id=<?=$residence['residenceID']?>">
-        <section class="result">
-            <section class="image">
-                <img src="../resources/house_image_test.jpeg">
-            </section>
-            <section class="info">
-                <h1 class="info_title"><?= $residence['title'] ?> </h1>
-                <h2 class="info_type_and_location"><?= $residence['typeStr'] . ' &#8226 ' . $residence['address'] ?></h2>
-                <p class="info_description"> <?= $descriptionTrimmed ?></p>
-                <p class="info_ppd"><?= $priceSimple ?></p>
-                <p class="info_score"><?= $residence['rating'] ?></p>
-                <p class="info_capacity"> <?= $residence['capacity'] ?></p>
-                <p class="info_bedrooms"> <?= $residence['nBedrooms'] ?></p>
-            </section>
-        </section>
-    </a>
-<?php
-}
-?>
