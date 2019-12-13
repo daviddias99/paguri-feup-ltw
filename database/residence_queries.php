@@ -135,6 +135,25 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         return $stmt->fetchAll();
     }
 
+    function getResidenceRating($residenceID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'SELECT rating
+             FROM residence LEFT JOIN (SELECT lodge, avg(rating) as rating
+                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                             GROUP BY lodge
+                            ) as avgRatingPerResidence
+                        ON residence.residenceID = avgRatingPerResidence.lodge
+             WHERE residence.residenceID = ?
+            '
+        );
+
+        $stmt->execute(array($residenceID));
+
+        return $stmt->fetchAll()[0]['rating'];
+    }
+
     function createResidence($residenceObj)
     {
         global $dbh;

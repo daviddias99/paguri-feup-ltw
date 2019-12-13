@@ -781,4 +781,151 @@ input[type='file'] {
     display: none;
 }
 
+/*Residence info page*/
 
+#residence_info h1{
+
+    border-bottom: solid 2px var(--color-4);
+    width: 50%;
+    margin: 1em 0em 1em 0em;
+}
+
+body.residence_page #left_side {
+
+    width: 40%;
+}
+
+body.residence_page #right_side {
+
+    width: 60%;
+    background-color: fuchsia;
+    margin: 3em;
+}
+
+
+body.residence_page #residence_info {
+
+    height: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.7fr 0.6fr 2.3fr 0.7fr 0.7fr 1fr;
+    grid-template-areas: 
+    "title title title rating" 
+    "type_and_location type_and_location type_and_location rating" 
+    "description description description description" 
+    "properties properties properties properties" 
+    "commodities commodities commodities commodities"
+    "owner owner . .";
+  }
+  
+body.residence_page #residence_info .ri_title {
+    
+    grid-area: title; 
+    margin-bottom: 0em;
+}
+body.residence_page #residence_info .ri_rating { 
+    grid-area: rating; 
+    align-self: center;
+    background-color: var(--color-4);
+    width: 6em;
+    margin-left: auto;
+    margin-right: 1em;
+    border-radius: 4px;
+    color: var(--color-6);
+
+}
+
+body.residence_page #residence_info .ri_rating h4{
+
+    text-align: center;
+    padding: auto;
+}
+
+body.residence_page #residence_info .ri_owner { grid-area: owner; }
+body.residence_page #residence_info .ri_type_and_location { 
+    
+    grid-area: type_and_location;
+    font-size: 1em;
+    color: #4e4e4e;
+    margin-top: 1em;
+    margin-bottom: 0em;
+}
+
+body.residence_page #residence_info #ri_residence_properties{
+    
+    border-top: 2px solid var(--color-5);
+    border-bottom: 2px solid var(--color-5);
+    grid-area: properties;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+body.residence_page #residence_info #ri_residence_properties > *::before {
+
+    content: "\2022  ";
+}
+
+body.residence_page #residence_info .ri_description {
+    grid-area: description; 
+    text-align: justify;
+    text-indent: 2em;
+    padding: 0em 1em;
+}
+body.residence_page #residence_info .ri_commodities { 
+
+    grid-area: commodities; 
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    margin-top: 1.5em;
+    padding: 0.5em;
+}
+
+body.residence_page #residence_info .ri_commodities ul{ 
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+body.residence_page #residence_info .ri_commodities li {
+
+    margin: 0.2em 1.5em 0.2em 0em;
+    list-style: none;
+}
+
+body.residence_page #residence_info .ri_commodities li.presentCommodity:before {
+
+    content: "\2705";
+}
+
+body.residence_page #residence_info .ri_commodities li.missingCommodity:before {
+
+    content: "\274C";
+}
+
+body.residence_page #residence_info #ri_owner {
+    grid-area: owner;
+
+}
+
+body.residence_page #residence_info #ri_owner h3{
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+body.residence_page #residence_info #ri_owner #owner_avatar {
+
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
+    width: 50%;
+    margin-left: 1em;
+}
+
+body.residence_page #residence_info #ri_owner #owner_avatar img{
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
