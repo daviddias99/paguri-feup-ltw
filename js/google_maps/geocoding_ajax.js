@@ -14,34 +14,13 @@ function encodeForAjax(data) {
 
 function updateAddressInfo(event) {
     let response = JSON.parse(event.target.responseText);
+    if(!checkMapsAPIResponse(response)) return;
 
-    // TODO deal with many results found?
-
-    let coords = null;
     const best_result = response.results[0];
-    switch(response.status) {
-      case "OK":
-        if(best_result == null) {
-          return;
-        }
-
-        coords = {
-          lat: best_result.geometry.location.lat,
-          lng: best_result.geometry.location.lng
-        }
-        break;
-    
-      case "ZERO_RESULTS":
-        console.log("No results found");
-        return;
-    
-      case "INVALID_REQUEST":
-        console.log("Invalid request");
-        return;
-
-      default:
-        return;
-    }    
+    const coords = {
+      lat: best_result.geometry.location.lat,
+      lng: best_result.geometry.location.lng
+    }
 
     if (path.search("search_results.php") != -1) {
       filterResidencesInRadius(coords, search_radius);
@@ -49,6 +28,7 @@ function updateAddressInfo(event) {
     }
     else if (path.search("add_house.php") != -1) {
 
+      // parse info
       const title = document.getElementById("title").value || "New residence";
       const addressInfo = parseAddressInfo(best_result);
       
@@ -59,13 +39,14 @@ function updateAddressInfo(event) {
         country: addressInfo.country
       }
 
+      // add marker
       clearMarkers();
       addMarker(coords, title);
       
-      // fill forms with city, country, lat, lng
+      // update inputs values
       document.getElementById("latitude").value = markerInfo.position.lat;
       document.getElementById("longitude").value = markerInfo.position.lng;
-      document.getElementById("city").value = markerInfo.city;
+      document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
       document.getElementById("country").value = markerInfo.country;
 
     }
@@ -74,18 +55,66 @@ function updateAddressInfo(event) {
 
 }
 
+function updateInputsValues(event, latLng) {
+  let response = JSON.parse(event.target.responseText);
+  if(!checkMapsAPIResponse(response)) return;
+
+  const best_result = response.results[0];
+
+  if (path.search("search_results.php") != -1) {
+     
+  }
+  else if (path.search("add_house.php") != -1) {
+
+    const addressInfo = parseAddressInfo(best_result);
+    const address = best_result.formatted_address;
+    
+    document.getElementById("latitude").value = latLng.lat();
+    document.getElementById("longitude").value = latLng.lng();
+    document.getElementById("city").value = addressInfo.city || addressInfo.admin_area_level_1;
+    document.getElementById("country").value = addressInfo.country;
+    document.getElementById("location").value = address;
+  }
+}
+
+function checkMapsAPIResponse(response) {
+  switch(response.status) {
+    case "OK":
+      if(response.results[0] == null) {
+        return false;
+      }
+      break;
+  
+    case "ZERO_RESULTS":
+      console.log("No results found");
+      return false;
+  
+    case "INVALID_REQUEST":
+      console.log("Invalid request");
+      return false;
+
+    default:
+      return false;
+  }
+  return true;
+}
+
 function parseAddressInfo(geocoding_info) {
   let addressInfo = {
     city: "",
-    country: ""
+    country: "",
+    admin_area_level_1: ""
   };
 
   geocoding_info.address_components.forEach(function (address_component) {
     if (address_component.types.find(type => type === "locality"))
-    addressInfo.city = address_component.long_name;
+      addressInfo.city = address_component.long_name;
 
     if (address_component.types.find(type => type === "country"))
-    addressInfo.country = address_component.long_name;
+      addressInfo.country = address_component.long_name;
+
+    if (address_component.types.find(type => type === "administrative_area_level_1"))
+      addressInfo.admin_area_level_1 = address_component.long_name;
     
   });
 
@@ -94,13 +123,27 @@ function parseAddressInfo(geocoding_info) {
 
 function getAddressInfo(address) {
   let options = {
-      "key" : api_key,
-      "address" : address
+      key : api_key,
+      address : address
   };    
   let requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + encodeForAjax(options);
 
   let request = new XMLHttpRequest();
   request.onload = updateAddressInfo;
+  request.open("get", requestUrl);
+  request.send();
+}
+
+function reverseGeocoding(latLng) {
+  let options = {
+    key : api_key,
+    latlng : latLng.lat() + "," + latLng.lng()
+  };
+  
+  let requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + encodeForAjax(options);
+
+  let request = new XMLHttpRequest();
+  request.onload = event => updateInputsValues(event, latLng);
   request.open("get", requestUrl);
   request.send();
 }

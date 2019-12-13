@@ -30,12 +30,19 @@ function initMap() {
         zoom: 8
     });
 
+
+    // different behaviour depending on current page
     const path = window.location.pathname;
     if (path.search("search_results.php") != -1) {
         fetchMarkersFromDB();
     }
     else if (path.search("add_house.php") != -1) {
-        console.log("add house page");
+        map.addListener('click', function(e) {
+            clearMarkers();
+            reverseGeocoding(e.latLng);
+            addMarker(e.latLng, "New residence");
+            moveMap(e.latLng);
+        });
     }
 }
 
