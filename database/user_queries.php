@@ -116,4 +116,13 @@
 
         return $oldPhotoID;
     }
+
+    function getUserRowID($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT RowID FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        return $stmt->fetch()['rowid'];
+    }
 ?>

@@ -35,10 +35,12 @@ document.getElementById("choose_photo").onchange = function (event) {
         img.src = reader.result;
     }
 
+    document.getElementById("remove_photo_input").checked = false;
     reader.readAsDataURL(event.target.files[0]);
 }
 
 document.getElementById("remove_photo").onclick = function (event) {
     document.getElementById("photo_preview").src = "../images/users/thumbnails_medium/default.jpg";
     document.getElementById("choose_photo_input").value = null;
+    document.getElementById("remove_photo_input").checked = true;
 }

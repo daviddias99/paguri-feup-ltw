@@ -1,7 +1,7 @@
 <?php
 function draw_user($user)
 {
-    $userLoggedIn = isset($_SESSION['username']) and $_SESSION['username'] == $user['username'];
+    $userLoggedIn = (isset($_SESSION['username']) and $_SESSION['username'] == $user['username']);
     ?>
     <section class="card" id='profile'>
         <img class='profile_pic' src="../images/users/thumbnails_medium/<?= $user['photo'] ?>">
@@ -47,10 +47,11 @@ function draw_edit_profile($user)
             <input type="hidden" name="username" value=<?= $user['username'] ?> />
 
             <label id="choose_photo" class="button">Choose
-                <input id="choose_photo_input" type="file" name="image" value="unchanged">
+                <input id="choose_photo_input" type="file" name="image">
             </label>
 
             <label id="remove_photo" class="button">Remove
+                <input id="remove_photo_input" type="checkbox" name="remove">
             </label>
 
             <section class="form_entry" id="username">

@@ -13,22 +13,21 @@ updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio);
 
 $_SESSION['username'] = $newUsername;
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
-
-if ($_FILES['image']['tmp_name'] != 'unchanged') {
-    if ($_FILES['image']['tmp_name'] != null) {
-        saveProfilePhoto($_FILES['image']['tmp_name']);
-    } else {
-        $oldPhotoID = updateProfilePicture($username, 'default.jpg');
-        if ($oldPhotoID !== 'default.jpg') {
-            unlink("../images/users/originals/$oldPhotoID");
-            unlink("../images/users/thumbnails_small/$oldPhotoID");
-            unlink("../images/users/thumbnails_medium/$oldPhotoID");
-        }
+if (isset($_POST['remove'])) {
+    $oldPhotoID = updateProfilePicture($username, 'default.jpg');
+    if ($oldPhotoID !== 'default.jpg') {
+        unlink("../images/users/originals/$oldPhotoID");
+        unlink("../images/users/thumbnails_small/$oldPhotoID");
+        unlink("../images/users/thumbnails_medium/$oldPhotoID");
     }
+} else if (! empty($_FILES['image']['tmp_name'])) {
+    saveProfilePhoto($newUsername, $_FILES['image']['tmp_name']);
 }
 
-function saveProfilePhoto($tmpPath)
+header('Location: ../pages/user.php?id=' . $newUsername);
+
+
+function saveProfilePhoto($username, $tmpPath)
 {
     $supportedFormats = array(IMAGETYPE_JPEG => '.jpg', IMAGETYPE_PNG => '.png');
 
@@ -38,12 +37,12 @@ function saveProfilePhoto($tmpPath)
     if ($extension == null)
         die();
 
-    $username = $_POST['username'];
+    $userRowID = getUserRowID($username);
 
-    $photoID = sha1_file($tmpPath) . $extension;
+    $photoID = $userRowID . sha1_file($tmpPath) . $extension;
     $oldPhotoID = updateProfilePicture($username, $photoID);
 
-    if ($oldPhotoID !== $photoID and $oldPhotoID !== 'default.jpg') {
+    if ($oldPhotoID !== 'default.jpg') {
         unlink("../images/users/originals/$oldPhotoID");
         unlink("../images/users/thumbnails_small/$oldPhotoID");
         unlink("../images/users/thumbnails_medium/$oldPhotoID");
