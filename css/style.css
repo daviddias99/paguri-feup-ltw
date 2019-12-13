@@ -23,6 +23,8 @@ body {
     height: 100%;
     background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
+    display: flex;
+    flex-direction: column;
 }
 
 .profile_pic {
@@ -140,10 +142,7 @@ body.search_results #main {
 
 }
 
-body.residence_page #main {
 
-    padding: 1em;
-}
 
 /* Search results page right side*/
 
@@ -161,10 +160,7 @@ body.search_results #right_side #map {
     margin-top:1em;
 }
 
-body.residence_page #map {
-    height: 60%;
-    width: 100%;
-}
+
 
 #residence_info {
 
@@ -783,6 +779,16 @@ input[type='file'] {
 
 /*Residence info page*/
 
+body.residence_page #map {
+    height: 60%;
+    width: 100%;
+}
+
+body.residence_page #main {
+
+    padding: 1em;
+}
+
 #residence_info h1{
 
     border-bottom: solid 2px var(--color-4);
@@ -929,3 +935,105 @@ body.residence_page #residence_info #ri_owner #owner_avatar img{
     border-radius: 50%;
     margin-right: 0.5em;
 }
+
+body.residence_page #review_section {
+
+    background-color: white;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    padding: 1em;
+
+}
+
+body.residence_page .review {
+
+    width: 70%;
+}
+
+body.residence_page .main_review {
+
+    width: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid black;
+}
+
+
+#review_section > h1{
+
+    border-bottom: solid 2px var(--color-4);
+    width: 8%;
+    margin: 1em 0em 1em 0em;
+}
+
+body.residence_page .review .reviewer_avatar {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body.residence_page .review .comment_header {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e7a6bd;
+    border-bottom: 2px solid black;
+    padding: 0em 1em;
+
+}
+
+body.residence_page .review .comment_header h1{
+    margin: 0;
+    font-size: 1.3em;
+}
+
+body.residence_page .review .reviewer_avatar .reviewer_name {
+
+    font-size: larger;
+}
+
+body.residence_page .review .reviewer_avatar .reviewer_username {
+
+    font-size: smaller;
+    color: rgb(40,40,40);
+    margin-left: 0.5em;
+}
+
+body.residence_page .review .comment_header .review_date {
+
+    font-size: smaller;
+    color: rgb(40,40,40);
+    margin-left: 0.5em;
+}
+
+body.residence_page .review .review_date{
+
+    font-size: medium;
+}
+
+body.residence_page .review .review_content {
+
+    font-size: 1em;
+    margin-left: 1em;
+}
+
+body.residence_page .review a{
+    text-decoration: none;
+    color: black;
+}
+
+body.residence_page .review .reviewer_avatar img {
+
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+

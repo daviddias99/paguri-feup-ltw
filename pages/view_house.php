@@ -3,7 +3,6 @@
 include_once('../includes/config.php');
 include_once('../templates/common/header.php');
 include_once('../templates/common/footer.php');
-include_once('../templates/map/includes.php');
 include_once('../templates/filters/includes.php');
 include_once('../templates/slideshow/includes.php');
 include_once('../templates/search_results_page_elements.php');
@@ -53,7 +52,11 @@ $residence = getResidenceInfo($_GET['id']);
 $owner = getUserInfoById($_GET['id']);
 $commodities = getAllCommodities();
 $residenceCommodities = getResidenceCommodities($_GET['id']);
+$comments = getResidenceComments($_GET['id']);
 $rating = getResidenceRating($_GET['id']);
+
+$replies = getCommentReplies($comments[0]['commentID']);
+print_r($replies);
 
 // Redirect the user if the residence does not exist
 if ($residence == FALSE) {
@@ -68,7 +71,6 @@ $rating = ($rating == null) ? '--' : $rating;
 
 // Draw the page
 draw_header('residence_page');
-add_map_includes();
 add_slideshow_includes();
 draw();
 draw_footer();
@@ -79,7 +81,7 @@ draw_footer();
 <?php function draw()
 {
 
-    global $residence,$residenceCommodities, $owner_name, $rating,$owner_name;    ?>
+    global $residence,$residenceCommodities, $owner_name, $rating,$owner_name,$comments,$replies;    ?>
 
     <section id="main">
         <section id="left_side">
@@ -119,8 +121,6 @@ draw_footer();
                 </section>
             </section>
             
-
-
         </section>
 
         <section id="right_side">
@@ -129,19 +129,57 @@ draw_footer();
                 <img src="../resources/house_image_test.jpeg">
             </section>
 
-            <!--<section id="map">
-
-            </section> -->
-
         </section>
 
-        <section id="residence_reviews">
-            <h1> Reviews </h1>
-       </section>
 
-
-        
     </section>
+
+
+    <section id="review_section" >
+        <h1> Reviews </h1>
+        <section id="residence_reviews">
+
+            <section class="review">
+
+                <section class="main_review">
+
+                    <section class="comment_header">
+                    <h1>"<?=$comments[0]['title']?>" - <?=$comments[0]['rating']?>/10</h1>
+                    <section class="reviewer_avatar">
+                        <img src="../resources/default-profile-pic.jpg">
+                        <a href="./user.php?id=<?=$comments[0]['username']?>"> <p class="reviewer_name"> <?=$comments[0]['firstName'] . ' ' . $comments[0]['lastName']?></p> </a>
+                        <a href="./user.php?id=<?=$comments[0]['username']?>"> <p class="reviewer_username">(<?=$comments[0]['username']?>)</p> </a>
+                    </section>
+                    <h3 class="review_date"><?=$comments[0]['datestamp']?></h3>
+                        
+                    </section>
+                    
+                    <p class="review_content"><?=$comments[0]['content']?></p>
+                   
+                    
+                </section>
+                
+                <section class="replies">
+                    <section class="comment_header">
+                        <h1>"<?=$replies[0]['title']?>"</h1>
+                        <section class="reviewer_avatar">
+                            <img src="../resources/default-profile-pic.jpg">
+                            <a href="./user.php?id=<?=$replies[0]['username']?>"> <p class="reviewer_name"> <?=$comments[0]['firstName'] . ' ' . $comments[0]['lastName']?></p> </a>
+                            <a href="./user.php?id=<?=$comments[0]['username']?>"> <p class="reviewer_username">(<?=$comments[0]['username']?>)</p> </a>
+                        </section>
+                        <h3 class="review_date"><?=$comments[0]['datestamp']?></h3>
+
+                    </section>
+                
+                </section>
+            
+            </section>
+        
+        </section>
+    
+    </section>
+
+    
 
     
 
