@@ -723,7 +723,7 @@ textarea {
     grid-area: bio;
 }
 
-#edit_profile #profile_info #chosse_foto {
+#edit_profile #profile_info #choose_foto {
     grid-area: choose-photo;
 }
 
