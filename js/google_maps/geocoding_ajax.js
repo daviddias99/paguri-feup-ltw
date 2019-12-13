@@ -82,7 +82,7 @@ function updateInputsValues(event, latLng) {
           const title = document.getElementById("title").value || "New residence";
           const addressInfo = parseAddressInfo(best_result);
           const address = best_result.formatted_address;
-          
+
           const house_type_select = document.getElementById("house_type");
             
           const markerInfo = {
@@ -209,7 +209,7 @@ function handleAddressChangeInput(event) {
 const current_page = getCurrentMapPage();
 switch(current_page) {
   case "search_results":
-      handleAddressChange();
+      handleAddressChangeClick();
       document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
       document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
       break;
