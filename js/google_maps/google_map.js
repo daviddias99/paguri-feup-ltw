@@ -1,5 +1,20 @@
 'use strict'
 
+// check if valid map page
+getCurrentMapPage();
+
+function getCurrentMapPage() {
+    const path = window.location.pathname;
+    if (path.search("search_results.php") != -1) {
+        return "search_results";
+    }
+    else if (path.search("add_house.php") != -1) {
+        return "add_house";
+    }
+    
+    throw new Error("Page does not require a map!"); 
+}
+
 import('../filter_results/filters.js');
 
 let map;
@@ -30,7 +45,20 @@ function initMap() {
         zoom: 8
     });
 
-    fetchMarkersFromDB();
+    // different behaviour depending on current page
+    const current_page = getCurrentMapPage();
+    switch(current_page) {
+        case "search_results":
+            fetchMarkersFromDB();
+            break;
+
+        case "add_house":
+            map.addListener('click', function(e) {
+                clearMarkers();
+                reverseGeocoding(e.latLng);
+            });
+            break;
+    }
 }
 
 function fetchMarkersFromDB() {
@@ -38,6 +66,19 @@ function fetchMarkersFromDB() {
     request.onload = addMarkers;
     request.open("get", "../ajax/residences_markers.php");
     request.send();
+}
+
+function addMarker(location, markerInfo) {
+    let newMarker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: markerInfo.title,
+        animation: google.maps.Animation.DROP
+    });
+    newMarker.addListener('click', toggleBounce.bind(newMarker));
+    addInfoWindow(newMarker, markerInfo);
+
+    markers.push(newMarker);
 }
 
 function addMarkers(event) {
@@ -92,18 +133,37 @@ function toggleBounce() {
     }
 }
 
-function addMarker(position) {
-    if (map == null) return;
+function addInfoWindow(marker, markerInfo) {
 
-    markers.push(new google.maps.Marker({
-        position: position,
-        map: map
-    }));
-}
+    let infoWindowContent;
+    const current_page = getCurrentMapPage();
+    switch(current_page) {
+        case "search_results":
+            infoWindowContent = `
+                <div class="marker_info_window">
+                    <p class="type">Tipo</p>
+                    <h6>Titulo</h6>
+                    <p>Cidade</p>
+                    <p>Pais</p>
+                </div>`;
+            break;
 
-function addInfoWindow(marker) {
+        case "add_house":
+            infoWindowContent = `
+                <div class="add_house_info_window">
+                    <h4>` + markerInfo.title + `</h6>
+                    <p>` + markerInfo.type + `</p>
+                    <p>99€</p>
+                    <p>` + markerInfo.city + `</p>
+                    <p>` + markerInfo.country + `</p>
+                </div>`;
+            break;
+        default:
+            throw new Error("Unknown current page.");
+    }
+
     let infoWindow = new google.maps.InfoWindow({
-        content: 'oiiii'
+        content: infoWindowContent
     });
 
     marker.addListener('click', function() {
@@ -182,4 +242,10 @@ function disableMarker(marker) {
         marker.inCluster = false;
         map_clusterer.removeMarker(marker);
     }
+}
+
+function clearMarkers() {
+    for(let i = 0; i < markers.length; i++)
+        markers[i].setMap(null);
+    markers = [];
 }

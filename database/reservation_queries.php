@@ -16,8 +16,6 @@
     function deleteReservation($reservationID) {
         global $dbh;
 
-        deleteReservationComments($reservationID);
-
         $stmt = $dbh->prepare('DELETE FROM reservation WHERE reservationID = ?');
         $stmt->execute(array($reservationID));
     }

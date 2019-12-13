@@ -168,6 +168,52 @@ body.search_results #right_side #map {
 }
 
 
+/* Add house page */
+body #search_box #map {
+    height: 30em;
+    width: 100%;
+    margin: auto;
+    margin-top:1em;
+}
+
+.add_house_info_window {
+    display: grid;
+    grid-template-areas:
+        "title title"
+        "type price"
+        "city country";
+    text-align: center;
+}
+
+.add_house_info_window > p:nth-of-type(1){
+    grid-area: type;
+    margin: 10px;
+    text-align: center;
+}
+
+.add_house_info_window > h4{
+    grid-area: title;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(2){
+    grid-area: price;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(3){
+    grid-area: city;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(4){
+    grid-area: country;
+    text-align: center;
+    margin: 10px;
+}
 
 /* Search results page left side*/
 
@@ -178,19 +224,11 @@ body.search_results #left_side {
 body.search_results #left_side header{
     display: grid;
     grid-template-areas:
-    "mainTitle mainTitle ."
-    "resultsCnt searchBar search_button"
+    "mainTitle mainTitle"
+    "resultsCnt searchBar"
     ;
 
     box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
-}
-
-body.search_results #left_side header button{
-    grid-area: search_button;
-    margin: 0.5em;
-    align-self: center;
-    height: 2.5em;
-
 }
 
 

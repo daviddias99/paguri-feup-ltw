@@ -27,7 +27,7 @@ CREATE TABLE residencetype(
 
 CREATE TABLE residence(
     residenceID INTEGER CONSTRAINT residencePK PRIMARY KEY,
-    owner INTEGER NOT NULL REFERENCES user,
+    owner INTEGER NOT NULL REFERENCES user ON UPDATE CASCADE ON DELETE RESTRICT,
     title TEXT NOT NULL,
     description TEXT,
     pricePerDay REAL NOT NULL CHECK(pricePerDay>=0),
@@ -35,7 +35,7 @@ CREATE TABLE residence(
     nBedrooms INTEGER CHECK(nBedrooms>=0),
     nBathrooms INTEGER CHECK(nBathrooms>=0),
     nBeds INTEGER CHECK(nBeds>=0),
-    type INTEGER NOT NULL REFERENCES residenceType,
+    type INTEGER NOT NULL REFERENCES residenceType ON UPDATE CASCADE ON DELETE RESTRICT,
     address TEXT NOT NULL ,
     city TEXT NOT NULL,
     country TEXT NOT NULL,
@@ -45,15 +45,15 @@ CREATE TABLE residence(
 
 CREATE TABLE residencePhoto(
     photoID INTEGER CONSTRAINT photoPK PRIMARY KEY,
-    lodge INTEGER NOT NULL REFERENCES residence,
+    lodge INTEGER NOT NULL REFERENCES residence ON UPDATE CASCADE ON DELETE CASCADE,
     filepath TEXT NOT NULL,
     priority INTEGER DEFAULT 0
 );
 
 CREATE TABLE reservation(
     reservationID INTEGER CONSTRAINT reservationPK PRIMARY KEY,
-    lodge INTEGER NOT NULL REFERENCES residence,
-    customer INTEGER NOT NULL REFERENCES user,
+    lodge INTEGER NOT NULL REFERENCES residence ON UPDATE CASCADE ON DELETE RESTRICT,
+    customer INTEGER NOT NULL REFERENCES user ON UPDATE CASCADE ON DELETE CASCADE,
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     numPeople INTEGER NOT NULL CHECK(numPeople>=0),
@@ -62,7 +62,7 @@ CREATE TABLE reservation(
 
 CREATE TABLE availability(
     availabilityID INTEGER CONSTRAINT availabilityPK PRIMARY KEY,
-    lodge INTEGER NOT NULL REFERENCES residence,
+    lodge INTEGER NOT NULL REFERENCES residence ON UPDATE CASCADE ON DELETE CASCADE,
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     CHECK(endDate > startDate)
@@ -70,7 +70,7 @@ CREATE TABLE availability(
 
 CREATE TABLE comment(
     commentID INTEGER CONSTRAINT commentPK PRIMARY KEY,
-    booking INTEGER NOT NULL REFERENCES reservation,
+    booking INTEGER NOT NULL REFERENCES reservation ON UPDATE CASCADE ON DELETE CASCADE,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     rating INTEGER NOT NULL CHECK(rating >= 0 and rating <= 5),
@@ -79,8 +79,8 @@ CREATE TABLE comment(
 
 CREATE TABLE reply(
     replyID INTEGER CONSTRAINT replyPK PRIMARY KEY,
-    author INTEGER NOT NULL REFERENCES user,
-    parent INTEGER NOT NULL REFERENCES comment,
+    author INTEGER NOT NULL REFERENCES user ON UPDATE CASCADE ON DELETE CASCADE,
+    parent INTEGER NOT NULL REFERENCES comment ON UPDATE CASCADE ON DELETE CASCADE,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     datestamp DATE NOT NULL
@@ -92,7 +92,7 @@ CREATE TABLE commodity(
 );
 
 CREATE TABLE residencehascommodity(
-	lodge INTEGER NOT NULL REFERENCES Residence,
-	item INTEGER NOT NULL REFERENCES Commodity,
+	lodge INTEGER NOT NULL REFERENCES Residence ON UPDATE CASCADE ON DELETE CASCADE,
+	item INTEGER NOT NULL REFERENCES Commodity ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT residenceHasCommodityPK PRIMARY KEY(lodge, item)
 );
