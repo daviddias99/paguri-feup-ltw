@@ -11,7 +11,7 @@
             </label>
             <label>
                 Type
-                <select name="type">
+                <select id="house_type" name="type">
                     <?php draw_house_type_options() ?>
                 </select>
             </label>

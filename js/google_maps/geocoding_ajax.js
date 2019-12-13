@@ -1,5 +1,8 @@
 'use strict'
 
+// check if valid map page
+getCurrentMapPage();
+
 let api_key = "AIzaSyD0_ruPYuzA1ntPaautYqVqtjOT96oNLSE";
 let search_radius = 2; //km
 
@@ -22,59 +25,86 @@ function updateAddressInfo(event) {
       lng: best_result.geometry.location.lng
     }
 
-    if (path.search("search_results.php") != -1) {
-      filterResidencesInRadius(coords, search_radius);
-      filterMarkersInRadius(coords, search_radius);      
+    const current_page = getCurrentMapPage();
+    switch(current_page) {
+      case "search_results":
+          filterResidencesInRadius(coords, search_radius);
+          filterMarkersInRadius(coords, search_radius); 
+          break;
+
+      case "add_house":
+
+          // parse info
+          const title = document.getElementById("title").value || "New residence";
+          const addressInfo = parseAddressInfo(best_result);
+          
+          const house_type_select = document.getElementById("house_type");
+
+          const markerInfo = {
+            title: title,
+            position: coords,
+            city: addressInfo.city,
+            country: addressInfo.country,
+            type: house_type_select.options[house_type_select.selectedIndex].value
+          }
+    
+          // add marker
+          clearMarkers();
+          addMarker(coords, markerInfo);
+          
+          // update inputs values
+          document.getElementById("latitude").value = markerInfo.position.lat;
+          document.getElementById("longitude").value = markerInfo.position.lng;
+          document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
+          document.getElementById("country").value = markerInfo.country;
+          break;
+      default:
+          throw new Error("Unknown current page.");
     }
-    else if (path.search("add_house.php") != -1) {
 
-      // parse info
-      const title = document.getElementById("title").value || "New residence";
-      const addressInfo = parseAddressInfo(best_result);
-      
-      const markerInfo = {
-        title: title,
-        position: coords,
-        city: addressInfo.city,
-        country: addressInfo.country
-      }
-
-      // add marker
-      clearMarkers();
-      addMarker(coords, title);
-      
-      // update inputs values
-      document.getElementById("latitude").value = markerInfo.position.lat;
-      document.getElementById("longitude").value = markerInfo.position.lng;
-      document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
-      document.getElementById("country").value = markerInfo.country;
-
-    }
     moveMap(coords);    
     setMapZoom(18);
-
 }
 
 function updateInputsValues(event, latLng) {
-  let response = JSON.parse(event.target.responseText);
-  if(!checkMapsAPIResponse(response)) return;
+    let response = JSON.parse(event.target.responseText);
+    if(!checkMapsAPIResponse(response)) return;
 
-  const best_result = response.results[0];
+    const best_result = response.results[0];
 
-  if (path.search("search_results.php") != -1) {
-     
-  }
-  else if (path.search("add_house.php") != -1) {
+    const current_page = getCurrentMapPage();
+    switch(current_page) {
+      case "search_results":
+          break;
 
-    const addressInfo = parseAddressInfo(best_result);
-    const address = best_result.formatted_address;
-    
-    document.getElementById("latitude").value = latLng.lat();
-    document.getElementById("longitude").value = latLng.lng();
-    document.getElementById("city").value = addressInfo.city || addressInfo.admin_area_level_1;
-    document.getElementById("country").value = addressInfo.country;
-    document.getElementById("location").value = address;
-  }
+      case "add_house":
+
+          const title = document.getElementById("title").value || "New residence";
+          const addressInfo = parseAddressInfo(best_result);
+          const address = best_result.formatted_address;
+          
+          const house_type_select = document.getElementById("house_type");
+            
+          const markerInfo = {
+            title: title,
+            city: addressInfo.city,
+            country: addressInfo.country,
+            type: house_type_select.options[house_type_select.selectedIndex].value
+          }
+
+          addMarker(latLng, markerInfo);
+          
+          document.getElementById("latitude").value = latLng.lat();
+          document.getElementById("longitude").value = latLng.lng();
+          document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
+          document.getElementById("country").value = markerInfo.country;
+          document.getElementById("location").value = address;
+          break;
+      default:
+          throw new Error("Unknown current page.");
+    }
+
+    moveMap(latLng);    
 }
 
 function checkMapsAPIResponse(response) {
@@ -101,9 +131,9 @@ function checkMapsAPIResponse(response) {
 
 function parseAddressInfo(geocoding_info) {
   let addressInfo = {
-    city: "",
-    country: "",
-    admin_area_level_1: ""
+    city: "Unknown",
+    country: "Unknown",
+    admin_area_level_1: "Unknown"
   };
 
   geocoding_info.address_components.forEach(function (address_component) {
@@ -175,12 +205,18 @@ function handleAddressChangeInput(event) {
   address_timeout = setTimeout(() => getAddressInfo(address), 1000);
 }
 
-const path = window.location.pathname;
-if (path.search("search_results.php") != -1) {
-  handleAddressChange();
-  document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
-  document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
-}
-else if (path.search("add_house.php") != -1) {
-    document.getElementById("location").addEventListener("input", handleAddressChangeInput);
+// install event listeners
+const current_page = getCurrentMapPage();
+switch(current_page) {
+  case "search_results":
+      handleAddressChange();
+      document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
+      document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
+      break;
+
+  case "add_house":
+      document.getElementById("location").addEventListener("input", handleAddressChangeInput);
+      break;
+  default:
+      throw new Error("Unknown current page.");
 }

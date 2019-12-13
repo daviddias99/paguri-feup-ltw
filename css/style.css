@@ -146,11 +146,51 @@ body.search_results #right_side #map {
     margin-top:1em;
 }
 
+/* Add house page */
 body #search_box #map {
     height: 30em;
     width: 100%;
     margin: auto;
     margin-top:1em;
+}
+
+.add_house_info_window {
+    display: grid;
+    grid-template-areas:
+        "title title"
+        "type price"
+        "city country";
+    text-align: center;
+}
+
+.add_house_info_window > p:nth-of-type(1){
+    grid-area: type;
+    margin: 10px;
+    text-align: center;
+}
+
+.add_house_info_window > h4{
+    grid-area: title;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(2){
+    grid-area: price;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(3){
+    grid-area: city;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_house_info_window > p:nth-of-type(4){
+    grid-area: country;
+    text-align: center;
+    margin: 10px;
 }
 
 /* Search results page left side*/
