@@ -11,7 +11,7 @@
     $username = $_SESSION['username'];
     $user = getUserInfo($username);
 
-    draw_header('user_profile');
+    draw_header('user_profile', array('edit_profile.js'));
     draw_edit_profile($user);
     draw_footer();
 ?>
