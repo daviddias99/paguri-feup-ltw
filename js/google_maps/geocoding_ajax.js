@@ -178,20 +178,12 @@ function reverseGeocoding(latLng) {
   request.send();
 }
 
-
-function buildResultsHeaderHTML(results_header,address){
-
-  let h1 = document.createElement("h1");
-  h1.innerHTML = "Showing places near '" + address + "'" ;
-
-  results_header.replaceChild(h1,results_header.firstElementChild);
-
-}
-
 function handleAddressChangeClick(event) {
 
-  let address = document.getElementById('location').value;  
-  buildResultsHeaderHTML(document.getElementById("results_header"),address);
+  const address = document.getElementById('location').value;  
+  if (current_page == "search_results") {
+    buildResultsHeaderHTML(document.getElementById("results_header"),address);
+  }
 
   if (address.length == 0) return;
   getAddressInfo(address);
@@ -209,7 +201,7 @@ function handleAddressChangeInput(event) {
 const current_page = getCurrentMapPage();
 switch(current_page) {
   case "search_results":
-      handleAddressChangeClick();
+      setTimeout(handleAddressChangeClick, 100);
       document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
       document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
       break;

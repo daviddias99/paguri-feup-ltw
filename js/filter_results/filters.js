@@ -94,6 +94,17 @@ function buildResidenceListHTML(properties){
     return innerHTML;
 }
 
+function buildResultsHeaderHTML(results_header, address){
+
+    let h1 = document.createElement("h1");
+    if (address.length > 0)
+        h1.innerHTML = "Showing places near '" + address + "'" ;
+    else
+        h1.innerHTML = "Showing available places";
+    results_header.replaceChild(h1,results_header.firstElementChild);
+
+}
+
 function buildResultCountHeader(results_header,count){
 
     let h2 = document.createElement("h2");
