@@ -129,6 +129,10 @@ function draw_right_side()
             <label>Type:
                 <select id="housing_type" name="type">
 
+                    <option 
+                            value=""
+                            <?= $type_filter === "" ? "selected" : "" ?>>Any
+
                     <?php foreach ($types as $type) { ?>
 
                         <option 

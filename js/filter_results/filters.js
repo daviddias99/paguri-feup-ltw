@@ -116,28 +116,31 @@ function buildResultCountHeader(results_header,count){
   
   }
 
-function updateSearchResults() {
+function updateSearchResults(event) {
 
     let results_section = document.getElementById("results");
     results_section.innerHTML = "";
 
     // Array that contains the properties that match the filters
-    let response = JSON.parse(this.responseText);
+    let response = JSON.parse(event.target.responseText);
+    console.log(response);
 
     buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
 }
 
 
-function filterResidencesInRadius(coords, radius) {
+function filterUpdateHandler(coords, radius) {
 
     var filterState = getCurrentFilterState();
     var location = {coords: coords, radius: radius};
 
-    let request = new XMLHttpRequest();
+    console.log(JSON.stringify(filterState));
+
     let encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
     let encodedLocationData = encodeURIComponent(JSON.stringify(location));
 
+    let request = new XMLHttpRequest();
     request.onload = updateSearchResults;
     request.open("get", "../ajax/residence_search.php?filter_data=" + encodedFilterData + '&location_data=' + encodedLocationData);
     request.send();

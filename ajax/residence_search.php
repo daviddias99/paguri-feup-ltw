@@ -94,8 +94,25 @@ function filterResidencesByLocation($location_data, $residences)
 $filter_data = json_decode($_GET['filter_data'], true);
 $location_data = json_decode($_GET['location_data'], true);
 
-$residences = getResidencesWith($filter_data['capacity'],$filter_data['nBeds'],$filter_data['type'],$filter_data['priceFrom'],$filter_data['priceTo'],$filter_data['ratingFrom'],$filter_data['ratingTo']);
-$residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
-$residences = filterResidencesByLocation($location_data, $residences);
+/*
+$capacity = is_numeric($filter_data['capacity']) ? intval($filter_data['capacity']) : 0;
+$nBeds = is_numeric($filter_data['nBeds']) ? intval($filter_data['nBeds']) : 0;
+$priceFrom = is_numeric($filter_data['priceFrom']) ? intval($filter_data['priceFrom']) : 0;
+$priceTo = is_numeric($filter_data['priceTo']) ? intval($filter_data['priceTo']) : 999999;
+$ratingFrom = is_numeric($filter_data['ratingFrom']) ? intval($filter_data['ratingFrom']) : 0;
+$ratingTo = is_numeric($filter_data['ratingTo']) ? intval($filter_data['ratingTo']) : 10;
+*/
+
+$residences = getResidencesWith(
+    $filter_data['capacity'],
+    $filter_data['nBeds'],
+    $filter_data['type'],
+    $filter_data['priceFrom'],
+    $filter_data['priceTo'],
+    $filter_data['ratingFrom'],
+    $filter_data['ratingTo']
+);
+#$residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
+#$residences = filterResidencesByLocation($location_data, $residences);
 
 echo json_encode($residences);

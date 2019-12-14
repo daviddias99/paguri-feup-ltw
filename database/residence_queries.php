@@ -97,23 +97,47 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 {
     global $dbh;
 
-    // Some injection safety for the rating variables. Since the query is not working properly we need this workaround
-    
-    $minRating = floatval($minRating);
-    $maxRating = floatval($maxRating);
-
-    $stmt = $dbh->prepare(
-        'SELECT residence.*, residencetype.name as typeStr , rating
-        FROM residence JOIN residencetype 
-                        ON residence.type = residenceTypeID 
+    $query_vals = array();
+    $query_base = 
+        'SELECT residence.*, residencetype.name as typeStr, rating
+        FROM residence JOIN residencetype ON residence.type = residenceTypeID 
                        LEFT JOIN (SELECT lodge, avg(rating) as rating
-                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
-                             GROUP BY lodge
-                            ) as avgRatingPerResidence
+                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                                    GROUP BY lodge
+                                    ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
-            WHERE capacity >= ? AND nBeds >= ? AND  ( pricePerDay BETWEEN ? AND ?  ) AND typeStr = ? and ( (rating BETWEEN ' . $minRating . ' AND ' . $maxRating .') or (rating IS NULL))');
+        WHERE 1=1'; 
+    
+    if (is_numeric($capacity)) {
+        $query_base .= ' AND capacity >= ?';
+        array_push($query_vals, intval($capacity));
+    }
+    if (is_numeric($nBeds)) {
+        $query_base .= ' AND nBeds >= ?';
+        array_push($query_vals, intval($nBeds));
+    }
+    if (is_numeric($minPrice)) {
+        $query_base .= ' AND pricePerDay >= ?';
+        array_push($query_vals, floatval($minPrice));
+    }
+    if (is_numeric($maxPrice)) {
+        $query_base .= ' AND pricePerDay <= ?';
+        array_push($query_vals, floatval($maxPrice));
+    }
+    if (is_numeric($minRating)) {
+        $query_base .= ' AND rating >= ' . floatval($minRating);
+    }
+    if (is_numeric($maxRating)) {
+        $query_base .= ' AND rating <= ' . floatval($maxRating);
+    }
+    if ($type !== "") {
+        $query_base .= ' AND typeStr = ?';
+        array_push($query_vals, $type);
+    }
 
-    $stmt->execute(array($capacity, $nBeds, $minPrice, $maxPrice , $type));
+
+    $stmt = $dbh->prepare($query_base);
+    $stmt->execute($query_vals);
 
     return $stmt->fetchAll();
 }
