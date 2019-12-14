@@ -298,7 +298,7 @@ $rating = ($rating == null) ? '--' : $rating;
             <div class="ri_rating">
                 <h4><?= $rating ?> &#9733 </h4>
             </div>
-            <p class="ri_description"><?= "Existem muitas variações das passagens do Lorem Ipsum disponíveis, mas a maior parte sofreu alterações de alguma forma, pela injecção de humor, ou de palavras aleatórias que nem sequer parecem suficientemente credíveis. Se vai usar uma passagem do Lorem Ipsum, deve ter a certeza que não contém nada de embaraçoso escondido no meio do texto. Todos os geradores de Lorem Ipsum na Internet acabam por repetir porções de texto pré-definido, como necessário, fazendo com que este seja o primeiro verdadeiro gerador na Internet. Usa um dicionário de 200 palavras em Latim, combinado com uma dúzia de modelos de frases, para gerar Lorem Ipsum que pareçam razoáveis. Desta forma, o Lorem Ipsum gerado é sempre livre de repetição, ou de injecção humorística, etc." ?></p>
+            <p class="ri_description"><?=ucfirst($residence['description'])?></p>
 
             <?php drawResidenceProperties(($residence)) ?>
 
