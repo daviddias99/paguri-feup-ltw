@@ -91,6 +91,12 @@ function filterResidencesByLocation($location_data, $residences)
     return $resultResidences;
 }
 
+function filterResidencesByAvailability($checkin, $checkout, $residences)
+{
+    // TODO implement this
+    return $residences;
+}
+
 $filter_data = json_decode($_GET['filter_data'], true);
 $location_data = json_decode($_GET['location_data'], true);
 
@@ -106,5 +112,6 @@ $residences = getResidencesWith(
 
 $residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
 $residences = filterResidencesByLocation($location_data, $residences);
+$residences = filterResidencesByAvailability($filter_data['checkin'], $filter_data['checkout'], $residences);
 
 echo json_encode($residences);

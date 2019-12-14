@@ -2,11 +2,11 @@
 
 class FilterState {
 
-    constructor(location, dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
+    constructor(location, checkin, checkout, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
 
         this.location = location;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.checkin = checkin;
+        this.checkout = checkout;
         this.priceFrom = priceFrom;
         this.priceTo = priceTo;
         this.ratingFrom = ratingFrom;
@@ -21,8 +21,8 @@ class FilterState {
         let urlStr = "?";
 
         if (this.location != "") urlStr += "location=" + this.location + "&";
-        if (this.dateFrom != "") urlStr += "checkin=" + this.dateFrom + "&";
-        if (this.dateTo != "") urlStr += "checkout=" + this.dateTo + "&";
+        if (this.checkin != "") urlStr += "checkin=" + this.checkin + "&";
+        if (this.checkout != "") urlStr += "checkout=" + this.checkout + "&";
         if (this.priceFrom != "") urlStr += "min_price=" + this.priceFrom + "&";
         if (this.priceTo != "") urlStr += "max_price=" + this.priceTo + "&";
         if (this.ratingFrom != "") urlStr += "min_rating=" + this.ratingFrom + "&";
@@ -60,8 +60,8 @@ function getCurrentFilterState() {
     const location = document.getElementById("location").value;
     const nBeds = document.getElementById("nBeds").value
     const capacity = document.getElementById("capacity").value
-    const dateFrom = document.getElementById("check_in").value
-    const dateTo = document.getElementById("check_out").value
+    const checkin = document.getElementById("check_in").value
+    const checkout = document.getElementById("check_out").value
     const type = document.getElementById("housing_type").value
     const priceFrom = document.getElementById("minPrice").value
     const priceTo = document.getElementById("maxPrice").value
@@ -75,7 +75,7 @@ function getCurrentFilterState() {
         commoditiesObj[commodity.value] = commodity.checked;
     }
 
-    return new FilterState(location, dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
+    return new FilterState(location, checkin, checkout, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
 function simplifyPrice(price) {

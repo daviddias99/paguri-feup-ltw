@@ -60,7 +60,6 @@ function draw_left_side()
             <label> Location 
                 <input id="location" type="text" name="location" value="<?= $location ?>" required>
             </label>
-            <button id="search_button">Search</button>
 
         </header>
 
