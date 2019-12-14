@@ -89,9 +89,13 @@ $residenceCommodities = getResidenceCommodities($_GET['id']);
 $comments = getResidenceComments($_GET['id']);
 $rating = getResidenceRating($_GET['id']);
 
-$replies = getCommentReplies($comments[0]['commentID']);
-print_r($replies);
-print_r($comments[0]['commentID']);
+$loggedAccountStatus = [];
+$loggedAccountStatus['status'] = isset($_SESSION['username']);
+
+if(isset($_SESSION['username'])){
+
+    $loggedAccountStatus['username'] = $_SESSION['username'];
+}
 
 // Redirect the user if the residence does not exist
 if ($residence == FALSE) {
@@ -112,21 +116,18 @@ draw_footer();
 
 ?>
 
-<?php function drawReviews($comments){
+<?php function drawReviews($comments){ ?>
 
-?>
-     <section id="residence_reviews">
+    <section id="residence_reviews">
 
-     <?php
+    <?php
 
         foreach($comments as $review){
 
             drawReview($review);
            
         }
-
     ?>
-
 
 <?php } ?>
 
@@ -186,7 +187,7 @@ draw_footer();
             drawReply($reply,$review);
         }
 
-        //drawNewReplyForm();
+        drawNewReplyForm($review);
     ?>
 
     </section>
@@ -216,11 +217,79 @@ draw_footer();
 
 <?php } ?>
 
+<?php function drawNewReplyForm($review) { 
+    
+    global $loggedAccountStatus;
+    
+
+    if($loggedAccountStatus['status']){
+        $loggedUserInfo = getUserInfo($loggedAccountStatus['username']);
+        $loggedUserFullName = $loggedUserInfo['firstName'] . ' ' . $loggedUserInfo['lastName'];
+        $loggedUserUserName = $loggedAccountStatus['username'];
+    }
+    else {
+        $loggedUserFullName = 'Anonymous';
+        $loggedUserUserName = 'anonymous_user';
+    }
+    
+    ?>
+
+    <section class="reply">
+
+        <section class="comment_user_info">
+            <img src="../resources/default-profile-pic.jpg">
+
+            <?php 
+                if($loggedAccountStatus['status']){
+            ?>
+
+                <a href="./user.php?id=<?=$loggedUserUserName?>">
+            <?php
+                }else{ ?>
+                <a>
+            <?php } ?>
+                            
+                <p class="reviewer_name"> <?=$loggedUserFullName?></p>
+                <p class="reviewer_username">(<?=$loggedUserUserName?>)</p>
+            </a>
+        </section>
+
+        <section class="reply_date">
+            <h3> Replying to <?=$review['username']?> </h3>
+        </section>
+
+    <?php if($loggedAccountStatus['status']){ ?>
+
+        <form class="comment_content" >
+            <input type="hidden" name="review" value="<?=$review['commentID']?>">
+            <input class="comment_title" placeholder="Title of your reply" required="required" type="text" name="title">
+            <textarea placeholder="What's on you mind?" name="content" required="required"  class="comment_content" rows="4" cols="50"></textarea>
+            <input class="submit_reply" formaction="add_comment.php" type="submit" value="Reply">
+        </form>
+        
+    </section>
+
+    <?php
+    }
+    else{
+    ?>
+            <section class="reply_date">
+                <h3> Replying to <?=$review['username']?> </h3>
+            </section>
+            
+            <p  class="comment_content" >You need to be logged in to reply to a review...</p>
+        </section>
+    <?php 
+    } 
+    ?>
+
+<?php } ?>
+
 
 <?php function draw()
 {
 
-    global $residence, $residenceCommodities, $owner_name, $rating, $owner_name, $comments,$owner, $replies;    ?>
+    global $residence, $residenceCommodities,$loggedAccountStatus, $owner_name, $rating, $owner_name, $comments,$owner, $replies;    ?>
 
     <section id="main">
         <section id="left_side">
@@ -263,9 +332,29 @@ draw_footer();
                     </section>
                 </section>
 
-                <button id="rent_button">RENT NOW</button>
+                <?php
 
+                    if($loggedAccountStatus['status'] ){
 
+                        if(strcmp($loggedAccountStatus['username'],$owner['username']) == 0){
+                            ?>
+                                <button id="rent_button_inactive">RENT NOW</button>
+                            <?php
+                        }
+                        else {
+                            ?>
+                                <button id="rent_button_active">RENT NOW</button>
+                            <?php
+                        }
+                    }
+                    else {
+
+                        ?>
+                            <button id="rent_button_active">RENT NOW</button>
+                        <?php
+                    }
+                
+                ?>
             </section>
 
         </section>

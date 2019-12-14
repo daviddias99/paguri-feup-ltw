@@ -962,7 +962,7 @@ body.residence_page #residence_info #ri_owner #owner_avatar img{
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
 }
 
-body.residence_page #rent_button {
+body.residence_page #rent_button_active {
 
     grid-area: rent_button;
     background-color: var(--color-2);
@@ -980,6 +980,26 @@ body.residence_page #rent_button {
     width: 80%;
     justify-self: center;
 }
+
+body.residence_page #rent_button_inactive {
+
+    grid-area: rent_button;
+    background-color: rgb(100,100,100);
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    text-decoration: none;
+    padding: 0.4em 0.6em;
+    width: auto;
+    display: block;
+    text-align: center;
+    align-self: center;
+    font-size: 1.2em;
+    height: 40%;
+    width: 80%;
+    justify-self: center;
+}
+
 
 /*Review Section*/
 
@@ -1049,7 +1069,7 @@ body.residence_page #review_section > h1 {
     color: rgb(34, 34, 34);
 }
   
-.comment_title {
+.comment_title { 
     grid-area: comment_title; 
     margin: 0em;
     font-size: larger;
@@ -1130,4 +1150,29 @@ body.residence_page #review_section > h1 {
     color: rgb(34, 34, 34);
     margin-left: 0em;
     margin-right: 1em;
+}
+
+input.comment_title { 
+    margin: 0em;
+    font-size: medium;
+    font-weight: 400;
+}
+
+textarea.comment_content { 
+    padding-left: 1em;
+    font-size: medium;
+} 
+
+.submit_reply {
+
+    grid-area: options;
+    align-self: end;
+    width: 50%;
+    justify-self: center;
+}
+
+form.comment_content {
+
+    display: flex;
+    flex-direction: column;
 }
