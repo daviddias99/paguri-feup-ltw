@@ -29,8 +29,7 @@ function updateAddressInfo(event) {
     switch(current_page) {
       case "search_results":
           updateURLFilters();
-          filterResidencesInRadius(coords, search_radius);
-          filterMarkersInRadius(coords, search_radius); 
+          filterUpdateHandler(coords, search_radius);
           break;
 
       case "add_house":
@@ -202,7 +201,7 @@ function handleAddressChangeInput(event) {
 const current_page = getCurrentMapPage();
 switch(current_page) {
   case "search_results":
-      setTimeout(handleAddressChangeClick, 100);
+      setTimeout(handleAddressChangeClick, 500);
       document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
       document.getElementById("location").addEventListener("input", handleAddressChangeInput);
       break;

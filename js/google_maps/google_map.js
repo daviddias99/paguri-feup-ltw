@@ -49,7 +49,7 @@ function initMap() {
     const current_page = getCurrentMapPage();
     switch(current_page) {
         case "search_results":
-            fetchMarkersFromDB();
+            //fetchMarkersFromDB();
             break;
 
         case "add_house":
@@ -81,21 +81,21 @@ function addMarker(location, markerInfo) {
     markers.push(newMarker);
 }
 
-function addMarkers(event) {
+function addMarkers(residences) {
     if (map == null) {
         console.log("map is null");
         return;
     }
-    let residences = JSON.parse(event.target.responseText);
+    //let residences = JSON.parse(event.target.responseText);
 
-    markers = residences.map(function(residence) {
+    let newMarkers = residences.map(function(residence) {
 
         /* residence info */
         let address = residence.address;
         let city = residence.city;
         let country = residence.country;
         let position = {lat: parseFloat(residence.latitude), lng: parseFloat(residence.longitude)};
-        let type = residence.type;
+        let type = residence.typeStr;
 
         /*let title = 'Titulo';
         let position = residence;
@@ -104,8 +104,8 @@ function addMarkers(event) {
 
         let newMarker = new google.maps.Marker({
             position: position,
-            map: map,
             title: address,
+            //map: map,
             icon: icons[type].icon,
             animation: google.maps.Animation.DROP
         });
@@ -116,6 +116,8 @@ function addMarkers(event) {
 
         return newMarker;
     });
+
+    markers.push(...newMarkers);
 
     initMapClusterer();
 }
@@ -245,7 +247,8 @@ function disableMarker(marker) {
 }
 
 function clearMarkers() {
-    for(let i = 0; i < markers.length; i++)
-        markers[i].setMap(null);
+    if (map_clusterer) {
+        map_clusterer.removeMarkers(markers, true);
+    }
     markers = [];
 }

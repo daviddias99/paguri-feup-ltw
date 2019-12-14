@@ -162,8 +162,13 @@ function updateSearchResults(event) {
     // Array that contains the properties that match the filters
     let response = JSON.parse(event.target.responseText);
 
+    // update residences section
     buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
+    
+    // update markers
+    clearMarkers();
+    addMarkers(response);
 }
 
 
