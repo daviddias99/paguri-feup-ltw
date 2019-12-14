@@ -66,6 +66,12 @@
                 reply(author, parent, title, content, datestamp)
                 VALUES (?,?,?,?,?)');
 
-        $stmt->execute(array($author,$parent,$title,$content,$datestamp));
+            try{
+
+                $stmt->execute(array($author,$parent,$title,$content,$datestamp));
+            }
+            catch(PDOException $Exception) {
+                return FALSE;
+            }
     }
 ?>
