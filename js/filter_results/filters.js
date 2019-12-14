@@ -60,6 +60,8 @@ function buildResidenceHTML(property){
 
     let resultHTML = "";
 
+    property['rating'] = (property['rating'] == null ? '--' : (property['rating']/2).toFixed(2));
+
     if (property['rating'] == null)
         property['rating'] = '-- ';
 

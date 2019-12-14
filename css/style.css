@@ -811,7 +811,28 @@ textarea {
     display: none;
 }
 
+#edit_profile #change_password {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "pw pw-conf"
+                         "submit submit";
+}
+
+#edit_profile #change_password #password { grid-area: pw }
+
+#edit_profile #change_password #pw_conf { grid-area: pw-conf }
+
+#edit_profile #change_password .button { grid-area: submit }
+
+
 /*Residence info page*/
+
+body.residence_page a {
+
+    text-decoration: none;
+    color: black;
+}
 
 body.residence_page #map {
     height: 60%;
@@ -821,6 +842,7 @@ body.residence_page #map {
 body.residence_page #main {
 
     padding: 1em;
+    height: 40em;
 }
 
 #residence_info h1{
@@ -845,7 +867,7 @@ body.residence_page #right_side {
 
 body.residence_page #residence_info {
 
-    height: 70%;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.7fr 0.6fr 2.3fr 0.7fr 0.7fr 1fr;
@@ -855,7 +877,7 @@ body.residence_page #residence_info {
     "description description description description" 
     "properties properties properties properties" 
     "commodities commodities commodities commodities"
-    "owner owner . .";
+    "owner owner rent_button rent_button ";
   }
   
 body.residence_page #residence_info .ri_title {
@@ -953,7 +975,7 @@ body.residence_page #residence_info #ri_owner h3{
     margin-bottom: 0.5em;
 }
 
-body.residence_page #residence_info #ri_owner #owner_avatar {
+body.residence_page #residence_info #ri_owner #owner_avatar a{
 
     display: flex;
     flex-direction: row;
@@ -968,119 +990,175 @@ body.residence_page #residence_info #ri_owner #owner_avatar img{
     height: 50px;
     border-radius: 50%;
     margin-right: 0.5em;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
 }
+
+body.residence_page #rent_button {
+
+    grid-area: rent_button;
+    background-color: var(--color-2);
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    text-decoration: none;
+    padding: 0.4em 0.6em;
+    width: auto;
+    display: block;
+    text-align: center;
+    align-self: center;
+    font-size: 1.2em;
+    height: 40%;
+    width: 80%;
+    justify-self: center;
+}
+
+/*Review Section*/
 
 body.residence_page #review_section {
 
     background-color: white;
-    width: 95%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 1em;
+    width: 60%;
+    margin: 1em 0 0 2em;
     border-radius: 6px;
     padding: 1em;
 
+    
 }
 
-body.residence_page .review {
-
-    width: 70%;
-}
-
-body.residence_page .main_review {
-
-    width: 90%;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid black;
-}
-
-
-#review_section > h1{
+body.residence_page #review_section > h1 {
 
     border-bottom: solid 2px var(--color-4);
-    width: 8%;
+    width: 20%;
     margin: 1em 0em 1em 0em;
+
 }
 
-body.residence_page .review .reviewer_avatar {
+.review {
+    width: 100%;
+}
 
+
+.main_review {
+
+    width: 100%;
+    height: 10em;
+    margin-bottom: 2em;
+    border-top: 1px solid rgb(200,200,200);
+
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    grid-template-areas: 
+    "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating options" 
+    "comment_user_info comment_title comment_title comment_title options" 
+    "comment_user_info comment_content comment_content comment_content options";
+  }
+  
+.comment_date_and_rating { 
+    grid-area: comment_date_and_rating;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    padding-left: 0.5em;
 }
 
-body.residence_page .review .comment_header {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #e7a6bd;
-    border-bottom: 2px solid black;
-    padding: 0em 1em;
-
-}
-
-body.residence_page .review .comment_header h1{
-    margin: 0;
-    font-size: 1.3em;
-}
-
-body.residence_page .review .reviewer_avatar .reviewer_name {
-
-    font-size: larger;
-}
-
-body.residence_page .review .reviewer_avatar .reviewer_username {
-
+.comment_date_and_rating h3 {
     font-size: smaller;
-    color: rgb(40,40,40);
-    margin-left: 0.5em;
-}
-
-body.residence_page .review .comment_header .review_date {
-
-    font-size: smaller;
-    color: rgb(40,40,40);
-    margin-left: 0.5em;
-}
-
-body.residence_page .review .review_date{
-
-    font-size: medium;
-}
-
-body.residence_page .review .review_content {
-
-    font-size: 1em;
+    color: rgb(34, 34, 34);
     margin-left: 1em;
 }
 
-body.residence_page .review a{
-    text-decoration: none;
-    color: black;
+.checked, .fa-star-half-o, .fa-star-o{
+  color: orange;
+  font-size: larger;
+
 }
 
-body.residence_page .review .reviewer_avatar img {
+.comment_content { 
+    grid-area: comment_content; 
+    margin: 1em 0em 0em 0em;
+    font-size: smaller;
+    color: rgb(34, 34, 34);
+}
+  
+.comment_title {
+    grid-area: comment_title; 
+    margin: 0em;
+    font-size: larger;
+    font-weight: 600;
+}
 
+.rating_display {
+
+    margin: auto 0 auto 0;
+    display: flex;
+
+}
+
+
+.comment_user_info {
+    
+    grid-area: comment_user_info; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1em;
+    
+}
+
+.comment_user_info p {
+
+    text-align: center;
+    margin: 0em;
+}
+
+.comment_user_info .reviewer_username {
+
+    font-size: smaller;
+    font-style: italic;
+    color: rgb(34, 34, 34);
+}
+
+.comment_user_info img{
     vertical-align: middle;
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    margin-right: 0.5em;
+    margin-bottom: 1em;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
 }
 
-#edit_profile #change_password {
+.replies {
+
+    padding-left: 4em;
+}
+
+.reply {
+
+    width: 100%;
+    height: 10em;
+    margin-bottom: 2em;
+    border-top: 1px solid rgb(200,200,200);
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: "pw pw-conf"
-                         "submit submit";
+    grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    grid-template-areas: 
+    "comment_user_info reply_date reply_date reply_date options" 
+    "comment_user_info comment_title comment_title comment_title options" 
+    "comment_user_info comment_content comment_content comment_content options";
 }
 
-#edit_profile #change_password #password { grid-area: pw }
+.reply_date { 
+    grid-area: reply_date;
+    display: flex;
+    flex-direction: row;
+    
+}
 
-#edit_profile #change_password #pw_conf { grid-area: pw-conf }
-
-#edit_profile #change_password .button { grid-area: submit }
+.reply_date h3 {
+    font-size: smaller;
+    color: rgb(34, 34, 34);
+    margin-left: 0em;
+    margin-right: 1em;
+}
