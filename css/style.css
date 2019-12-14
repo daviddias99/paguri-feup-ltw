@@ -601,7 +601,7 @@ body.user_profile {
 
 #profile {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto min(0, 1fr);
     grid-template-rows: min-content auto min-content min-content;
     grid-template-areas: "image image image name"
                          "image image image info"
@@ -643,6 +643,7 @@ body.user_profile {
 
 #profile li p {
     margin: 0.5em 0em;
+    word-wrap: break-word;
 }
 
 #profile .button {
@@ -809,6 +810,21 @@ textarea {
 #edit_profile #profile_info #choose_photo_input, #edit_profile #profile_info #remove_photo_input {
     display: none;
 }
+
+#edit_profile #change_password {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "pw pw-conf"
+                         "submit submit";
+}
+
+#edit_profile #change_password #password { grid-area: pw }
+
+#edit_profile #change_password #pw_conf { grid-area: pw-conf }
+
+#edit_profile #change_password .button { grid-area: submit }
+
 
 /*Residence info page*/
 
@@ -1070,19 +1086,6 @@ body.residence_page .review .reviewer_avatar img {
     margin-right: 0.5em;
 }
 
-#edit_profile #change_password {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: "pw pw-conf"
-                         "submit submit";
-}
-
-#edit_profile #change_password #password { grid-area: pw }
-
-#edit_profile #change_password #pw_conf { grid-area: pw-conf }
-
-#edit_profile #change_password .button { grid-area: submit }
 
 #login form {
     display: flex;
