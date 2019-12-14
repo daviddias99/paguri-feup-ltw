@@ -219,7 +219,7 @@ draw_footer();
 
 <?php function drawNewReplyForm($review) { 
     
-    global $loggedAccountStatus;
+    global $loggedAccountStatus, $actual_link;
     
 
     if($loggedAccountStatus['status']){
@@ -261,10 +261,11 @@ draw_footer();
     <?php if($loggedAccountStatus['status']){ ?>
 
         <form class="comment_content" >
-            <input type="hidden" name="review" value="<?=$review['commentID']?>">
+            <input type="hidden" name="reviewID" value="<?=$review['commentID']?>">
+            <input type="hidden" name="residence" value="<?=$_GET['id']?>">
             <input class="comment_title" placeholder="Title of your reply" required="required" type="text" name="title">
-            <textarea placeholder="What's on you mind?" name="content" required="required"  class="comment_content" rows="4" cols="50"></textarea>
-            <input class="submit_reply" formaction="add_comment.php" type="submit" value="Reply">
+            <textarea  class="comment_content"  placeholder="What's on you mind?" required="required"  name="content" rows="4" cols="50"></textarea>
+            <input class="submit_reply" formaction="../actions/action_add_reply.php" type="submit" value="Reply">
         </form>
         
     </section>

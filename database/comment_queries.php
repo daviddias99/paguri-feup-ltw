@@ -56,4 +56,16 @@
         $stmt->execute(array($commentID));
     }
 
+
+    function addReply($author,$parent,$title,$content,$datestamp){
+
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+                reply(author, parent, title, content, datestamp)
+                VALUES (?,?,?,?,?)');
+
+        $stmt->execute(array($author,$parent,$title,$content,$datestamp));
+    }
 ?>
