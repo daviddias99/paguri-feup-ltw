@@ -2,8 +2,9 @@
 
 class FilterState {
 
-    constructor(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
+    constructor(location, dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
 
+        this.location = location;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.priceFrom = priceFrom;
@@ -16,20 +17,57 @@ class FilterState {
         this.commodities = commodities;
     }
 
+    urlString() {
+        let urlStr = "?";
+
+        if (this.location != "") urlStr += "location=" + this.location + "&";
+        if (this.dateFrom != "") urlStr += "checkin=" + this.dateFrom + "&";
+        if (this.dateTo != "") urlStr += "checkout=" + this.dateTo + "&";
+        if (this.priceFrom != "") urlStr += "min_price=" + this.priceFrom + "&";
+        if (this.priceTo != "") urlStr += "max_price=" + this.priceTo + "&";
+        if (this.ratingFrom != "") urlStr += "min_rating=" + this.ratingFrom + "&";
+        if (this.ratingTo != "") urlStr += "max_rating=" + this.ratingTo + "&";
+        if (this.type != "") urlStr += "type=" + this.type + "&";
+        if (this.nBeds != "") urlStr += "min_beds=" + this.nBeds + "&";
+        if (this.capacity != "") urlStr += "guest_count=" + this.capacity + "&";
+
+        if (Object.keys(this.commodities).length > 0) {
+            let first = true;
+            for (const commodity in this.commodities) {
+                if (this.commodities[commodity] == true) {
+                    if (first) {
+                        urlStr += "commodities=";
+                        first = false;
+                    }
+                    urlStr += commodity + ","
+                }
+            }
+            // remove trailing comma
+            urlStr = urlStr.substr(0, urlStr.length-1);
+            urlStr += "&";
+        }
+
+        // remove trailing & or ?
+        urlStr = urlStr.substr(0, urlStr.length-1);
+
+        return urlStr;
+    }
+
 }
 
 function getCurrentFilterState() {
 
-    let nBeds = document.getElementById("nBeds").value
-    let capacity = document.getElementById("capacity").value
-    let dateFrom = document.getElementById("check_in").value
-    let dateTo = document.getElementById("check_out").value
-    let type = document.getElementById("housing_type").value
-    let priceFrom = document.getElementById("minPrice").value
-    let priceTo = document.getElementById("maxPrice").value
-    let ratingFrom = document.getElementById("minRating").value
-    let ratingTo = document.getElementById("maxRating").value
-    let commodities = document.getElementsByName("commodity")
+    const location = document.getElementById("location").value;
+    const nBeds = document.getElementById("nBeds").value
+    const capacity = document.getElementById("capacity").value
+    const dateFrom = document.getElementById("check_in").value
+    const dateTo = document.getElementById("check_out").value
+    const type = document.getElementById("housing_type").value
+    const priceFrom = document.getElementById("minPrice").value
+    const priceTo = document.getElementById("maxPrice").value
+    const ratingFrom = document.getElementById("minRating").value
+    const ratingTo = document.getElementById("maxRating").value
+    const commodities = document.getElementsByName("commodity")
     let commoditiesObj = {};
 
     for (let i = 0; i < commodities.length; i++) {
@@ -37,7 +75,7 @@ function getCurrentFilterState() {
         commoditiesObj[commodity.value] = commodity.checked;
     }
 
-    return new FilterState(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
+    return new FilterState(location, dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
 function simplifyPrice(price) {
@@ -123,7 +161,6 @@ function updateSearchResults(event) {
 
     // Array that contains the properties that match the filters
     let response = JSON.parse(event.target.responseText);
-    console.log(response);
 
     buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
@@ -132,13 +169,11 @@ function updateSearchResults(event) {
 
 function filterUpdateHandler(coords, radius) {
 
-    var filterState = getCurrentFilterState();
-    var location = {coords: coords, radius: radius};
+    const filterState = getCurrentFilterState();
+    const location = {coords: coords, radius: radius};
 
-    console.log(JSON.stringify(filterState));
-
-    let encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
-    let encodedLocationData = encodeURIComponent(JSON.stringify(location));
+    const encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
+    const encodedLocationData = encodeURIComponent(JSON.stringify(location));
 
     let request = new XMLHttpRequest();
     request.onload = updateSearchResults;
@@ -146,3 +181,9 @@ function filterUpdateHandler(coords, radius) {
     request.send();
 
 }
+
+function updateURLFilters() {
+    window.history.pushState(null, '', window.location.pathname + getCurrentFilterState().urlString());
+}
+
+document.getElementById("filter_button").addEventListener("click", updateURLFilters);
