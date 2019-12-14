@@ -16,6 +16,10 @@ $rating = getResidenceRating($_GET['id']);
 $loggedAccountStatus = [];
 $loggedAccountStatus['status'] = isset($_SESSION['username']);
 
+// Owner photo
+$ownerphoto = getUserPhotoID($owner['username']);
+$ownerphotopath = "../images/users/thumbnails_small/$ownerphoto";
+
 if (isset($_SESSION['username'])) {
 
     $loggedAccountStatus['username'] = $_SESSION['username'];
@@ -139,12 +143,15 @@ $rating = ($rating == null) ? '--' : $rating;
 
     <?php function drawMainReview($review)
     {
+        // Owner photo
+        $userphoto = getUserPhotoID($review['username']);
+        $userphotopath = "../images/users/thumbnails_small/$userphoto";
 
         ?>
         <section class="main_review">
 
             <section class="comment_user_info">
-                <img src="../resources/default-profile-pic.jpg">
+                <img src="../resources/<?=$userphotopath?>">
                 <a href="./user.php?id=<?= $review['username'] ?>">
                     <p class="reviewer_name"> <?= $review['firstName'] . ' ' . $review['lastName'] ?></p>
                     <p class="reviewer_username">(<?= $review['username'] ?>)</p>
@@ -187,11 +194,16 @@ $rating = ($rating == null) ? '--' : $rating;
     <?php } ?>
 
     <?php function drawReply($reply, $review)
-    { ?>
+    { 
+        
+        // Owner photo
+        $userphoto = getUserPhotoID($reply['username']);
+        $userphotopath = "../images/users/thumbnails_small/$userphoto";
+    ?>
 
         <section class="reply">
             <section class="comment_user_info">
-                <img src="../resources/default-profile-pic.jpg">
+                <img src="../resources/<?=$userphotopath?>">
                 <a href="./user.php?id=<?= $reply['username'] ?>">
                     <p class="reviewer_name"> <?= $reply['firstName'] . ' ' . $reply['lastName'] ?></p>
                     <p class="reviewer_username">(<?= $reply['username'] ?>)</p>
@@ -239,7 +251,7 @@ $rating = ($rating == null) ? '--' : $rating;
     <?php function drawResidenceOwnerInfo()
     {
 
-        global $owner, $owner_name;
+        global $owner, $owner_name,$ownerphotopath;
         ?>
 
         <section id="ri_owner">
@@ -247,7 +259,7 @@ $rating = ($rating == null) ? '--' : $rating;
             <h3> Owner: </h3>
             <section id="owner_avatar">
                 <a href="./user.php?id=<?= $owner['username'] ?>">
-                    <img src="../resources/default-profile-pic.jpg">
+                    <img src="<?=$ownerphotopath?>">
                     <p> <?= $owner_name ?></p>
                 </a>
             </section>
@@ -322,16 +334,23 @@ $rating = ($rating == null) ? '--' : $rating;
     <?php function drawNewReplyForm($review)
     {
 
-        global $loggedAccountStatus, $actual_link;
+        global $loggedAccountStatus;
+        
 
 
         if ($loggedAccountStatus['status']) {
             $loggedUserInfo = getUserInfo($loggedAccountStatus['username']);
             $loggedUserFullName = $loggedUserInfo['firstName'] . ' ' . $loggedUserInfo['lastName'];
             $loggedUserUserName = $loggedAccountStatus['username'];
+
+            // Owner photo
+            $userphoto = getUserPhotoID($loggedAccountStatus['username']);
+            $userphotopath = "../images/users/thumbnails_small/$userphoto";
         } else {
             $loggedUserFullName = 'Anonymous';
             $loggedUserUserName = 'anonymous_user';
+
+            $userphotopath = "../resources/default-profile-pic.jpg";
         }
 
         ?>
@@ -339,21 +358,19 @@ $rating = ($rating == null) ? '--' : $rating;
         <section class="reply">
 
             <section class="comment_user_info">
-                <img src="../resources/default-profile-pic.jpg">
+                <img src="<?=$userphotopath?>">
 
                 <?php
-                    if ($loggedAccountStatus['status']) {
-                        ?>
-
+                if ($loggedAccountStatus['status']) { ?>
+                    
                     <a href="./user.php?id=<?= $loggedUserUserName ?>">
-                    <?php
-                        } else { ?>
-                        <a>
-                        <?php } ?>
-
-                        <p class="reviewer_name"> <?= $loggedUserFullName ?></p>
-                        <p class="reviewer_username">(<?= $loggedUserUserName ?>)</p>
-                        </a>
+                <?php
+                } else { ?>
+                <a>
+                <?php } ?>
+                    <p class="reviewer_name"> <?= $loggedUserFullName ?></p>
+                    <p class="reviewer_username">(<?= $loggedUserUserName ?>)</p>
+                </a>
             </section>
 
             <section class="reply_date">
