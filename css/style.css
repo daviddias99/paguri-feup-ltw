@@ -36,7 +36,7 @@ body {
     grid-area: header;
     background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
 
-    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
+    box-shadow: 0px 7px 16px -2px rgba(0,0,0,0.58);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -281,96 +281,6 @@ body.front_page {
     background-size: cover;
 }
 
-/* Form Card */
-.formCard{
-    margin: 3em auto;
-    padding: 1em;
-    width: 40em;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
-}
-
-.formCard form {
-    display: flex;
-    flex-direction: column;
-
-}
-
-.formCard h1 {
-
-    display: inline-block;
-    font-size: 2em;
-    margin-top: 0em;
-
-}
-
-.formCard form #location{
-    display: block;
-    width: 100%;
-}
-
-.formCard form #dates{
-    display: flex;
-    flex-direction: row;
-}
-
-.formCard input:focus {
-    outline: none !important;
-}
-
-.formCard input {
-
-    height: 2em;
-}
-
-.formCard form > *{
-
-    margin: 0.5em 0;
-}
-
-.formCard form input::placeholder{
-    color: #AAAAAA
-}
-
-.formCard form #dates > * {
-    flex-grow: 1;
-}
-
-.formCard form #dates label > * {
-    display: block;
-
-}
-
-.formCard form #submit_button {
-
-    background-color: var(--color-2);
-    color: white;
-    border-radius: 4px;
-    border: none;
-    font-family: 'Roboto Condensed', sans-serif;
-
-}
-
-.formCard form #submit_button:focus {
-    box-shadow: 0 0 10px;
-    outline: black
-}
-
-.formCard form #dates label > input {
-
-    margin: 0;
-    width: 100%;
-}
-
-.formCard form label {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 0.9em;
-    font-weight: 300;
-}
-
 /* Search_results page filters */
 
 body.search_results #filters {
@@ -601,6 +511,27 @@ body.user_profile {
     box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
 }
 
+.formCard {
+    width: 40em;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3em auto;
+    border-radius: 8px;
+    box-shadow: 9px 7px 16px -2px rgba(0,0,0,0.58);
+}
+
+.formCard a {
+    text-decoration: none;
+    color: var(--color-2);
+    font-weight: bold;
+}
+
+.formCard a:hover {
+    text-decoration: underline;
+}
+
 #profile {
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -694,7 +625,8 @@ body.user_profile {
 }
 
 #search_box {
-    width: 40em;
+    display: block;
+    padding: 1em;
 }
 
 #search_box h1 {
@@ -791,7 +723,7 @@ textarea {
     grid-area: bio;
 }
 
-#edit_profile #profile_info #chosse_foto {
+#edit_profile #profile_info #choose_foto {
     grid-area: choose-photo;
 }
 
@@ -825,6 +757,43 @@ textarea {
 
 #edit_profile #change_password .button { grid-area: submit }
 
+#edit_profile #change_password .button { grid-area: submit }
+
+#login form {
+    display: flex;
+    flex-direction: column;
+}
+
+#register form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "username username"
+                         "email email"
+                         "first-name last-name"
+                         "password confirm-password"
+                         "submit submit";
+}
+
+#register #username { grid-area: username; }
+
+#register #password { grid-area: password; }
+
+#register #email { grid-area: email; }
+
+#register #first_name { grid-area: first-name; }
+
+#register #last_name { grid-area: last-name; }
+
+#register #password { grid-area: password; }
+
+#register #conf_password { grid-area: confirm-password; }
+
+#register .button { grid-area: submit; }
+
+#login .button, #register .button {
+    margin: 0.5em;
+}
 
 /*Residence info page*/
 
@@ -871,22 +840,22 @@ body.residence_page #residence_info {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.7fr 0.6fr 2.3fr 0.7fr 0.7fr 1fr;
-    grid-template-areas: 
-    "title title title rating" 
-    "type_and_location type_and_location type_and_location rating" 
-    "description description description description" 
-    "properties properties properties properties" 
+    grid-template-areas:
+    "title title title rating"
+    "type_and_location type_and_location type_and_location rating"
+    "description description description description"
+    "properties properties properties properties"
     "commodities commodities commodities commodities"
     "owner owner rent_button rent_button ";
   }
-  
+
 body.residence_page #residence_info .ri_title {
-    
-    grid-area: title; 
+
+    grid-area: title;
     margin-bottom: 0em;
 }
-body.residence_page #residence_info .ri_rating { 
-    grid-area: rating; 
+body.residence_page #residence_info .ri_rating {
+    grid-area: rating;
     align-self: center;
     background-color: var(--color-4);
     width: 6em;
@@ -904,8 +873,8 @@ body.residence_page #residence_info .ri_rating h4{
 }
 
 body.residence_page #residence_info .ri_owner { grid-area: owner; }
-body.residence_page #residence_info .ri_type_and_location { 
-    
+body.residence_page #residence_info .ri_type_and_location {
+
     grid-area: type_and_location;
     font-size: 1em;
     color: #4e4e4e;
@@ -914,7 +883,7 @@ body.residence_page #residence_info .ri_type_and_location {
 }
 
 body.residence_page #residence_info #ri_residence_properties{
-    
+
     border-top: 2px solid var(--color-5);
     border-bottom: 2px solid var(--color-5);
     grid-area: properties;
@@ -929,21 +898,21 @@ body.residence_page #residence_info #ri_residence_properties > *::before {
 }
 
 body.residence_page #residence_info .ri_description {
-    grid-area: description; 
+    grid-area: description;
     text-align: justify;
     text-indent: 2em;
     padding: 0em 1em;
 }
-body.residence_page #residence_info .ri_commodities { 
+body.residence_page #residence_info .ri_commodities {
 
-    grid-area: commodities; 
+    grid-area: commodities;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
     margin-top: 1.5em;
     padding: 0.5em;
 }
 
-body.residence_page #residence_info .ri_commodities ul{ 
-    
+body.residence_page #residence_info .ri_commodities ul{
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

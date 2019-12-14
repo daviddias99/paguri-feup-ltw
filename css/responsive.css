@@ -1,0 +1,32 @@
+@media (max-width: 40em) {
+    body.front_page  {
+        background: none;
+    }
+
+    .formCard {
+        width: auto;
+        background-color: white;
+        border-radius: 0;
+        box-shadow: none;
+        align-content: center;
+    }
+
+    .formCard h1 {
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+    }
+
+    .form_entry {
+        margin: 0.3em;
+    }
+
+    #register form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #search_box #submit_button {
+        grid-area: submit;
+        margin: 1em 0.3em;
+    }
+}
