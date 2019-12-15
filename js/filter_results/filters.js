@@ -90,11 +90,21 @@ function simplifyPrice(price) {
         return price;
 }
 
+function reservationNumberOfDays() {
+    const checkin = document.getElementById("check_in").value
+    const checkout = document.getElementById("check_out").value
+    let nDays = 1;
+    if (checkin != "" && checkout != "")
+        nDays = Math.ceil(Math.abs(new Date(checkout.replace(/-/g, '/')) - new Date(checkin.replace(/-/g, '/'))) / (1000 * 60 * 60 * 24));
+    return nDays;
+}
+
 
 function buildResidenceHTML(property){
 
-    let descriptionTrimmed =property['description'].length > 180 ? property['description'].substr(0, 180) + "..." : property['description'];
-    let priceSimple = simplifyPrice(property['pricePerDay']);
+    const descriptionTrimmed =property['description'].length > 180 ? property['description'].substr(0, 180) + "..." : property['description'];
+    const ppdSimple = simplifyPrice(property['pricePerDay']);
+    const totalPriceSimple = simplifyPrice(property['pricePerDay'] * reservationNumberOfDays());
 
     let resultHTML = "";
 
@@ -103,20 +113,21 @@ function buildResidenceHTML(property){
 
     resultHTML = 
         '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
-        '<section class="result">' +    
-        '<section class="image">' +
-        '<img src="../resources/house_image_test.jpeg">' +
-        '</section>' +  
-        '<section class="info">' + 
-        '<h1 class="info_title">' + property['title'] + '</h1>' +
-        '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
-        '<p class="info_description">'  + descriptionTrimmed + '</p>' +
-        '<p class="info_ppd">' + priceSimple +'</p>' +
-        '<p class="info_score">'+ property['rating']+'</p>' +
-        '<p class="info_capacity">' + property['capacity']+'</p>' +
-        '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
-        '</section>' +
-        '</section>' +
+            '<section class="result">' +    
+                '<section class="image">' +
+                    '<img src="../resources/house_image_test.jpeg">' +
+                '</section>' +  
+                '<section class="info">' + 
+                    '<h1 class="info_title">' + property['title'] + '</h1>' +
+                    '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
+                    '<p class="info_description">'  + descriptionTrimmed + '</p>' +
+                    '<p class="total_price">' + totalPriceSimple + '</p>' +
+                    '<p class="info_ppd">' + ppdSimple +'</p>' +
+                    '<p class="info_score">'+ property['rating']+'</p>' +
+                    '<p class="info_capacity">' + property['capacity']+'</p>' +
+                    '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+                '</section>' +
+            '</section>' +
         '</a>'    
 
     return resultHTML;

@@ -90,13 +90,6 @@ function addMarkers(residences) {
         return;
     }
 
-    // determine number of days in the reservation
-    const checkin = document.getElementById("check_in").value
-    const checkout = document.getElementById("check_out").value
-    let nDays = 1;
-    if (checkin != "" && checkout != "")
-        nDays = Math.ceil(Math.abs(new Date(checkout.replace(/-/g, '/')) - new Date(checkin.replace(/-/g, '/'))) / (1000 * 60 * 60 * 24));
-
     let newMarkers = residences.map(function(residence) {
 
         /* marker info */
@@ -104,7 +97,7 @@ function addMarkers(residences) {
             residenceID: residence.residenceID,
             title: residence.title,
             pricePerDay: parseInt(residence.pricePerDay),
-            totalPrice: parseInt(residence.pricePerDay * nDays),
+            totalPrice: parseInt(residence.pricePerDay * reservationNumberOfDays()),
             address: residence.address,
             city: residence.city,
             country: residence.country,
@@ -127,7 +120,7 @@ function addMarkers(residences) {
         };
 
         const normalLabel = {
-            text: priceString + '€',
+            text: '€' + priceString,
             fontWeight: "500"
         };
 
@@ -145,7 +138,7 @@ function addMarkers(residences) {
             };
 
             const hoverLabel = {
-                text: priceString + '€',
+                text: '€' + priceString,
                 fontSize: "16px",
                 fontWeight: "500"
             };
@@ -194,9 +187,9 @@ function addInfoWindow(marker, markerInfo) {
                     <img src="` + "https://picsum.photos/250/150" + `">
                     <h3>` + markerInfo.type + `</h3>
                     <h2>` + markerInfo.title + `</h2>
-                    <h3>` + markerInfo.pricePerDay + `€ per night!</h3>
+                    <h3>€` + markerInfo.pricePerDay + ` per night!</h3>
                     <p>` + starsHTML + `</p>
-                    <p>` + markerInfo.totalPrice + `€ total</p>
+                    <p>€` + markerInfo.totalPrice + ` total</p>
                 </div>`;
             break;
 
