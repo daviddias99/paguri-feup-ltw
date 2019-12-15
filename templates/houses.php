@@ -135,3 +135,14 @@ function draw_place_operations($place)
         <a class="button" href="">Remove</a>
     </section>
 <?php } ?>
+
+
+<?php
+function draw_reservations($reservations) {
+?>
+    <section id="user_reservations" class="card">
+        <h1>My reservations</h1>
+    </section>
+<?php
+}
+?>

@@ -6,7 +6,7 @@
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'SELECT * 
+            'SELECT *
             FROM reservation
             WHERE lodge = ?');
         $stmt->execute(array($residenceID));
@@ -25,6 +25,17 @@
         foreach($comments as $comment) {
             deleteComment($comment['commentID']);
         }
+    }
+
+    function getUserReservations($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT *
+                               FROM reservation, user, residence
+                               WHERE username =  ? and customer = userID and lodge = residenceID');
+        $stmt->execute(array($username));
+
+        return $stmt->fetchAll();
     }
 
 ?>
