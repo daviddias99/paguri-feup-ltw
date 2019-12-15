@@ -169,6 +169,6 @@
         $stmt = $dbh->prepare('SELECT RowID FROM user WHERE username = ?');
         $stmt->execute(array($username));
 
-        return $stmt->fetch()['rowid'];
+        return $stmt->fetch()['userID'];
     }
 ?>

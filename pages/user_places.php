@@ -4,7 +4,7 @@
     include_once('../templates/common/footer.php');
     include_once('../templates/houses.php');
 
-    draw_header('user_profile', null);
+    draw_header('user_profile', array('user_properties.js'));
 
     $userID = $_GET['id'];
 

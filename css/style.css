@@ -236,13 +236,42 @@ body.search_results #right_side #map {
 
 
 /* Add house page */
-body #search_box #map {
+body #add_place #map {
     height: 30em;
     width: 100%;
     margin: auto;
     margin-top:1em;
 }
 
+#add_place_form {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto min-content auto auto auto;
+    grid-template-areas: "title title title type"
+                         "description description description description"
+                         "location location location location"
+                         "map map map map"
+                         "commodities commodities commodities commodities"
+                         "capacity n-bedrooms n-bathrooms n-beds"
+                         "submit submit submit submit";
+}
+
+#add_place_form #title { grid-area: title; }
+#add_place_form #type { grid-area: type; }
+#add_place_form #description { grid-area: description; }
+#add_place_form #location_wrapper { grid-area: location; }
+#add_place_form #map { grid-area: map; }
+#add_place_form #commodities { grid-area: commodities; }
+#add_place_form #num_bedrooms { grid-area: n-bedrooms; }
+#add_place_form #num_beds { grid-area: n-beds; }
+#add_place_form #capacity { grid-area: capacity; }
+#add_place_form #num_bathrooms { grid-area: n-bathrooms; }
+#add_place_form #submit_button { grid-area: submit; }
+#add_place_form #commodity_list {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .add_house_info_window {
     display: grid;
     grid-template-areas:
@@ -672,6 +701,10 @@ body.user_profile {
 
 .button:active {
     opacity: 0.4;
+}
+
+.button {
+    transition: all 0.1s ease;
 }
 
 #about_me {
@@ -1126,6 +1159,16 @@ body.residence_page .review .reviewer_avatar img {
 
 #places_list h1 {
     margin: 0.8em 0.3em;
+}
+
+#places_list .my_places_title h1 {
+    margin: 0 0.3em;
+}
+
+#places_list .my_places_title {
+    display: flex;
+    margin: 0.8em auto;
+    flex-direction: row;
 }
 
 .places_list_entry {

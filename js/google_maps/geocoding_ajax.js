@@ -29,16 +29,16 @@ function updateAddressInfo(event) {
     switch(current_page) {
       case "search_results":
           filterResidencesInRadius(coords, search_radius);
-          filterMarkersInRadius(coords, search_radius); 
+          filterMarkersInRadius(coords, search_radius);
           break;
 
       case "add_house":
 
           // parse info
-          const title = document.getElementById("title").value || "New residence";
+          const title = document.getElementById("title_input").value || "New residence";
           const addressInfo = parseAddressInfo(best_result);
-          
-          const house_type_select = document.getElementById("house_type");
+
+          const house_type_select = document.getElementById("house_type_input");
 
           const markerInfo = {
             title: title,
@@ -47,11 +47,11 @@ function updateAddressInfo(event) {
             country: addressInfo.country,
             type: house_type_select.options[house_type_select.selectedIndex].value
           }
-    
+
           // add marker
           clearMarkers();
           addMarker(coords, markerInfo);
-          
+
           // update inputs values
           document.getElementById("latitude").value = markerInfo.position.lat;
           document.getElementById("longitude").value = markerInfo.position.lng;
@@ -62,7 +62,7 @@ function updateAddressInfo(event) {
           throw new Error("Unknown current page.");
     }
 
-    moveMap(coords);    
+    moveMap(coords);
     setMapZoom(18);
 }
 
@@ -79,12 +79,12 @@ function updateInputsValues(event, latLng) {
 
       case "add_house":
 
-          const title = document.getElementById("title").value || "New residence";
+          const title = document.getElementById("title_input").value || "New residence";
           const addressInfo = parseAddressInfo(best_result);
           const address = best_result.formatted_address;
 
-          const house_type_select = document.getElementById("house_type");
-            
+          const house_type_select = document.getElementById("house_type_input");
+
           const markerInfo = {
             title: title,
             city: addressInfo.city,
@@ -93,7 +93,7 @@ function updateInputsValues(event, latLng) {
           }
 
           addMarker(latLng, markerInfo);
-          
+
           document.getElementById("latitude").value = latLng.lat();
           document.getElementById("longitude").value = latLng.lng();
           document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
@@ -104,7 +104,7 @@ function updateInputsValues(event, latLng) {
           throw new Error("Unknown current page.");
     }
 
-    moveMap(latLng);    
+    moveMap(latLng);
 }
 
 function checkMapsAPIResponse(response) {
@@ -114,11 +114,11 @@ function checkMapsAPIResponse(response) {
         return false;
       }
       break;
-  
+
     case "ZERO_RESULTS":
       console.log("No results found");
       return false;
-  
+
     case "INVALID_REQUEST":
       console.log("Invalid request");
       return false;
@@ -145,7 +145,7 @@ function parseAddressInfo(geocoding_info) {
 
     if (address_component.types.find(type => type === "administrative_area_level_1"))
       addressInfo.admin_area_level_1 = address_component.long_name;
-    
+
   });
 
   return addressInfo;
@@ -155,7 +155,7 @@ function getAddressInfo(address) {
   let options = {
       key : api_key,
       address : address
-  };    
+  };
   let requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + encodeForAjax(options);
 
   let request = new XMLHttpRequest();
@@ -169,7 +169,7 @@ function reverseGeocoding(latLng) {
     key : api_key,
     latlng : latLng.lat() + "," + latLng.lng()
   };
-  
+
   let requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?" + encodeForAjax(options);
 
   let request = new XMLHttpRequest();
@@ -190,7 +190,7 @@ function buildResultsHeaderHTML(results_header,address){
 
 function handleAddressChangeClick(event) {
 
-  let address = document.getElementById('location').value;  
+  let address = document.getElementById('location').value;
   buildResultsHeaderHTML(document.getElementById("results_header"),address);
 
   if (address.length == 0) return;

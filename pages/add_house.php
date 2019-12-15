@@ -8,13 +8,8 @@
     if (! isset($_SESSION['username']))
         die("User not logged in!");
 
-    $username = $_SESSION['username'];
-
-    draw_header('search_results', $username);
-
+    draw_header('search_results', array('add_place.js'));
     add_map_includes();
-
     draw_add_house();
-
     draw_footer();
 ?>
