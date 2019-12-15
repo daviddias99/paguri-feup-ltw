@@ -963,6 +963,13 @@ body.residence_page #residence_info #ri_owner #owner_avatar img{
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
 }
 
+body.residence_page #rent_action_form {
+    grid-area: rent_button;
+    align-self: center;
+    height: 40%;
+    width: 80%;
+}
+
 body.residence_page #rent_button_active {
 
     grid-area: rent_button;
@@ -975,11 +982,9 @@ body.residence_page #rent_button_active {
     width: auto;
     display: block;
     text-align: center;
-    align-self: center;
     font-size: 1.2em;
-    height: 40%;
-    width: 80%;
-    justify-self: center;
+    height: 100%;
+    width: 100%;
 }
 
 body.residence_page #rent_button_inactive {
@@ -994,11 +999,9 @@ body.residence_page #rent_button_inactive {
     width: auto;
     display: block;
     text-align: center;
-    align-self: center;
     font-size: 1.2em;
-    height: 40%;
-    width: 80%;
-    justify-self: center;
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -1290,4 +1293,20 @@ body.residence_page #residence-images a.prev, body.residence_page #residence-ima
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
+}
+
+/*Rent house page*/
+
+body.rent_house #main {
+
+    grid-area: main;
+    background-color: white;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+
 }
