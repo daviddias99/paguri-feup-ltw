@@ -101,9 +101,10 @@ function addMarkers(residences) {
 
         /* marker info */
         const marker_info = {
+            residenceID: residence.residenceID,
             title: residence.title,
-            pricePerDay: residence.pricePerDay,
-            totalPrice: residence.pricePerDay * nDays,
+            pricePerDay: parseInt(residence.pricePerDay),
+            totalPrice: parseInt(residence.pricePerDay * nDays),
             address: residence.address,
             city: residence.city,
             country: residence.country,
@@ -117,23 +118,45 @@ function addMarkers(residences) {
 
         const width_base = 40;
         const width_per_char = 8;
-        const priceString = parseInt(marker_info.totalPrice).toString();
+        const priceString = marker_info.pricePerDay.toString();
         const marker_width = width_base + width_per_char * priceString.length;
 
-        const image = {
+        const normalIcon = {
             url: icons.tag.icon,
             scaledSize: new google.maps.Size(marker_width, 30)
+        };
+
+        const normalLabel = {
+            text: priceString + '€',
+            fontWeight: "500"
         };
 
         let newMarker = new google.maps.Marker({
             position: marker_info.position,
             title: marker_info.address,
-            label: priceString + '€',
-            //map: map,
-            icon: image
-            //animation: google.maps.Animation.DROP
+            label: normalLabel,
+            icon: normalIcon
         });
-        //newMarker.addListener('click', toggleBounce.bind(newMarker));
+
+        newMarker.addListener('mouseover', function() {
+            const hoverIcon = {
+                url: icons.tag.icon,
+                scaledSize: new google.maps.Size(marker_width*1.1, 30*1.1)
+            };
+
+            const hoverLabel = {
+                text: priceString + '€',
+                fontSize: "16px",
+                fontWeight: "500"
+            };
+            newMarker.setIcon(hoverIcon);
+            newMarker.setLabel(hoverLabel);
+        });
+
+        newMarker.addListener('mouseout', function() {
+            newMarker.setIcon(normalIcon);
+            newMarker.setLabel(normalLabel);
+        });
 
         addInfoWindow(newMarker, marker_info);
         newMarker.inCluster = true;
@@ -165,12 +188,15 @@ function addInfoWindow(marker, markerInfo) {
     const current_page = getCurrentMapPage();
     switch(current_page) {
         case "search_results":
+            const starsHTML = isNaN(markerInfo.rating) ? "" : markerInfo.rating/2 + ' <i class="fas fa-star"></i>';
             infoWindowContent = `
-                <div class="marker_info_window">
-                    <p class="type">Tipo</p>
-                    <h6>Titulo</h6>
-                    <p>Cidade</p>
-                    <p>Pais</p>
+                <a class="search_results_info_window" href="../pages/view_house.php?id=` + markerInfo.residenceID + `">
+                    <img src="` + "https://picsum.photos/250/150" + `">
+                    <h3>` + markerInfo.type + `</h3>
+                    <h2>` + markerInfo.title + `</h2>
+                    <h3>` + markerInfo.pricePerDay + `€ per night!</h3>
+                    <p>` + starsHTML + `</p>
+                    <p>` + markerInfo.totalPrice + `€ total</p>
                 </div>`;
             break;
 

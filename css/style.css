@@ -176,6 +176,62 @@ body #search_box #map {
     margin-top:1em;
 }
 
+.search_results_info_window {
+    display: grid;
+    grid-template-areas:
+        "img img"
+        "type type"
+        "title title"
+        "pricePerDay pricePerDay"
+        "rating totalPrice";
+    text-decoration: none;
+    color: black;
+}
+
+.search_results_info_window i {
+    color: orange;
+}
+
+.search_results_info_window  > * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.search_results_info_window > img {
+    grid-area: img;
+    text-align: center;
+}
+
+.search_results_info_window > h3:nth-of-type(1) {
+    grid-area: type;
+    text-align: left;
+    color: grey;
+}
+
+.search_results_info_window > h3:first-letter, .search_results_info_window > h2:first-letter {
+    text-transform: uppercase;
+}
+
+.search_results_info_window > h2 {
+    grid-area: title;
+    text-align: left;
+}
+
+.search_results_info_window > h3:nth-of-type(2) {
+    grid-area: pricePerDay;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(1) {
+    grid-area: rating;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(2) {
+    grid-area: totalPrice;
+    text-align: right;
+}
+
 .add_house_info_window {
     display: grid;
     grid-template-areas:
