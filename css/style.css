@@ -176,6 +176,62 @@ body #search_box #map {
     margin-top:1em;
 }
 
+.search_results_info_window {
+    display: grid;
+    grid-template-areas:
+        "img img"
+        "type type"
+        "title title"
+        "pricePerDay pricePerDay"
+        "rating totalPrice";
+    text-decoration: none;
+    color: black;
+}
+
+.search_results_info_window i {
+    color: orange;
+}
+
+.search_results_info_window  > * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.search_results_info_window > img {
+    grid-area: img;
+    text-align: center;
+}
+
+.search_results_info_window > h3:nth-of-type(1) {
+    grid-area: type;
+    text-align: left;
+    color: grey;
+}
+
+.search_results_info_window > h3:first-letter, .search_results_info_window > h2:first-letter {
+    text-transform: uppercase;
+}
+
+.search_results_info_window > h2 {
+    grid-area: title;
+    text-align: left;
+}
+
+.search_results_info_window > h3:nth-of-type(2) {
+    grid-area: pricePerDay;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(1) {
+    grid-area: rating;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(2) {
+    grid-area: totalPrice;
+    text-align: right;
+}
+
 .add_house_info_window {
     display: grid;
     grid-template-areas:
@@ -397,13 +453,14 @@ body.search_results #filters button { grid-area: filter_bttn; }
 
     width: 65%;
     display: grid;
-    grid-template-columns: 2.1fr 2.3fr 0.5fr 0.5fr 0.5fr;
-    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
+    grid-template-columns: 2fr 2fr 1.25fr 1.25fr;
+    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr 0.5fr;
     grid-template-areas:
-    "type_and_location type_and_location . rating rating"
-    "title title title title ."
-    "desc desc desc desc ."
-    "nBedrooms nBeds ppd ppd ppd";
+        "type_and_location type_and_location . rating"
+        "title title title title"
+        "desc desc desc desc"
+        ". . ppd ppd"
+        "nBedrooms nBeds total_price total_price";
 }
 
  .result .info .info_title {
@@ -449,7 +506,7 @@ body.search_results #filters button { grid-area: filter_bttn; }
  .result .info .info_bedrooms { grid-area: nBedrooms; }
 
  .result .info .info_bedrooms:after {
-    content:" Bedroom";
+    content: " Bedrooms";
 }
 
  .result .info .info_capacity:before {
@@ -468,24 +525,44 @@ body.search_results #filters button { grid-area: filter_bttn; }
     color: white;
     border: 1em solid #475c7a;
     margin: 0;
-    justify-self: center;
+    /*justify-self: center;*/
     align-self: center;
+    text-align: center;
 }
 
  .result .info .info_score:after {
     content:"\2605";
 }
 
- .result .info .info_ppd:before {
-    content:" \2022 ";
-}
-
  .result .info .info_ppd {
     grid-area: ppd;
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.result .info .info_ppd:before {
+   content:"€";
+   font-weight: 500;
 }
 
  .result .info .info_ppd:after {
-    content:"€ per day";
+    content:" per night";
+    font-weight: 500;
+}
+
+.result .info .total_price {
+   grid-area: total_price;
+   text-align: right;
+   margin-right: 10px;
+   font-weight: 700;
+}
+
+.result .info .total_price:before {
+   content:"Total of €";
+   font-weight: 500;
 }
 
  .result img {
