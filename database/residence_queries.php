@@ -50,97 +50,104 @@
         return $res === FALSE ? FALSE : $res['name'];
     }
 
+    function getResidenceAvailabilities($residenceID) {
+        global $dbh;
 
+        $stmt = $dbh->prepare('SELECT strftime("%Y-%m-%d",startDate) as startDate, strftime("%Y-%m-%d",endDate) as endDate FROM availability WHERE lodge = ?');
+        $stmt->execute(array($residenceID));
 
-
-function getResidenceInfo($residenceID)
-{
-    global $dbh;
-
-    $stmt = $dbh->prepare(
-        'SELECT residence.*, residencetype.name as type
-            FROM residence JOIN residencetype
-            ON residence.type = residenceTypeID
-            WHERE residenceID = ?'
-    );
-
-    $stmt->execute(array($residenceID));
-    return $stmt->fetch();
-}
-
-function getResidencePhotos($residenceID)
-{
-    global $dbh;
-
-    $stmt = $dbh->prepare('SELECT filepath, priority FROM residencePhoto WHERE lodge = ?');
-    $stmt->execute(array($residenceID));
-    return $stmt->fetchAll();
-}
-
-
-function getResidenceCommodities($residenceID)
-{
-    global $dbh;
-
-    $stmt = $dbh->prepare(
-        'SELECT name
-            FROM residenceHasCommodity JOIN commodity
-            ON item = commodityID
-            WHERE lodge = ?'
-    );
-
-    $stmt->execute(array($residenceID));
-    return $stmt->fetchAll();
-}
-
-function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minRating, $maxRating)
-{
-    global $dbh;
-
-    $query_vals = array();
-    $query_base = 
-        'SELECT residence.*, residencetype.name as typeStr, rating
-        FROM residence JOIN residencetype ON residence.type = residenceTypeID 
-                       LEFT JOIN (SELECT lodge, avg(rating) as rating
-                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
-                                    GROUP BY lodge
-                                    ) as avgRatingPerResidence
-                        ON residence.residenceID = avgRatingPerResidence.lodge
-        WHERE 1=1'; 
-    
-    if (is_numeric($capacity)) {
-        $query_base .= ' AND capacity >= ?';
-        array_push($query_vals, intval($capacity));
-    }
-    if (is_numeric($nBeds)) {
-        $query_base .= ' AND nBeds >= ?';
-        array_push($query_vals, intval($nBeds));
-    }
-    if (is_numeric($minPrice)) {
-        $query_base .= ' AND pricePerDay >= ?';
-        array_push($query_vals, floatval($minPrice));
-    }
-    if (is_numeric($maxPrice)) {
-        $query_base .= ' AND pricePerDay <= ?';
-        array_push($query_vals, floatval($maxPrice));
-    }
-    if (is_numeric($minRating)) {
-        $query_base .= ' AND rating >= ' . floatval($minRating);
-    }
-    if (is_numeric($maxRating)) {
-        $query_base .= ' AND rating <= ' . floatval($maxRating);
-    }
-    if ($type !== "") {
-        $query_base .= ' AND typeStr = ?';
-        array_push($query_vals, $type);
+        return $stmt->fetchAll();
     }
 
 
-    $stmt = $dbh->prepare($query_base);
-    $stmt->execute($query_vals);
+    function getResidenceInfo($residenceID)
+    {
+        global $dbh;
 
-    return $stmt->fetchAll();
-}
+        $stmt = $dbh->prepare(
+            'SELECT residence.*, residencetype.name as type
+                FROM residence JOIN residencetype
+                ON residence.type = residenceTypeID
+                WHERE residenceID = ?'
+        );
+
+        $stmt->execute(array($residenceID));
+        return $stmt->fetch();
+    }
+
+    function getResidencePhotos($residenceID)
+    {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT filepath, priority FROM residencePhoto WHERE lodge = ?');
+        $stmt->execute(array($residenceID));
+        return $stmt->fetchAll();
+    }
+
+
+    function getResidenceCommodities($residenceID)
+    {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'SELECT name
+                FROM residenceHasCommodity JOIN commodity
+                ON item = commodityID
+                WHERE lodge = ?'
+        );
+
+        $stmt->execute(array($residenceID));
+        return $stmt->fetchAll();
+    }
+
+    function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minRating, $maxRating)
+    {
+        global $dbh;
+
+        $query_vals = array();
+        $query_base = 
+            'SELECT residence.*, residencetype.name as typeStr, rating
+            FROM residence JOIN residencetype ON residence.type = residenceTypeID 
+                        LEFT JOIN (SELECT lodge, avg(rating) as rating
+                                        FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                                        GROUP BY lodge
+                                        ) as avgRatingPerResidence
+                            ON residence.residenceID = avgRatingPerResidence.lodge
+            WHERE 1=1'; 
+        
+        if (is_numeric($capacity)) {
+            $query_base .= ' AND capacity >= ?';
+            array_push($query_vals, intval($capacity));
+        }
+        if (is_numeric($nBeds)) {
+            $query_base .= ' AND nBeds >= ?';
+            array_push($query_vals, intval($nBeds));
+        }
+        if (is_numeric($minPrice)) {
+            $query_base .= ' AND pricePerDay >= ?';
+            array_push($query_vals, floatval($minPrice));
+        }
+        if (is_numeric($maxPrice)) {
+            $query_base .= ' AND pricePerDay <= ?';
+            array_push($query_vals, floatval($maxPrice));
+        }
+        if (is_numeric($minRating)) {
+            $query_base .= ' AND rating >= ' . floatval($minRating);
+        }
+        if (is_numeric($maxRating)) {
+            $query_base .= ' AND rating <= ' . floatval($maxRating);
+        }
+        if ($type !== "") {
+            $query_base .= ' AND typeStr = ?';
+            array_push($query_vals, $type);
+        }
+
+
+        $stmt = $dbh->prepare($query_base);
+        $stmt->execute($query_vals);
+
+        return $stmt->fetchAll();
+    }
 
 
 
@@ -164,12 +171,12 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 
         $stmt = $dbh->prepare(
             'SELECT rating
-             FROM residence LEFT JOIN (SELECT lodge, avg(rating) as rating
-                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
-                             GROUP BY lodge
+            FROM residence LEFT JOIN (SELECT lodge, avg(rating) as rating
+                            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                            GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
-             WHERE residence.residenceID = ?
+            WHERE residence.residenceID = ?
             '
         );
 
@@ -321,3 +328,4 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 
         return TRUE;        
     }
+?>

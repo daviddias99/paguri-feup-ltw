@@ -1,6 +1,7 @@
 <?php
 
 include_once('../database/residence_queries.php');
+include_once('../database/reservation_queries.php');
 
 function residenceHasCommodity($residenceCommodities, $commodityName)
 {
@@ -70,16 +71,14 @@ function toRadians($num) {
     return $num * (M_PI / 180);
 }
 
-function isResidenceInLocation($residence,$location_data){
+function isResidenceInLocation($residence, $location_data){
 
     return distanceBetweenPoints(['lat' => $residence['latitude'],'lng' => $residence[ 'longitude']],$location_data['coords']) <= $location_data['radius'];
 }
 
 function filterResidencesByLocation($location_data, $residences)
 {
-
     $resultResidences = [];
-
     for ($i = 0; $i < count($residences); $i++) {
 
         if (isResidenceInLocation($residences[$i], $location_data)) {
@@ -87,14 +86,49 @@ function filterResidencesByLocation($location_data, $residences)
             array_push($resultResidences, $residences[$i]);
         }
     }
-
     return $resultResidences;
+}
+
+function dateBetween($date_start, $date_end, $comp_start, $comp_end) {
+    if ($date_start === "" && $date_end === "") return TRUE;
+
+    if ($date_start === "") return $date_end >= $comp_start && $date_end <= $comp_end;
+    else if ($date_end === "") return $date_start >= $comp_start && $date_start <= $comp_end;
+    else return $date_start >= $comp_start && $date_end <= $comp_end;
 }
 
 function filterResidencesByAvailability($checkin, $checkout, $residences)
 {
-    // TODO implement this
-    return $residences;
+    if ($checkin === "" && $checkout === "") return $residences;
+    if ($checkin !== "" && $checkout !== "" && $checkin > $checkout) return [];
+
+    $resultResidences = [];
+    for ($i = 0; $i < count($residences); $i++) {
+
+        $residence = $residences[$i];
+        $available_periods = getResidenceAvailabilities($residence['residenceID']);
+
+        $valid_period = FALSE;
+        foreach($available_periods as $period) {
+            if (dateBetween($checkin, $checkout, $period['startDate'], $period['endDate'])) {
+                $valid_period = $period;
+                break;
+            }
+        }
+        if(!$valid_period) continue;
+
+        // check reservations inside valid_period
+
+        // if both != ""
+            // check if any reservation overlaps
+        
+        // else
+            // check if checkin/checkout day is available
+
+        array_push($resultResidences, $residence);
+
+    }
+    return $resultResidences;
 }
 
 $filter_data = json_decode($_GET['filter_data'], true);

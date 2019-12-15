@@ -161,6 +161,7 @@ function updateSearchResults(event) {
 
     // Array that contains the properties that match the filters
     let response = JSON.parse(event.target.responseText);
+    console.log(response);
 
     // update residences section
     buildResultCountHeader(document.getElementById("results_header"),response.length);
