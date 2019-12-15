@@ -86,6 +86,7 @@ function buildResidenceHTML(property){
     return resultHTML;
 }
 
+
 function buildResidenceListHTML(properties){
 
     let innerHTML = "";
@@ -105,7 +106,7 @@ function buildResultCountHeader(results_header,count){
   
     return results_header;
   
-  }
+}
 
 function updateSearchResults() {
 
@@ -118,7 +119,6 @@ function updateSearchResults() {
     buildResultCountHeader(document.getElementById("results_header"),response.length);
     results_section.innerHTML =  buildResidenceListHTML(response);
 }
-
 
 function filterResidencesInRadius(coords, radius) {
 

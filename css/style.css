@@ -1297,16 +1297,104 @@ body.residence_page #residence-images a.prev, body.residence_page #residence-ima
 
 /*Rent house page*/
 
+body.rent_house {
+
+    height: 90vh;
+}
+
+body.rent_house h1{
+
+    border-bottom: solid 2px var(--color-4);
+    width: 40%;
+    margin: 1em 0em 1em 0em;
+}
+
+body.rent_house #availabilities h2{
+
+    border-bottom: solid 2px var(--color-5);
+    width: 20%;
+    margin-top: 0em;
+}
+
+
 body.rent_house #main {
 
-    grid-area: main;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: initial;
+    
+
+}
+
+body.rent_house #residence_info_simplified{
+
     background-color: white;
     width: 50%;
     display: flex;
-    flex-direction: row;
-    margin-right: auto;
-    margin-left: auto;
+    flex-direction: column;
     margin-top: 1em;
     border-radius: 6px;
+    padding: 1em;
+    height: max-content;
+
+    margin-top: auto;
+    margin-bottom: auto;
 
 }
+
+body.rent_house #availabilities{
+
+    background-color: rgb(250,250,250);
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 6px;
+    padding: 1em;
+    overflow: scroll;
+    height: 30%;
+}
+
+body.rent_house #residence_summary{
+    width: 100%;
+}
+
+body.rent_house #residence_summary a{
+    text-decoration: none;
+}
+
+body.rent_house #residence_summary  .result:hover {
+
+    border-bottom: 4px solid  #685d79;;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+
+}
+
+body.rent_house  #display_price {
+
+    border: 1px solid black;
+    width:50%;
+    padding: 1em 1em 1em 1em;
+    margin: 1em auto 1em auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body.rent_house  #display_price p {
+
+    margin-left: 1em;
+}
+
+
+body.rent_house #rent_form {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+

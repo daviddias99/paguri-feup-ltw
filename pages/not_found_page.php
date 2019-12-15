@@ -3,7 +3,7 @@
     include_once('../templates/common/header.php');
     include_once('../templates/common/footer.php');
 
-    draw_header('search_results');
+    draw_header('search_results',NULL);
 
     draw_not_found();
 

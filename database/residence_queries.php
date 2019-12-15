@@ -50,21 +50,31 @@
         return $res === FALSE ? FALSE : $res['name'];
     }
 
-
-
-
 function getResidenceInfo($residenceID)
 {
     global $dbh;
 
     $stmt = $dbh->prepare(
-        'SELECT residence.*, residencetype.name as type
-            FROM residence JOIN residencetype
-            ON residence.type = residenceTypeID
+        '        SELECT residence.*, residencetype.name as type , rating
+        FROM residence JOIN residencetype 
+                        ON residence.type = residenceTypeID 
+                       LEFT JOIN (SELECT lodge, avg(rating) as rating
+                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                             GROUP BY lodge
+                            ) as avgRatingPerResidence
+                        ON residence.residenceID = avgRatingPerResidence.lodge
             WHERE residenceID = ?'
     );
 
-    $stmt->execute(array($residenceID));
+    try{
+
+        $stmt->execute(array($residenceID));
+    }
+    catch(PDOException $Exception) {
+        return FALSE;
+    }
+
+
     return $stmt->fetch();
 }
 
@@ -90,6 +100,27 @@ function getResidenceCommodities($residenceID)
     );
 
     $stmt->execute(array($residenceID));
+    return $stmt->fetchAll();
+}
+
+function getResidenceAvailabilities($residenceID)
+{
+    global $dbh;
+
+    $stmt = $dbh->prepare(
+        'SELECT *
+        FROM availability 
+        WHERE lodge = ?'
+    );
+
+    try{
+
+        $stmt->execute(array($residenceID));
+    }
+    catch(PDOException $Exception){
+        return FALSE;
+    }
+
     return $stmt->fetchAll();
 }
 

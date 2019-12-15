@@ -6,7 +6,7 @@ include_once('../database/user_queries.php');
 
 // Database fetching
 $residence = getResidenceInfo($_GET['id']);
-$owner = getUserInfoById($_GET['id']);
+$owner = getUserInfoById($residence['owner']);
 $commodities = getAllCommodities();
 $residenceCommodities = getResidenceCommodities($_GET['id']);
 $comments = getResidenceComments($_GET['id']);
@@ -16,24 +16,21 @@ $rating = getResidenceRating($_GET['id']);
 $loggedAccountStatus = [];
 $loggedAccountStatus['status'] = isset($_SESSION['username']);
 
-// Owner photo
-$ownerphoto = getUserPhotoID($owner['username']);
-$ownerphotopath = "../images/users/thumbnails_small/$ownerphoto";
-
 if (isset($_SESSION['username'])) {
 
     $loggedAccountStatus['username'] = $_SESSION['username'];
 }
 
-// Redirect the user if the residence does not exist
-if ($residence == FALSE) {
 
-    header('Location: not_found_page.php');
-}
+// Owner photo
+$ownerphoto = getUserPhotoID($owner['username']);
+$ownerphotopath = "../images/users/thumbnails_small/$ownerphoto";
+
+
 
 // Variable value assembly
 $owner_name = $owner['firstName'] . ' ' . $owner['lastName'];
-$rating = ($rating == null) ? '--' : $rating;
+$rating = ($rating == null) ? '--' : $rating/2;
 
 ?>
 
@@ -316,7 +313,7 @@ $rating = ($rating == null) ? '--' : $rating;
             <h1 class="ri_title"><?= $residence['title'] ?></h1>
             <h2 class="ri_type_and_location"> <?= ucfirst($residence['type']) . ' &#8226 ' . $residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country'] ?> </h2>
             <div class="ri_rating">
-                <h4><?= $rating ?> &#9733 </h4>
+                <h4><?= $rating?> &#9733 </h4>
             </div>
             <p class="ri_description"><?= ucfirst($residence['description']) ?></p>
 
