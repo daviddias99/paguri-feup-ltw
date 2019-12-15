@@ -73,7 +73,7 @@ CREATE TABLE comment(
     booking INTEGER NOT NULL REFERENCES reservation ON UPDATE CASCADE ON DELETE CASCADE,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    rating INTEGER NOT NULL CHECK(rating >= 0 and rating <= 5),
+    rating REAL NOT NULL CHECK(rating >= 0 and rating <= 10),
     datestamp DATE NOT NULL
 );
 

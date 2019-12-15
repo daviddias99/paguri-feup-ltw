@@ -8,8 +8,8 @@
     include_once('../database/residence_queries.php');
 
     draw_header('search_results', NULL);
-    add_map_includes();
     add_filter_includes();
+    add_map_includes();
     draw_main();
     draw_footer();
 ?>

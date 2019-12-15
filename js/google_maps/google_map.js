@@ -21,20 +21,23 @@ let map;
 let map_clusterer;
 let markers = [];
 let info_windows = [];
-let map_clusters_img_path = "../js/google_maps/map_clusters/m";
+const map_clusters_img_path = "../js/google_maps/map_clusters/m";
 
-let start_position = {
+const start_position = {
     lat: 41.177964, 
     lng: -8.597730
 };
 
 let iconBase = '../js/google_maps/map_icons/';   
 let icons = {
-    'house' : {
+    house : {
         icon: iconBase + 'house.png'
     },
-    'apartment' : {
+    apartment : {
         icon: iconBase + 'apartment.png'
+    },
+    tag : {
+        icon: iconBase + 'tag.png'
     }
 }
   
@@ -49,7 +52,9 @@ function initMap() {
     const current_page = getCurrentMapPage();
     switch(current_page) {
         case "search_results":
-            fetchMarkersFromDB();
+            //fetchMarkersFromDB();
+
+            map.addListener('drag', handleAddressChangePan);
             break;
 
         case "add_house":
@@ -81,41 +86,80 @@ function addMarker(location, markerInfo) {
     markers.push(newMarker);
 }
 
-function addMarkers(event) {
+function addMarkers(residences) {
     if (map == null) {
         console.log("map is null");
         return;
     }
-    let residences = JSON.parse(event.target.responseText);
 
-    markers = residences.map(function(residence) {
+    let newMarkers = residences.map(function(residence) {
 
-        /* residence info */
-        let address = residence.address;
-        let city = residence.city;
-        let country = residence.country;
-        let position = {lat: parseFloat(residence.latitude), lng: parseFloat(residence.longitude)};
-        let type = residence.type;
+        /* marker info */
+        const marker_info = {
+            residenceID: residence.residenceID,
+            title: residence.title,
+            pricePerDay: parseInt(residence.pricePerDay),
+            totalPrice: parseInt(residence.pricePerDay * reservationNumberOfDays()),
+            address: residence.address,
+            city: residence.city,
+            country: residence.country,
+            position: {
+                lat: parseFloat(residence.latitude),
+                lng: parseFloat(residence.longitude)
+            },
+            type: residence.typeStr,
+            rating: residence.rating
+        }
 
-        /*let title = 'Titulo';
-        let position = residence;
-        let type = 'house';*/
+        const width_base = 40;
+        const width_per_char = 8;
+        const priceString = marker_info.pricePerDay.toString();
+        const marker_width = width_base + width_per_char * priceString.length;
 
+        const normalIcon = {
+            url: icons.tag.icon,
+            scaledSize: new google.maps.Size(marker_width, 30)
+        };
+
+        const normalLabel = {
+            text: '€' + priceString,
+            fontWeight: "500"
+        };
 
         let newMarker = new google.maps.Marker({
-            position: position,
-            map: map,
-            title: address,
-            icon: icons[type].icon,
-            animation: google.maps.Animation.DROP
+            position: marker_info.position,
+            title: marker_info.address,
+            label: normalLabel,
+            icon: normalIcon
         });
-        newMarker.addListener('click', toggleBounce.bind(newMarker));
 
-        addInfoWindow(newMarker);
+        newMarker.addListener('mouseover', function() {
+            const hoverIcon = {
+                url: icons.tag.icon,
+                scaledSize: new google.maps.Size(marker_width*1.1, 30*1.1)
+            };
+
+            const hoverLabel = {
+                text: '€' + priceString,
+                fontSize: "16px",
+                fontWeight: "500"
+            };
+            newMarker.setIcon(hoverIcon);
+            newMarker.setLabel(hoverLabel);
+        });
+
+        newMarker.addListener('mouseout', function() {
+            newMarker.setIcon(normalIcon);
+            newMarker.setLabel(normalLabel);
+        });
+
+        addInfoWindow(newMarker, marker_info);
         newMarker.inCluster = true;
 
         return newMarker;
     });
+
+    markers.push(...newMarkers);
 
     initMapClusterer();
 }
@@ -139,12 +183,15 @@ function addInfoWindow(marker, markerInfo) {
     const current_page = getCurrentMapPage();
     switch(current_page) {
         case "search_results":
+            const starsHTML = isNaN(markerInfo.rating) ? "" : markerInfo.rating/2 + ' <i class="fas fa-star"></i>';
             infoWindowContent = `
-                <div class="marker_info_window">
-                    <p class="type">Tipo</p>
-                    <h6>Titulo</h6>
-                    <p>Cidade</p>
-                    <p>Pais</p>
+                <a class="search_results_info_window" href="../pages/view_house.php?id=` + markerInfo.residenceID + `">
+                    <img src="` + "https://picsum.photos/250/150" + `">
+                    <h3>` + markerInfo.type + `</h3>
+                    <h2>` + markerInfo.title + `</h2>
+                    <h3>€` + markerInfo.pricePerDay + ` per night!</h3>
+                    <p>` + starsHTML + `</p>
+                    <p>€` + markerInfo.totalPrice + ` total</p>
                 </div>`;
             break;
 
@@ -177,6 +224,11 @@ function initMapClusterer() {
     if (map == null) return;
 
     map_clusterer = new MarkerClusterer(map, markers, {imagePath: map_clusters_img_path});
+}
+
+function currentMapLocation() {
+    if (map == null) return null;
+    return map.getCenter();
 }
 
 function moveMap(position) {
@@ -245,7 +297,8 @@ function disableMarker(marker) {
 }
 
 function clearMarkers() {
-    for(let i = 0; i < markers.length; i++)
-        markers[i].setMap(null);
+    if (map_clusterer) {
+        map_clusterer.removeMarkers(markers, true);
+    }
     markers = [];
 }
