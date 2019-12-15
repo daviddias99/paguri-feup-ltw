@@ -2,19 +2,18 @@
     include_once('../includes/config.php');
     include_once('../templates/common/header.php');
     include_once('../templates/common/footer.php');
+    include_once('../templates/page_not_found_elements.php');
 
     draw_header('search_results',NULL);
 
-    draw_not_found();
+    if(isset($_GET['message'])){
+        draw_not_found($_GET['message']);
+    }
+    else{   
+        draw_not_found(null);
+    }
 
     draw_footer();
 ?>
 
 
-<?php function draw_not_found() { ?>
-
-    <section id="not_found_card" class="card">
-        <h1> Page not found :( </h1>
-    </section>
-
-<?php } ?>

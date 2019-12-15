@@ -27,4 +27,34 @@
         }
     }
 
+    function addReservation($reservationObj)
+    {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+                reservation(lodge,customer,startDate,endDate,numPeople)
+                VALUES (?,?,?,?,?)');
+            
+        try{
+            $stmt->execute(array(
+                    $reservationObj['lodge'],
+                    $reservationObj['customer'],
+                    $reservationObj['startDate'],
+                    $reservationObj['endDate'],
+                    1
+                    
+                )
+            );
+        }
+        catch(PDOException $Exception) {
+
+            return FALSE;
+        }
+
+        if ($stmt->rowCount() <= 0) return FALSE;
+
+        return $dbh->lastInsertId();
+    }
+
 ?>

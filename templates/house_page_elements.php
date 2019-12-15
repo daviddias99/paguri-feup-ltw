@@ -21,12 +21,9 @@ if (isset($_SESSION['username'])) {
     $loggedAccountStatus['username'] = $_SESSION['username'];
 }
 
-
 // Owner photo
 $ownerphoto = getUserPhotoID($owner['username']);
 $ownerphotopath = "../images/users/thumbnails_small/$ownerphoto";
-
-
 
 // Variable value assembly
 $owner_name = $owner['firstName'] . ' ' . $owner['lastName'];

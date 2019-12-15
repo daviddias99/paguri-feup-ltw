@@ -1317,44 +1317,17 @@ body.rent_house #availabilities h2{
 }
 
 
-body.rent_house #main {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: initial;
-    
-
-}
-
 body.rent_house #residence_info_simplified{
 
     background-color: white;
     width: 50%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 1em;
-    border-radius: 6px;
-    padding: 1em;
     height: max-content;
-
-    margin-top: auto;
-    margin-bottom: auto;
-
-}
-
-body.rent_house #availabilities{
-
-    background-color: rgb(250,250,250);
-    width: 30%;
     display: flex;
     flex-direction: column;
-    margin-top: auto;
-    margin-bottom: auto;
     border-radius: 6px;
     padding: 1em;
-    overflow: scroll;
-    height: 30%;
+    margin: 3em auto auto auto;
+
 }
 
 body.rent_house #residence_summary{
@@ -1397,4 +1370,9 @@ body.rent_house #rent_form {
     justify-content: space-around;
 }
 
+
+body.rent_house .disabled {
+
+    background-color: grey;
+}
 

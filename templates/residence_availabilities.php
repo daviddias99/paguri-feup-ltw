@@ -43,7 +43,7 @@ function getReservationsDates($reservations){
 
 }
 
-function translate($array){
+function translateDateArrToStr($array){
 
     $result = [];
 
@@ -62,12 +62,56 @@ function translate($array){
     
 }
 
+function translateStrArrToDate($array){
+
+    $result = [];
+
+    foreach($array as $i){
+
+        $newRow = [];
+        $newRow['startDate'] = strtotime($i['startDate']);
+        $newRow['endDate'] = strtotime($i['endDate']);
+
+        array_push($result,$newRow);
+    }
+
+
+    return $result ;
+
+    
+}
+
 function addOneDay($time){
     return strtotime(strftime('%Y-%m-%d',$time). ' +1 day');
 }
 
 function removeOneDay($time){
     return strtotime(strftime('%Y-%m-%d',$time). ' -1 day');
+}
+
+function datesRespectAvailabilities($availabilities,$checkin,$checkout){
+
+    $validDates = false;
+    $availabilities = translateStrArrToDate($availabilities);
+    $checkin = strtotime($checkin);
+    $checkout = strtotime($checkout);
+
+    for ($i = 0; $i < count($availabilities); $i++) {
+
+        $availability = $availabilities[$i];
+
+
+        if ($checkin >= $availability['startDate']
+            && $checkout <= $availability['endDate']
+        ) {
+
+            $validDates = true;
+            break;
+        }
+
+    }
+
+    return $validDates;
 }
 
 function getAvailabilities($id){
@@ -121,7 +165,7 @@ function getAvailabilities($id){
         
     }
 
-    return translate($result);
+    return translateDateArrToStr($result);
 
 }
 

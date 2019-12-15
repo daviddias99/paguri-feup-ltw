@@ -13,7 +13,7 @@ $residence = getResidenceInfo($_GET['id']);
 // Redirect the user if the residence does not exist
 if ($residence == FALSE) {
 
-    header('Location: not_found_page.php');
+    header('Location: not_found_page.php?message='.urlencode("The residence you're looking for does not exist."));
 }
 
 // Draw the page
