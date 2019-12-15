@@ -22,7 +22,7 @@ document.getElementById("submit_button").onclick = function (event) {
     const country = document.getElementById("country").value;
     const latitude = document.getElementById("latitude").value;
     const longitude = document.getElementById("longitude").value;
-    const pricePerDay = 5;
+    const pricePerDay = document.getElementById("price_input").value;
 
     const selectedCommodities = [];
     const commodityCheckboxes = document.querySelectorAll(".commodities");;
@@ -51,6 +51,7 @@ document.getElementById("submit_button").onclick = function (event) {
             country: country,
             latitude: latitude,
             longitude: longitude,
+            pricePerDay: ppicePerDay,
             commodities: JSON.stringify(selectedCommodities)
         }));
 };

@@ -247,7 +247,7 @@ body #add_place #map {
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto auto auto min-content auto auto auto;
-    grid-template-areas: "title title title type"
+    grid-template-areas: "title title type price"
                          "description description description description"
                          "location location location location"
                          "map map map map"
@@ -258,6 +258,7 @@ body #add_place #map {
 
 #add_place_form #title { grid-area: title; }
 #add_place_form #type { grid-area: type; }
+#add_place_form #price { grid-area: price; }
 #add_place_form #description { grid-area: description; }
 #add_place_form #location_wrapper { grid-area: location; }
 #add_place_form #map { grid-area: map; }

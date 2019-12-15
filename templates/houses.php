@@ -19,6 +19,10 @@ include_once('../database/user_queries.php');
                     <?php draw_house_type_options() ?>
                 </select>
             </section>
+            <section class="form_entry" id="price">
+                <label for="price_input">Price per night</label>
+                <input type="number" id="price_input" value="1" min="1">
+            </section>
             <section class="form_entry" id="description">
                 <label for="description_input">Description</label>
                 <textarea id="description_input" type="text" name="description" rows="6"></textarea>
@@ -50,6 +54,7 @@ include_once('../database/user_queries.php');
                 <label for="num_beds_input">Number of beds</label>
                 <input id="num_beds_input" type="number" name="num-beds" value="1" min="0" max="10" step="1">
             </section>
+
             <input id="latitude" type="hidden">
             <input id="longitude" type="hidden">
             <input id="city" type="hidden">
