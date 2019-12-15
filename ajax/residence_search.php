@@ -89,12 +89,21 @@ function filterResidencesByLocation($location_data, $residences)
     return $resultResidences;
 }
 
+// verifies if [$date_start, $date_end] is between [$comp_start, $comp_end]
 function dateBetween($date_start, $date_end, $comp_start, $comp_end) {
     if ($date_start === "" && $date_end === "") return TRUE;
 
     if ($date_start === "") return $date_end >= $comp_start && $date_end <= $comp_end;
     else if ($date_end === "") return $date_start >= $comp_start && $date_start <= $comp_end;
     else return $date_start >= $comp_start && $date_end <= $comp_end;
+}
+
+function dateOverlaps($date_start, $date_end, $comp_start, $comp_end) {
+    if ($date_start === "" && $date_end === "") return FALSE;
+
+    if ($date_start === "") return $date_end >= $comp_start && $date_end <= $comp_end;
+    else if ($date_end === "") return $date_start >= $comp_start && $date_start <= $comp_end;
+    else return !($date_end < $comp_start || $date_start > $comp_end);
 }
 
 function filterResidencesByAvailability($checkin, $checkout, $residences)
@@ -106,8 +115,9 @@ function filterResidencesByAvailability($checkin, $checkout, $residences)
     for ($i = 0; $i < count($residences); $i++) {
 
         $residence = $residences[$i];
-        $available_periods = getResidenceAvailabilities($residence['residenceID']);
 
+        // find corresponding availability period
+        $available_periods = getResidenceAvailabilities($residence['residenceID']);
         $valid_period = FALSE;
         foreach($available_periods as $period) {
             if (dateBetween($checkin, $checkout, $period['startDate'], $period['endDate'])) {
@@ -118,14 +128,17 @@ function filterResidencesByAvailability($checkin, $checkout, $residences)
         if(!$valid_period) continue;
 
         // check reservations inside valid_period
+        $reservations = getResidenceReservationsBetween($residence['residenceID'], $valid_period['startDate'], $valid_period['endDate']);
+        $reservations_overlap = FALSE;
+        foreach($reservations as $reservation) {
+            if (dateOverlaps($checkin, $checkout, $reservation['startDate'], $reservation['endDate'])) {
+                $reservations_overlap = TRUE;
+                break;
+            }
+        }
 
-        // if both != ""
-            // check if any reservation overlaps
-        
-        // else
-            // check if checkin/checkout day is available
-
-        array_push($resultResidences, $residence);
+        if(!$reservations_overlap)
+            array_push($resultResidences, $residence);
 
     }
     return $resultResidences;

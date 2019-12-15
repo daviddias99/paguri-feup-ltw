@@ -86,7 +86,6 @@ function addMarkers(residences) {
         console.log("map is null");
         return;
     }
-    //let residences = JSON.parse(event.target.responseText);
 
     let newMarkers = residences.map(function(residence) {
 

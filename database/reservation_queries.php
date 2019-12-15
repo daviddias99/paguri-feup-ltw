@@ -13,6 +13,19 @@
         return $stmt->fetchAll();
     }
 
+    function getResidenceReservationsBetween($residenceID, $periodStart, $periodEnd) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'SELECT reservationID, lodge, customer, strftime("%Y-%m-%d", startDate) as startDate, strftime("%Y-%m-%d", endDate) as endDate, numPeople
+            FROM reservation
+            WHERE lodge = ?
+            AND strftime("%Y-%m-%d", startDate) >= ?
+            AND strftime("%Y-%m-%d", endDate) <= ?');
+        $stmt->execute(array($residenceID, $periodStart, $periodEnd));
+        return $stmt->fetchAll();
+    }
+
     function deleteReservation($reservationID) {
         global $dbh;
 
