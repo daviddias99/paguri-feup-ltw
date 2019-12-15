@@ -1,7 +1,5 @@
 'use strict'
 
-console.log("running");
-
 function encodeForAjax(data) {
     return Object.keys(data).map(function (k) {
         return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
@@ -26,9 +24,14 @@ document.getElementById("submit_button").onclick = function (event) {
     const longitude = document.getElementById("longitude").value;
     const pricePerDay = 5;
 
-    const request = new XMLHttpRequest();
+    const selectedCommodities = [];
+    const commodityCheckboxes = document.querySelectorAll(".commodities");;
+    commodityCheckboxes.forEach(element => {
+        if (element.checked)
+            selectedCommodities.push(element.value);
+    });
 
-    console.log("send post");
+    const request = new XMLHttpRequest();
 
     request.open("post", "../api/residence.php?", true);
     request.setRequestHeader('Accept', 'application/json');
@@ -47,6 +50,7 @@ document.getElementById("submit_button").onclick = function (event) {
             city: city,
             country: country,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            commodities: JSON.stringify(selectedCommodities)
         }));
 };

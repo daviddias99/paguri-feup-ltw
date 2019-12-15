@@ -80,7 +80,7 @@ function draw_commodity_checkboxes()
     foreach ($commodities as $commodity) {
         ?>
         <label>
-            <input type="checkbox" name="commodities[]" value=<?= $commodity['name'] ?>> <?= ucfirst($commodity['name']) ?>
+            <input type="checkbox" class="commodities" name="commodities[]" value="<?= $commodity['commodityID'] ?>"> <?= ucfirst($commodity['name']) ?>
         </label>
 <?php
     }

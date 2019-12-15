@@ -33,7 +33,7 @@
     {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT name FROM commodity');
+        $stmt = $dbh->prepare('SELECT * FROM commodity');
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -182,6 +182,15 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
                     $residenceObj['longitude']
                 )
             );
+
+            $residenceID = $dbh->lastInsertId();
+
+            $commodities = json_decode($residenceObj['commodities']);
+
+            foreach ($commodities as $commodity) {
+                $commodityStmt = $dbh->prepare('INSERT INTO residencehascommodity VALUES (?, ?)');
+                $commodityStmt->execute(array($residenceID, $commodity));
+            }
         }
         catch(PDOException $Exception) {
             return FALSE;
@@ -189,7 +198,7 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 
         if ($stmt->rowCount() <= 0) return FALSE;
 
-        return $dbh->lastInsertId();
+        return $residenceID;
     }
 
 
