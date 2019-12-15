@@ -58,16 +58,16 @@ class FilterState {
 function getCurrentFilterState() {
 
     const location = document.getElementById("location").value;
-    const nBeds = document.getElementById("nBeds").value
-    const capacity = document.getElementById("capacity").value
-    const checkin = document.getElementById("check_in").value
-    const checkout = document.getElementById("check_out").value
-    const type = document.getElementById("housing_type").value
-    const priceFrom = document.getElementById("minPrice").value
-    const priceTo = document.getElementById("maxPrice").value
-    const ratingFrom = document.getElementById("minRating").value
-    const ratingTo = document.getElementById("maxRating").value
-    const commodities = document.getElementsByName("commodity")
+    const nBeds = document.getElementById("nBeds").value;
+    const capacity = document.getElementById("capacity").value;
+    const checkin = document.getElementById("check_in").value;
+    const checkout = document.getElementById("check_out").value;
+    const type = document.getElementById("housing_type").value;
+    const priceFrom = document.getElementById("minPrice").value;
+    const priceTo = document.getElementById("maxPrice").value;
+    const ratingFrom = document.getElementById("minRating").value;
+    const ratingTo = document.getElementById("maxRating").value;
+    const commodities = document.getElementsByName("commodity");
     let commoditiesObj = {};
 
     for (let i = 0; i < commodities.length; i++) {

@@ -30,11 +30,14 @@ let start_position = {
 
 let iconBase = '../js/google_maps/map_icons/';   
 let icons = {
-    'house' : {
+    house : {
         icon: iconBase + 'house.png'
     },
-    'apartment' : {
+    apartment : {
         icon: iconBase + 'apartment.png'
+    },
+    tag : {
+        icon: iconBase + 'tag.png'
     }
 }
   
@@ -87,30 +90,52 @@ function addMarkers(residences) {
         return;
     }
 
+    // determine number of days in the reservation
+    const checkin = document.getElementById("check_in").value
+    const checkout = document.getElementById("check_out").value
+    let nDays = 1;
+    if (checkin != "" && checkout != "")
+        nDays = Math.ceil(Math.abs(new Date(checkout.replace(/-/g, '/')) - new Date(checkin.replace(/-/g, '/'))) / (1000 * 60 * 60 * 24));
+
     let newMarkers = residences.map(function(residence) {
 
-        /* residence info */
-        let address = residence.address;
-        let city = residence.city;
-        let country = residence.country;
-        let position = {lat: parseFloat(residence.latitude), lng: parseFloat(residence.longitude)};
-        let type = residence.typeStr;
+        /* marker info */
+        const marker_info = {
+            title: residence.title,
+            pricePerDay: residence.pricePerDay,
+            totalPrice: residence.pricePerDay * nDays,
+            address: residence.address,
+            city: residence.city,
+            country: residence.country,
+            position: {
+                lat: parseFloat(residence.latitude),
+                lng: parseFloat(residence.longitude)
+            },
+            type: residence.typeStr,
+            rating: residence.rating
+        }
 
-        /*let title = 'Titulo';
-        let position = residence;
-        let type = 'house';*/
+        const width_base = 40;
+        const width_per_char = 8;
+        const priceString = parseInt(marker_info.totalPrice).toString();
+        const marker_width = width_base + width_per_char * priceString.length;
 
+        const image = {
+            url: icons.tag.icon,
+            scaledSize: new google.maps.Size(marker_width, 30)
+        };
 
         let newMarker = new google.maps.Marker({
-            position: position,
-            title: address,
+            position: marker_info.position,
+            title: marker_info.address,
+            label: priceString + '€',
             //map: map,
-            icon: icons[type].icon,
-            animation: google.maps.Animation.DROP
+            icon: image
+            //animation: google.maps.Animation.DROP
         });
-        newMarker.addListener('click', toggleBounce.bind(newMarker));
+        //newMarker.addListener('click', toggleBounce.bind(newMarker));
 
-        addInfoWindow(newMarker);
+        addInfoWindow(newMarker, marker_info);
         newMarker.inCluster = true;
 
         return newMarker;
