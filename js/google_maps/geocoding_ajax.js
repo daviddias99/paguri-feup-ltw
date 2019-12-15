@@ -194,6 +194,7 @@ function handleAddressChangeClick(event) {
 
   const address = document.getElementById('location').value;  
   if (address.length == 0) return;
+  
   getAddressInfo(address);
 }
 
@@ -208,8 +209,10 @@ function handleAddressChangeInput(event) {
 function handleAddressChangePan(event) {
   clearTimeout(center_changed_timeout);
 
-  const coords = currentMapLocation();
-  center_changed_timeout = setTimeout(() => reverseGeocoding(coords), 500);
+  center_changed_timeout = setTimeout(function() {
+    const coords = currentMapLocation();
+    reverseGeocoding(coords);
+  }, 500);
 }
 
 // install event listeners

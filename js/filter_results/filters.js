@@ -1,5 +1,8 @@
 'use strict'
 
+let prev_filter_state = null;
+let prev_residences_response = null;
+
 class FilterState {
 
     constructor(location, checkin, checkout, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
@@ -172,16 +175,20 @@ function buildResultCountHeader(results_header, count){
 
 function updateSearchResults(event) {
 
-    let results_section = document.getElementById("results");
-    results_section.innerHTML = "";
-
     // Array that contains the properties that match the filters
     let response = JSON.parse(event.target.responseText);
-    console.log(response);
+
+    // same residences as before, no need to update
+    if (JSON.stringify(response) === JSON.stringify(prev_residences_response)) {
+        return;
+    }
+
+    prev_residences_response = JSON.parse(JSON.stringify(response));
 
     // update residences section
+    let results_section = document.getElementById("results");
+    results_section.innerHTML = buildResidenceListHTML(response);
     buildResultCountHeader(document.getElementById("results_header"),response.length);
-    results_section.innerHTML =  buildResidenceListHTML(response);
     
     // update markers
     clearMarkers();
@@ -192,6 +199,14 @@ function updateSearchResults(event) {
 function filterUpdateHandler(coords, radius) {
 
     const filterState = getCurrentFilterState();
+    
+    // state did not change
+    if (JSON.stringify(prev_filter_state) === JSON.stringify(filterState)) {
+        return;
+    }
+
+    prev_filter_state = filterState;
+
     const location = {coords: coords, radius: radius};
 
     const encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
