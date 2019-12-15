@@ -1122,3 +1122,19 @@ body.residence_page .review .reviewer_avatar img {
 #login .button, #register .button {
     margin: 0.5em;
 }
+
+
+#places_list h1 {
+    margin: 0.8em 0.3em;
+}
+
+.places_list_entry {
+    display: flex;
+    flex-direction: row;
+}
+
+.places_list_entry .place_operations {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

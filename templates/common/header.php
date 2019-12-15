@@ -65,6 +65,11 @@ function draw_header($body_class, $scripts)
                 </a>
             </li>
             <li>
+                <a href="../pages/reservations.php">
+                    My reservations
+                </a>
+            </li>
+            <li>
                 <a href="../actions/action_logout.php">
                     Log out
                 </a>

@@ -78,23 +78,60 @@ function draw_commodity_checkboxes()
 <?php
 function draw_list_user_places($userID)
 {
+    $user = getUserInfoById($userID);
+    $userLoggedIn = (isset($_SESSION['username']) and $_SESSION['username'] == $user['username']);
     $places = getUserResidences($userID);
     ?>
     <section id="places_list" class="card">
-        <?php print_r($places); ?>
-        <?php foreach ($places as $place) {
-                draw_places_list_entry($place);
-            } ?>
+
+        <?php if ($userLoggedIn) { ?>
+            <h1>My places</h1>
+        <?php } else { ?>
+            <h1><?= $user['firstName'] ?> <?= $user['lastName'] ?>'s places</h1>
+        <?php }
+            foreach ($places as $place) { ?>
+            <section class="places_list_entry">
+                <?php
+                        draw_place_summary($place);
+                        if ($userLoggedIn)
+                            draw_place_operations($place);
+                        ?>
+            </section>
+        <?php } ?>
     </section>
 <?php
 }
 ?>
 
 <?php
-function draw_places_list_entry($place)
+function draw_place_summary($place)
 {
     ?>
-    <h1><?= $place['title'] ?></h2>
-    <?php
-    }
-    ?>
+    <section class="result">
+        <section class="image">
+            <img src="../resources/house_image_test.jpeg">
+        </section>
+        <section class="info">
+            <h1 class="info_title"><?= $place['title'] ?> </h1>
+            <h2 class="info_type_and_location"><?= $place['type'] . ' &#8226 ' . $place['address'] ?></h2>
+            <p class="info_description"> <?= $place['bio'] ?></p>
+            <p class="info_ppd"><?= $place['price'] ?></p>
+            <p class="info_score">4.5</p>
+            <p class="info_capacity"> <?= $place['capacity'] ?></p>
+            <p class="info_bedrooms"> <?= $place['nBedrooms'] ?></p>
+        </section>
+    </section>
+<?php
+}
+?>
+
+<?php
+function draw_place_operations($place)
+{ ?>
+    <section class="place_operations">
+        <a class="button" href="">Add availability</a>
+        <a class="button" href="">Reservations</a>
+        <a class="button" href="">Edit</a>
+        <a class="button" href="">Remove</a>
+    </section>
+<?php } ?>
