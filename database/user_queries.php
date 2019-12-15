@@ -68,17 +68,17 @@
     function createUserByObj($userObj) {
         global $dbh;
 
-        if (userExists($userObj['username'], $userObj['email'])) 
+        if (userExists($userObj['username'], $userObj['email']))
             return FALSE;
 
         $options = ['cost' => 12];
 
         $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute(array(
-            $userObj['username'], 
-            $userObj['email'], 
-            $userObj['firstName'], 
-            $userObj['lastName'], 
+            $userObj['username'],
+            $userObj['email'],
+            $userObj['firstName'],
+            $userObj['lastName'],
             password_hash($userObj['password'], PASSWORD_DEFAULT, $options
         )));
 
@@ -163,7 +163,7 @@
         return $oldPhotoID;
     }
 
-    function getUserRowID($username) {
+    function getUserID($username) {
         global $dbh;
 
         $stmt = $dbh->prepare('SELECT RowID FROM user WHERE username = ?');

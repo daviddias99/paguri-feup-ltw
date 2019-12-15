@@ -2,8 +2,6 @@
 
 include_once('../database/residence_queries.php');
 
-$types = getResidenceTypes();
-$commodities = getAllCommodities();
 
 
 ?>

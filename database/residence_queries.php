@@ -9,9 +9,9 @@
 
         $stmt = $dbh->prepare(
             'SELECT residence.*, residencetype.name as typeStr , rating
-                FROM residence JOIN residencetype ON residence.type = residenceTypeID 
+                FROM residence JOIN residencetype ON residence.type = residenceTypeID
                                 LEFT OUTER JOIN (SELECT lodge, avg(rating) as rating
-                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                                     GROUP BY lodge) as avgRatingPerResidence
                                 ON residence.residenceID = avgRatingPerResidence.lodge'
         );
@@ -98,16 +98,16 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
     global $dbh;
 
     // Some injection safety for the rating variables. Since the query is not working properly we need this workaround
-    
+
     $minRating = floatval($minRating);
     $maxRating = floatval($maxRating);
 
     $stmt = $dbh->prepare(
         'SELECT residence.*, residencetype.name as typeStr , rating
-        FROM residence JOIN residencetype 
-                        ON residence.type = residenceTypeID 
+        FROM residence JOIN residencetype
+                        ON residence.type = residenceTypeID
                        LEFT JOIN (SELECT lodge, avg(rating) as rating
-                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                              GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
@@ -125,9 +125,9 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 
         $stmt = $dbh->prepare(
             'SELECT lodge, avg(rating) as rating
-            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
             GROUP BY lodge'
-                
+
         );
 
         $stmt->execute();
@@ -141,7 +141,7 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         $stmt = $dbh->prepare(
             'SELECT rating
              FROM residence LEFT JOIN (SELECT lodge, avg(rating) as rating
-                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                              GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
@@ -159,11 +159,11 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'INSERT INTO 
-                residence(owner, title, description, pricePerDay, capacity, nBedrooms, 
+            'INSERT INTO
+                residence(owner, title, description, pricePerDay, capacity, nBedrooms,
                 nBathrooms, nBeds, type, address, city, country, latitude, longitude)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-            
+
         try{
             $stmt->execute(array(
                     $residenceObj['owner'],
@@ -265,7 +265,7 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
                     city = ?,
                     country = ?,
                     latitude = ?,
-                    longitude = ?                
+                    longitude = ?
             WHERE residenceID = ?');
 
         try {
@@ -295,5 +295,17 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
 
         if ($stmt->rowCount() <= 0) return FALSE;
 
-        return TRUE;        
+        return TRUE;
+    }
+
+    function getUserResidences($userID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT residence.*
+                               FROM residence, user
+                               WHERE userID = owner AND userID = ?');
+
+        $stmt->execute(array($userID));
+
+        return $stmt->fetchAll();
     }

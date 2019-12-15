@@ -47,20 +47,20 @@ function draw_header($body_class, $scripts)
     <?php
     function draw_logged_in_nav($username)
     {
-        $photo = getUserPhotoID($username);
-        $photoPath = "../images/users/thumbnails_small/$photo";
+        $user = getUserInfo($username);
+        $photoPath = "../images/users/thumbnails_small/" . $user['photo'];
         ?>
         <input type="checkbox" class="hamburger-btn" id="hamburger-btn" />
         <label class="hamburger" for="hamburger-btn"><span class="hamburger-icon"></span></label>
         <ul class="menu">
             <li>
-                <a id="username" href="../pages/user.php?id=<?= $username ?>">
+                <a id="username" href="../pages/user.php?id=<?= $user['userID'] ?>">
                     <img class="profile_pic" src=<?= $photoPath ?> alt="<?= $username ?>'s profile picture." />
                     <?= $username ?>
                 </a>
             </li>
             <li>
-                <a href="../pages/owner_houses.php">
+                <a href="../pages/user_places.php?id=<?= $user['userID'] ?>">
                     My places
                 </a>
             </li>

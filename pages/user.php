@@ -5,8 +5,8 @@
     include_once('../templates/user.php');
     include_once('../database/user_queries.php');
 
-    $username = $_GET['id'];
-    $user = getUserInfo($username);
+    $id = $_GET['id'];
+    $user = getUserInfoById($id);
 
     draw_header('user_profile', null);
     draw_user($user);

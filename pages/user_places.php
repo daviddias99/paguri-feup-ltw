@@ -2,13 +2,13 @@
     include_once('../includes/config.php');
     include_once('../templates/common/header.php');
     include_once('../templates/common/footer.php');
+    include_once('../templates/houses.php');
 
-    if (! isset($_SESSION['username']))
-        draw_header('search_results', $_SESSION['username']);
-    else
-        draw_header('search_results', null);
+    draw_header('user_profile', null);
 
+    $userID = $_GET['id'];
 
+    draw_list_user_places($userID);
 
     draw_footer();
 ?>

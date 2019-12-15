@@ -1,8 +1,9 @@
 <?php
-    include_once('../database/residence_queries.php');
+include_once('../database/residence_queries.php');
 ?>
 
-<?php function draw_add_house() { ?>
+<?php function draw_add_house()
+{ ?>
     <section id="search_box">
         <h1>Add house</h1>
         <form action="../actions/action_add_house.php" method="post">
@@ -19,7 +20,7 @@
             <label>
                 Location <input id="location" type="text" name="location" value="">
             </label>
-         <!--   <label>
+            <!--   <label>
                 Description <textarea id="description" type="text" name="description" rows="6" cols="80"></textarea>
             </label>
             <label>
@@ -45,28 +46,55 @@
 <?php } ?>
 
 <?php
-    function draw_house_type_options() {
-        $types = getResidenceTypes();
+function draw_house_type_options()
+{
+    $types = getResidenceTypes();
 
-        foreach ($types as $type) {
-?>
-            <option value=<?=$type['name']?>><?=ucfirst($type['name'])?></option>
+    foreach ($types as $type) {
+        ?>
+        <option value=<?= $type['name'] ?>><?= ucfirst($type['name']) ?></option>
 <?php
-        }
     }
+}
 ?>
 
 
 <?php
-    function draw_commodity_checkboxes() {
-        $commodities = getAllCommodities();
+function draw_commodity_checkboxes()
+{
+    $commodities = getAllCommodities();
 
-        foreach ($commodities as $commodity) {
-?>
-            <label>
-                <input type="checkbox" name="commodities[]" value=<?=$commodity['name']?>> <?=ucfirst($commodity['name'])?>
-            </label>
+    foreach ($commodities as $commodity) {
+        ?>
+        <label>
+            <input type="checkbox" name="commodities[]" value=<?= $commodity['name'] ?>> <?= ucfirst($commodity['name']) ?>
+        </label>
 <?php
-        }
     }
+}
 ?>
+
+
+<?php
+function draw_list_user_places($userID)
+{
+    $places = getUserResidences($userID);
+    ?>
+    <section id="places_list" class="card">
+        <?php print_r($places); ?>
+        <?php foreach ($places as $place) {
+                draw_places_list_entry($place);
+            } ?>
+    </section>
+<?php
+}
+?>
+
+<?php
+function draw_places_list_entry($place)
+{
+    ?>
+    <h1><?= $place['title'] ?></h2>
+    <?php
+    }
+    ?>
