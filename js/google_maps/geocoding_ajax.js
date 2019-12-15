@@ -8,6 +8,7 @@ let search_radius = 2; //km
 
 /* Variable used to store reference to return from setTimeout */
 let address_timeout;
+let center_changed_timeout;
 
 function encodeForAjax(data) {
     return Object.keys(data).map(function(k){
@@ -30,6 +31,7 @@ function updateAddressInfo(event) {
       case "search_results":
           updateURLFilters();
           filterUpdateHandler(coords, search_radius);
+          buildResultsHeaderHTML(document.getElementById("results_header"));
           break;
 
       case "add_house":
@@ -63,7 +65,7 @@ function updateAddressInfo(event) {
     }
 
     moveMap(coords);    
-    setMapZoom(18);
+    setMapZoom(16);
 }
 
 function updateInputsValues(event, latLng) {
@@ -71,17 +73,22 @@ function updateInputsValues(event, latLng) {
     if(!checkMapsAPIResponse(response)) return;
 
     const best_result = response.results[0];
+    const address = best_result.formatted_address;
 
     const current_page = getCurrentMapPage();
     switch(current_page) {
       case "search_results":
+
+          document.getElementById("location").value = address;
+          updateURLFilters();
+          buildResultsHeaderHTML(document.getElementById("results_header"));
+          filterUpdateHandler(latLng, search_radius);
           break;
 
       case "add_house":
 
           const title = document.getElementById("title").value || "New residence";
           const addressInfo = parseAddressInfo(best_result);
-          const address = best_result.formatted_address;
 
           const house_type_select = document.getElementById("house_type");
             
@@ -99,12 +106,13 @@ function updateInputsValues(event, latLng) {
           document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
           document.getElementById("country").value = markerInfo.country;
           document.getElementById("location").value = address;
+
+
+          moveMap(latLng);  
           break;
       default:
           throw new Error("Unknown current page.");
-    }
-
-    moveMap(latLng);    
+    }  
 }
 
 function checkMapsAPIResponse(response) {
@@ -180,11 +188,11 @@ function reverseGeocoding(latLng) {
 
 function handleAddressChangeClick(event) {
 
-  const address = document.getElementById('location').value;  
   if (current_page == "search_results") {
-    buildResultsHeaderHTML(document.getElementById("results_header"),address);
+    buildResultsHeaderHTML(document.getElementById("results_header"));
   }
 
+  const address = document.getElementById('location').value;  
   if (address.length == 0) return;
   getAddressInfo(address);
 }
@@ -195,6 +203,13 @@ function handleAddressChangeInput(event) {
   const address = event.target.value;
   if (address.length == 0) return;
   address_timeout = setTimeout(() => getAddressInfo(address), 1000);
+}
+
+function handleAddressChangePan(event) {
+  clearTimeout(center_changed_timeout);
+
+  const coords = currentMapLocation();
+  center_changed_timeout = setTimeout(() => reverseGeocoding(coords), 500);
 }
 
 // install event listeners

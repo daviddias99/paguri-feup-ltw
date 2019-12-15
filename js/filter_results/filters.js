@@ -110,6 +110,10 @@ function buildResidenceHTML(property){
 
     if (property['rating'] == null)
         property['rating'] = '-- ';
+    
+    let typeStr = property['typeStr'];
+    if (typeStr.length > 0)
+        typeStr = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
 
     resultHTML = 
         '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
@@ -119,7 +123,7 @@ function buildResidenceHTML(property){
                 '</section>' +  
                 '<section class="info">' + 
                     '<h1 class="info_title">' + property['title'] + '</h1>' +
-                    '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
+                    '<h2 class="info_type_and_location">' + typeStr + ' &#8226 ' + property['address']  + '</h2>' +
                     '<p class="info_description">'  + descriptionTrimmed + '</p>' +
                     '<p class="total_price">' + totalPriceSimple + '</p>' +
                     '<p class="info_ppd">' + ppdSimple +'</p>' +
@@ -143,8 +147,9 @@ function buildResidenceListHTML(properties){
     return innerHTML;
 }
 
-function buildResultsHeaderHTML(results_header, address){
+function buildResultsHeaderHTML(results_header){
 
+    const address = document.getElementById('location').value;  
     let h1 = document.createElement("h1");
     if (address.length > 0)
         h1.innerHTML = "Showing places near '" + address + "'" ;
@@ -154,7 +159,7 @@ function buildResultsHeaderHTML(results_header, address){
 
 }
 
-function buildResultCountHeader(results_header,count){
+function buildResultCountHeader(results_header, count){
 
     let h2 = document.createElement("h2");
     h2.innerHTML = count + " results found (Wow!)" ;

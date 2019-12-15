@@ -21,9 +21,9 @@ let map;
 let map_clusterer;
 let markers = [];
 let info_windows = [];
-let map_clusters_img_path = "../js/google_maps/map_clusters/m";
+const map_clusters_img_path = "../js/google_maps/map_clusters/m";
 
-let start_position = {
+const start_position = {
     lat: 41.177964, 
     lng: -8.597730
 };
@@ -53,6 +53,8 @@ function initMap() {
     switch(current_page) {
         case "search_results":
             //fetchMarkersFromDB();
+
+            map.addListener('drag', handleAddressChangePan);
             break;
 
         case "add_house":
@@ -222,6 +224,11 @@ function initMapClusterer() {
     if (map == null) return;
 
     map_clusterer = new MarkerClusterer(map, markers, {imagePath: map_clusters_img_path});
+}
+
+function currentMapLocation() {
+    if (map == null) return null;
+    return map.getCenter();
 }
 
 function moveMap(position) {
