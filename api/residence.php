@@ -12,7 +12,7 @@
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
-    if (!isset($_SESSION['userID'])) {
+    if (!isset($_SESSION['userID']) && !isset($_SESSION['isAdmin'])) {
         api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate itself to access this resource.');
     }
 
@@ -88,7 +88,7 @@
             api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
         }
 
-        if ($_SESSION['userID'] != $residenceToDelete['owner'])
+        if ($_SESSION['userID'] != $residenceToDelete['owner'] && !isset($_SESSION['isAdmin']))
             api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the residence to delete it.');
 
         $deletedRes = deleteResidence($_GET['id']);
@@ -161,7 +161,7 @@
         if(!getResidenceTypeWithID($values['type']))
             api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
     
-        if($_SESSION['userID'] != $values['owner'])
+        if($_SESSION['userID'] != $values['owner'] && !isset($_SESSION['isAdmin']))
             api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the provided residence.');
     }
 

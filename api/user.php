@@ -10,10 +10,6 @@
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
-    if (!isset($_SESSION['userID'])) {
-        api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate itself to access this resource.');
-    }
-
     include_once("../database/user_queries.php");
 
     $response = array();
@@ -27,6 +23,9 @@
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given id.');
             }
 
+            if ($_SESSION['userID'] != $info['userID'])
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
+
             $response['user'] = $info;
         }
         else if(array_key_exists('username', $_GET)) {
@@ -35,6 +34,9 @@
             if ($info == FALSE) {
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given username.');
             }
+
+            if ($_SESSION['userID'] != $info['userID'])
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
         }
@@ -44,10 +46,16 @@
             if ($info == FALSE) {
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given email.');
             }
+
+            if ($_SESSION['userID'] != $info['userID'])
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
         }
         else {
+            if (!isset($_SESSION['isAdmin']))
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
+
             $response['users'] = getAllUsers();
         }
 
