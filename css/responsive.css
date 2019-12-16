@@ -33,6 +33,7 @@
 
 @media (max-width: 60em) {
 
+
     body.search_results #main {
 
         width: 100%;
@@ -99,9 +100,6 @@
 
 @media (max-width: 40em) {
     
-    #site_header nav{
-        display:none;
-    }
 
     body.search_results #main {
     
@@ -260,4 +258,173 @@ body.search_results #filters button { grid-area: filter_bttn; }
 }
 
 
+}
+
+@media (max-width: 60em) {
+
+    body.residence_page #main {
+
+        flex-direction: column;
+        height: auto;
+    }
+
+    body.residence_page #left_side {
+
+        width: 100%;
+    }
+
+    body.residence_page #right_side {
+
+        width: 100%;
+        margin: 0em;
+    }
+
+
+    .slide_show_img {
+
+        width: 100%;
+        height: auto;
+    }
+
+    body.residence_page #residence_info {
+
+        grid-template-rows: 0.7fr 0.6fr 1fr 0.7fr 0.7fr 1fr;
+    }
+
+    body.residence_page #review_section {
+        width: 95%;
+        margin: 1em auto 0em auto;
+    }
+
+}
+
+@media (max-width: 40em) {
+    
+    #site_header nav {
+
+        display: none;
+    }
+
+    body.residence_page #main {
+
+        width: 100%;
+        margin: 1em 0 0 0;
+        box-sizing: border-box;
+    }
+
+
+    #residence_info h1{
+        width: 100%;
+        text-decoration: underline;
+        border-bottom: none;
+    }
+
+    body.residence_page #residence_info{
+        grid-template-rows: 0.4fr 0.3fr 0.6fr 0.7fr 0.7fr 0.6fr 0.6fr;
+
+        grid-template-areas:
+        "title title title rating" 
+        "type_and_location type_and_location type_and_location type_and_location" 
+        "description description description description" 
+        "properties properties properties properties" 
+        "commodities commodities commodities commodities" 
+        "owner owner owner owner "
+        "rent_button rent_button rent_button rent_button ";
+    }
+
+    body.residence_page #residence_info #ri_residence_properties{
+        flex-direction: column;
+    }
+
+    body.residence_page #residence_info #ri_residence_properties p{
+        margin: 0em;
+    }
+
+
+    body.residence_page #rent_action_form {
+
+        justify-self: center;
+    }
+
+    body.residence_page #residence_info #residence_commodities ul{
+
+        padding: 0.5em;
+    }
+
+    body.residence_page #review_section{
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0em 0em 0.5em 0.5em
+    }
+
+    .main_review {
+
+        height: 6em;
+        grid-template-areas: 
+        "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating comment_date_and_rating" 
+        "comment_user_info comment_title comment_title comment_title comment_title" 
+        "comment_user_info comment_content comment_content comment_content options";
+    }
+
+    .comment_user_info{
+        padding: 0em 0.5em 0em 0em;
+    }
+
+    .comment_user_info .reviewer_username{
+        font-size: x-small;
+    }
+
+    .comment_user_info .reviewer_name{
+        font-size: small;
+    }
+    
+    .comment_date_and_rating{
+        font-size: small;
+    }
+
+
+    .comment_title {
+        font-size: smaller;
+    }
+
+    
+
+    .comment_user_info img{
+        width: 45px;
+        height: 45px;    
+        border-radius: 50%;
+        margin-bottom: 0.5em;
+    }
+
+    .replies{
+        padding-left: 1em;
+        background-color: #f3f3f3;
+    }
+
+    .reply {
+        grid-template-areas: 
+        "comment_user_info reply_date reply_date reply_date reply_date" 
+        "comment_user_info comment_title comment_title comment_title options" 
+        "comment_user_info comment_content comment_content comment_content options";
+
+        margin: 0em;
+    }
+
+    form.comment_content {
+        width: 95%;
+    }
+
+    .reply_date{
+        font-size: small;
+    }
+
+    .reply_form {
+
+        height: 12em;
+        grid-template-areas: 
+        "comment_user_info reply_date reply_date reply_date reply_date" 
+        "comment_user_info comment_title comment_title comment_title comment_title" 
+        "comment_user_info comment_content comment_content comment_content comment_content";
+    }
 }

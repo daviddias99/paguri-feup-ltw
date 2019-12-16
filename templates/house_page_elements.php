@@ -357,7 +357,7 @@ $rating = ($rating == null) ? '--' : $rating/2;
 
         ?>
 
-        <section class="reply">
+        <section class="reply reply_form">
 
             <section class="comment_user_info">
                 <img src="<?= $userphotopath ?>">
@@ -400,12 +400,10 @@ $rating = ($rating == null) ? '--' : $rating/2;
 
         <p class="comment_content">You need to be logged in to reply to a review...</p>
     </section>
-<?php
+    <?php
+        }
     }
     ?>
-
-<?php } ?>
-
 
 <?php function draw_main()
 { ?>
@@ -452,7 +450,6 @@ $rating = ($rating == null) ? '--' : $rating/2;
 
             global $comments;
             drawReviews($comments);
-
             ?>
     </section>
 <?php } ?>
