@@ -198,12 +198,8 @@ function updateSearchResults(event) {
     addMarkers(response);
 }
 
-<<<<<<< HEAD
-function filterResidencesInRadius(coords, radius) {
-=======
 
 function filterUpdateHandler(coords, radius) {
->>>>>>> master
 
     const filterState = getCurrentFilterState();
     
