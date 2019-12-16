@@ -51,7 +51,7 @@ document.getElementById("submit_button").onclick = function (event) {
             country: country,
             latitude: latitude,
             longitude: longitude,
-            pricePerDay: ppicePerDay,
+            pricePerDay: pricePerDay,
             commodities: JSON.stringify(selectedCommodities)
         }));
 };

@@ -8,7 +8,7 @@ include_once('../database/user_queries.php');
     <section id="add_place" class="card">
         <h1>Add place</h1>
         <form id="add_place_form" action="" method="post">
-            <input id="user_id" type="hidden" value=<?= getUserID($_SESSION['username'])?>>
+            <input id="user_id" type="hidden" value=<?= getUserID($_SESSION['username']) ?>>
             <section class="form_entry" id="title">
                 <label for="title_input">Title</label>
                 <input id="title_input" type="text" name="title" value="">
@@ -141,8 +141,8 @@ function draw_place_summary($place)
         <section class="info">
             <h1 class="info_title"><?= $place['title'] ?> </h1>
             <h2 class="info_type_and_location"><?= $place['type'] . ' &#8226 ' . $place['address'] ?></h2>
-            <p class="info_description"> <?= $place['bio'] ?></p>
-            <p class="info_ppd"><?= $place['price'] ?></p>
+            <p class="info_description"> <?= $place['description'] ?></p>
+            <p class="info_ppd"><?= $place['pricePerDay'] ?></p>
             <p class="info_score">4.5</p>
             <p class="info_capacity"> <?= $place['capacity'] ?></p>
             <p class="info_bedrooms"> <?= $place['nBedrooms'] ?></p>
@@ -159,7 +159,12 @@ function draw_place_operations($place)
         <input type="hidden" value=<?= $place['residenceID'] ?>>
         <a class="button" id="" href="">Add availability</a>
         <a class="button" href="">Reservations</a>
-        <a class="button" href="">Edit</a>
+
+        <form class="post_link" action="../pages/edit_place.php" method="post">
+            <input type="hidden" name="id" value="<?= $place['residenceID'] ?>">
+            <input type="submit" class="button" value="Edit">
+        </form>
+
         <button class="button remove_reservation">Remove</button>
     </section>
 <?php } ?>
@@ -171,6 +176,48 @@ function draw_reservations($reservations)
     ?>
     <section id="user_reservations" class="card">
         <h1>My reservations</h1>
+    </section>
+<?php
+}
+?>
+
+
+
+<?php
+function draw_edit_place($place)
+{
+    ?>
+    <section class="card" id="edit_place">
+        <h1>Edit place information</h1>
+        <?php print_r($place)?>
+
+        <form id="edit_place_form" action="" method="">
+            <section class="form_entry" id="title">
+                <label for="title_input">Title</label>
+                <input id="title_input" type="text" name="title" value="<?= $place['title'] ?>">
+            </section>
+            <section class="form_entry" id="description">
+                <label for="description_input">Description</label>
+                <textarea id="description_input" type="text" name="description" rows="6"><?= $place['description'] ?></textarea>
+            </section>
+
+            <input id="user_id" type="hidden" value="<?= $place['owner'] ?>">
+            <input id="place_id" type="hidden" value="<?= $place['residenceID'] ?>">
+            <input id="commodities" type="hidden" value="<?= getCommoditiesAsKeysString($place['residenceID']) ?>">
+            <input id="capacity" type="hidden" value="<?= $place['capacity'] ?>">
+            <input id="num_bathrooms" type="hidden" value="<?= $place['nBathrooms'] ?>">
+            <input id="num_bedrooms" type="hidden" value="<?= $place['nBedrooms'] ?>">
+            <input id="num_beds" type="hidden" value="<?= $place['nBeds'] ?>">
+            <input id="location" type="hidden" value="<?= $place['address'] ?>">
+            <input id="price" type="hidden" value="<?= $place['pricePerDay'] ?>">
+            <input id="type" type="hidden" value="<?= $place['residenceTypeID'] ?>">
+            <input id="latitude" type="hidden" value="<?= $place['latitude'] ?>">
+            <input id="longitude" type="hidden" value="<?= $place['longitude'] ?>">
+            <input id="city" type="hidden" value="<?= $place['country'] ?>">
+            <input id="country" type="hidden" value="<?= $place['city'] ?>">
+
+            <input class="button" id="submit_button" type="submit" value="Edit">
+        </form>
     </section>
 <?php
 }

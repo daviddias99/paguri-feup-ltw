@@ -171,4 +171,17 @@
 
         return $stmt->fetch()['userID'];
     }
+
+    function userHasResidence($username, $residenceID)
+    {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT *
+                                FROM residence, user
+                                WHERE userID = owner AND username = ? AND residenceID = ?');
+
+        $stmt->execute(array($username, $residenceID));
+
+        return $stmt->fetch();
+    }
 ?>

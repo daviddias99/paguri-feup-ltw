@@ -56,7 +56,7 @@
 
     else if ($request_method == 'PUT') {
 
-        if(!array_key_exists('id', $_GET)) {
+        if(! array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 

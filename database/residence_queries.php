@@ -58,7 +58,7 @@ function getResidenceInfo($residenceID)
     global $dbh;
 
     $stmt = $dbh->prepare(
-        'SELECT residence.*, residencetype.name as type
+        'SELECT residence.*, residenceTypeID, residencetype.name as type
             FROM residence JOIN residencetype
             ON residence.type = residenceTypeID
             WHERE residenceID = ?'
@@ -83,7 +83,7 @@ function getResidenceCommodities($residenceID)
     global $dbh;
 
     $stmt = $dbh->prepare(
-        'SELECT name
+        'SELECT *
             FROM residenceHasCommodity JOIN commodity
             ON item = commodityID
             WHERE lodge = ?'
@@ -317,4 +317,15 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         $stmt->execute(array($userID));
 
         return $stmt->fetchAll();
+    }
+
+    function getCommoditiesAsKeysString($id) {
+        $commodities = getResidenceCommodities($id);
+        $commoditiesKeys = array();
+
+        foreach ($commodities as $commodity) {
+            array_push($commoditiesKeys, $commodity['commodityID']);
+        }
+
+        return json_encode($commoditiesKeys);
     }
