@@ -189,7 +189,6 @@ function draw_edit_place($place)
     ?>
     <section class="card" id="edit_place">
         <h1>Edit place information</h1>
-        <?php print_r($place)?>
 
         <form id="edit_place_form" action="" method="">
             <section class="form_entry" id="title">
@@ -215,6 +214,10 @@ function draw_edit_place($place)
             <input id="longitude" type="hidden" value="<?= $place['longitude'] ?>">
             <input id="city" type="hidden" value="<?= $place['country'] ?>">
             <input id="country" type="hidden" value="<?= $place['city'] ?>">
+
+            <label class="choose_photo button">Choose
+                <input class="choose_photo_input" type="file" name="image" multiple>
+            </label>
 
             <input class="button" id="submit_button" type="submit" value="Edit">
         </form>

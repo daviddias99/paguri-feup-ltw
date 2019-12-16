@@ -47,8 +47,8 @@ function draw_edit_profile($user)
             <input type="hidden" name="userID" value=<?= $user['userID'] ?> />
             <input type="hidden" name="username" value=<?= $user['username'] ?> />
 
-            <label id="choose_photo" class="button">Choose
-                <input id="choose_photo_input" type="file" name="image">
+            <label class="button choose_photo">Choose
+                <input class="choose_photo_input" type="file" name="image">
             </label>
 
             <label id="remove_photo" class="button">Remove

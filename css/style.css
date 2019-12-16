@@ -846,7 +846,7 @@ textarea {
     margin: 0.4em;
 }
 
-#edit_profile #profile_info #choose_photo_input, #edit_profile #profile_info #remove_photo_input {
+.choose_photo_input, #edit_profile #profile_info #remove_photo_input {
     display: none;
 }
 
