@@ -72,7 +72,7 @@ function getResidencePhotos($residenceID)
 {
     global $dbh;
 
-    $stmt = $dbh->prepare('SELECT filepath, priority FROM residencePhoto WHERE lodge = ?');
+    $stmt = $dbh->prepare('SELECT * FROM residencePhoto WHERE lodge = ?');
     $stmt->execute(array($residenceID));
     return $stmt->fetchAll();
 }
@@ -328,4 +328,40 @@ function getResidencesWith($capacity, $nBeds, $type, $minPrice, $maxPrice, $minR
         }
 
         return json_encode($commoditiesKeys);
+    }
+
+    function addResidencePhoto($residenceID, $path) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('INSERT INTO residencePhoto(lodge, filepath)
+                               VALUES (?, ?)');
+        $stmt->execute(array($residenceID, $path));
+
+        $photoID = $dbh->lastInsertId();
+
+        $stmt = $dbh->prepare('UPDATE residencePhoto
+                               SET filepath = ?
+                               WHERE photoID = ?');
+        $stmt->execute(array($photoID . $path, $photoID));
+
+        return $photoID . $path;
+    }
+
+    function getResidencePhotoPath($photoID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT filepath
+                               FROM residencePhoto
+                               WHERE photoID = ?');
+        $stmt->execute(array($photoID));
+
+        return $stmt->fetch()['filepath'];
+    }
+
+    function removeResidencePhoto($photoID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('DELETE FROM residencePhoto WHERE photoID = ?');
+
+        $stmt->execute(array($photoID));
     }

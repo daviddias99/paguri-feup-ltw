@@ -6,7 +6,9 @@ function encodeForAjax(data) {
     }).join('&')
 }
 
-const images = [];
+const images = {};
+const removedImages = [];
+let lastImageID = 0;
 
 document.getElementById("submit_button").onclick = function (event) {
     event.preventDefault();
@@ -54,26 +56,33 @@ document.getElementById("submit_button").onclick = function (event) {
 
     request.send();
 
-
-    // ---- deal with images
-
-    images.forEach(image => {
-        send(image);
+    Object.keys(images).forEach(key => {
+        send(id, images[key]);
     });
 
+    removedImages.forEach(image => {
+        remove(image);
+    });
 };
 
-function send(image) {
+function send(id, image) {
     let formData = new FormData();
     const request = new XMLHttpRequest();
 
     formData.set('image', image);
-
-
-    console.log(formData);
+    formData.set('id', id);
 
     request.open("POST", '../actions/action_add_house_image.php');
     request.send(formData);
+}
+
+function remove(imageID) {
+    const request = new XMLHttpRequest();
+
+    request.open("POST", "../actions/action_remove_house_image.php", true);
+    request.setRequestHeader('Accept', 'application/json');
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    request.send(encodeForAjax({imageID: imageID }));
 }
 
 
@@ -85,14 +94,28 @@ const card = document.getElementById("edit_place");
 
 document.querySelector(".choose_photo").onchange = function (event) {
 
-    images.push(...event.target.files);
-
     for (let i = 0; i < event.target.files.length; i++) {
         const reader = new FileReader();
 
+        images[++lastImageID] = event.target.files[i];
+
         reader.onload = function () {
+
+            const section = document.createElement('section');
+            section.setAttribute('class', 'new_image_preview');
+            section.setAttribute('id', lastImageID);
+
             const preview = document.createElement('img');
-            card.appendChild(preview);
+
+            const del = document.createElement('span');
+            del.setAttribute('class', 'remove_image button');
+            del.innerHTML = "X";
+            del.onclick = removeImage;
+
+            section.appendChild(preview);
+            section.appendChild(del);
+            card.appendChild(section);
+
 
             const img = document.createElement('img');
 
@@ -124,12 +147,18 @@ document.querySelector(".choose_photo").onchange = function (event) {
         }
 
         reader.readAsDataURL(event.target.files[i]);
-
-        // const oldInput = document.querySelector(".choose_photo_input");
-        // const newInput = document.createElement('input');
-        // newInput.setAttribute('class', 'choose_photo_input');
-        // newInput.setAttribute('type', 'file');
-        // newInput.setAttribute('name', 'image');
-        // newInput.setAttribute('multiple');
     }
+}
+
+document.querySelectorAll(".image_preview .remove_image").forEach(element => {
+    element.onclick = (event) => {
+        event.target.parentNode.remove();
+        removedImages.push(event.target.parentNode.id);
+        console.log("nao esta a remover");
+    }
+});
+
+function removeImage(event) {
+    event.target.parentNode.remove();
+    delete images[event.target.parentNode.id];
 }

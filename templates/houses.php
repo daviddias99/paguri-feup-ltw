@@ -186,6 +186,7 @@ function draw_reservations($reservations)
 <?php
 function draw_edit_place($place)
 {
+    $photos = getResidencePhotos($place['residenceID']);
     ?>
     <section class="card" id="edit_place">
         <h1>Edit place information</h1>
@@ -218,6 +219,13 @@ function draw_edit_place($place)
             <label class="choose_photo button">Choose
                 <input class="choose_photo_input" type="file" name="image" multiple>
             </label>
+
+            <?php foreach ($photos as $photo) { ?>
+                <section class="image_preview" id="<?= $photo['photoID'] ?>">
+                    <img src="../images/properties/originals/<?= $photo['filepath']?>">
+                    <span class="remove_image button">X</span>
+                </section>
+            <?php } ?>
 
             <input class="button" id="submit_button" type="submit" value="Edit">
         </form>

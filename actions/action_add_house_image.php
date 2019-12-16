@@ -1,6 +1,7 @@
 <?php
-include_once('../database/user_queries.php');
+include_once('../database/residence_queries.php');
 
+    $residenceID = $_POST['id'];
     $image = $_FILES['image']['tmp_name'];
 
     $supportedFormats = array(IMAGETYPE_JPEG => '.jpg', IMAGETYPE_PNG => '.png');
@@ -12,11 +13,11 @@ include_once('../database/user_queries.php');
         die();
 
 
-    $photoID = sha1_file($image) . $extension;
+    $photoID = addResidencePhoto($residenceID, sha1_file($image) . $extension);
 
 
     // Generate filenames for original, small and medium files
-    $filename = "../images/properties/$photoID";
+    $filename = "../images/properties/originals/$photoID";
 
     // Move the uploaded file to its final destination
     move_uploaded_file($image, $filename);
