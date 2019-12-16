@@ -2,6 +2,7 @@
 include_once('../includes/config.php');
 include_once('../database/user_queries.php');
 
+$userID = $_POST['userID'];
 $username = $_POST['username'];
 $newUsername = $_POST['newUsername'];
 $email = $_POST['email'];
@@ -24,7 +25,7 @@ if (isset($_POST['remove'])) {
     saveProfilePhoto($newUsername, $_FILES['image']['tmp_name']);
 }
 
-header('Location: ../pages/user.php?id=' . $newUsername);
+header('Location: ../pages/user.php?id=' . $userID);
 
 
 function saveProfilePhoto($username, $tmpPath)
@@ -37,7 +38,7 @@ function saveProfilePhoto($username, $tmpPath)
     if ($extension == null)
         die();
 
-    $userRowID = getUserRowID($username);
+    $userRowID = getUserID($username);
 
     $photoID = $userRowID . sha1_file($tmpPath) . $extension;
     $oldPhotoID = updateProfilePicture($username, $photoID);

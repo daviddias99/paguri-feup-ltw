@@ -6,7 +6,7 @@
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'SELECT * 
+            'SELECT *
             FROM reservation
             WHERE lodge = ?');
         $stmt->execute(array($residenceID));
@@ -40,15 +40,26 @@
         }
     }
 
+    function getUserReservations($username) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT *
+                               FROM reservation, user, residence
+                               WHERE username =  ? and customer = userID and lodge = residenceID');
+        $stmt->execute(array($username));
+
+        return $stmt->fetchAll();
+    }
+
     function addReservation($reservationObj)
     {
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'INSERT INTO 
+            'INSERT INTO
                 reservation(lodge,customer,startDate,endDate,numPeople)
                 VALUES (?,?,?,?,?)');
-            
+
         try{
             $stmt->execute(array(
                     $reservationObj['lodge'],
@@ -56,7 +67,7 @@
                     $reservationObj['startDate'],
                     $reservationObj['endDate'],
                     1
-                    
+
                 )
             );
         }

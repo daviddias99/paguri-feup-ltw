@@ -1,6 +1,6 @@
 'use strict'
 
-document.getElementById("choose_photo").onchange = function (event) {
+document.querySelector(".choose_photo").onchange = function (event) {
     const reader = new FileReader();
 
     reader.onload = function () {

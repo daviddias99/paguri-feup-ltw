@@ -31,73 +31,146 @@ body {
    border-radius: 50%;
 }
 
-/* Site Header */
-#site_header  {
-    grid-area: header;
-    background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
-
-    box-shadow: 0px 7px 16px -2px rgba(0,0,0,0.58);
+.post_link {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    padding-right: 1.4em;
+    flex-direction: column;
+    justify-content: stretch;
 }
 
-#site_header h1 {
-    margin: 0em;
-}
+/* header */
 
-#site_header a {
-    color: white;
-    text-decoration: none;
-}
-
-#site_header nav {
-    color: white;
-    font-size: 1.2em;
-}
-
-#site_header nav a {
-    color: white;
-    text-decoration: none;
-}
-
-#site_header nav ul {
-    padding: 0em;
-    margin: 0em;
-    display: flex;
-    align-items: center;
-    list-style-type: none;
-}
-
-#site_header nav li {
-    padding-left: 1.4em;
-}
-
-#site_header nav a img {
-    margin-right: 0.5em;
-}
-
-#site_header nav a {
-    display: flex;
-    align-items: center;
-}
-
-
-#logo {
+.logo {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-#logo p {
+.logo p {
     margin: 0em;
     font-size: 2em;
     font-weight: bold;
 }
+
+.navbar {
+  grid-area: header;
+
+  background: linear-gradient(114deg, var(--color-3) 0%,  var(--color-2) 18%,  var(--color-1) 79%);
+  box-shadow: 0px 7px 16px -2px rgba(0,0,0,0.58);
+
+  z-index: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar li {
+    padding-left: 1.5em;
+}
+
+.navbar li a {
+    display: flex;
+    align-items: center;
+}
+
+.navbar li img {
+    margin-right: 0.5em;
+}
+
+.navbar li:last-child {
+    padding-right: 1.5em;
+}
+
+.navbar li a:hover,
+.navbar .hamburger-btn:hover {
+  opacity: 0.5;
+}
+
+
+/* menu */
+
+
+/* hamburger icon */
+
+.navbar .hamburger {
+  cursor: pointer;
+  display: none;
+  user-select: none;
+  align-self: center;
+  padding: 1em;
+}
+
+.navbar .hamburger .hamburger-icon {
+  background: white;
+  display: block;
+  height: 0.2em;
+  position: relative;
+  transition: background .2s ease-out;
+  width: 1.6em;
+  margin: 0em;
+}
+
+.navbar .hamburger .hamburger-icon:before,
+.navbar .hamburger .hamburger-icon:after {
+  background: white;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+
+.navbar .hamburger .hamburger-icon:before {
+  top: 0.5em;
+}
+
+.navbar .hamburger .hamburger-icon:after {
+  top: -0.5em;
+}
+
+/* hamburger button */
+
+.navbar .hamburger-btn {
+  display: none;
+}
+
+.navbar .hamburger-btn:checked ~ .hamburger .hamburger-icon {
+  background: transparent;
+}
+
+.navbar .hamburger-btn:checked ~ .hamburger .hamburger-icon:before {
+  transform: rotate(-45deg);
+}
+
+.navbar .hamburger-btn:checked ~ .hamburger .hamburger-icon:after {
+  transform: rotate(45deg);
+}
+
+.navbar .hamburger-btn:checked ~ .hamburger:not(.steps) .hamburger-icon:before,
+.navbar .hamburger-btn:checked ~ .hamburger:not(.steps) .hamburger-icon:after {
+  top: 0;
+}
+
+
 
 /* Search Results Page*/
 
@@ -124,8 +197,7 @@ body.search_results {
 
     grid-template-areas:
     "header"
-    "main"
-    ;
+    "main"    ;
 }
 
 body.search_results #main {
@@ -169,13 +241,43 @@ body.search_results #right_side #map {
 
 
 /* Add house page */
-body #search_box #map {
+body #add_place #map {
     height: 30em;
     width: 100%;
     margin: auto;
     margin-top:1em;
 }
 
+#add_place_form {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto min-content auto auto auto;
+    grid-template-areas: "title title type price"
+                         "description description description description"
+                         "location location location location"
+                         "map map map map"
+                         "commodities commodities commodities commodities"
+                         "capacity n-bedrooms n-bathrooms n-beds"
+                         "submit submit submit submit";
+}
+
+#add_place_form #title { grid-area: title; }
+#add_place_form #type { grid-area: type; }
+#add_place_form #price { grid-area: price; }
+#add_place_form #description { grid-area: description; }
+#add_place_form #location_wrapper { grid-area: location; }
+#add_place_form #map { grid-area: map; }
+#add_place_form #commodities { grid-area: commodities; }
+#add_place_form #num_bedrooms { grid-area: n-bedrooms; }
+#add_place_form #num_beds { grid-area: n-beds; }
+#add_place_form #capacity { grid-area: capacity; }
+#add_place_form #num_bathrooms { grid-area: n-bathrooms; }
+#add_place_form #submit_button { grid-area: submit; }
+#add_place_form #commodity_list {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .search_results_info_window {
     display: grid;
     grid-template-areas:
@@ -610,7 +712,7 @@ body.user_profile {
 
 #profile {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto min(0, 1fr);
     grid-template-rows: min-content auto min-content min-content;
     grid-template-areas: "image image image name"
                          "image image image info"
@@ -652,6 +754,7 @@ body.user_profile {
 
 #profile li p {
     margin: 0.5em 0em;
+    word-wrap: break-word;
 }
 
 #profile .button {
@@ -680,6 +783,10 @@ body.user_profile {
 
 .button:active {
     opacity: 0.4;
+}
+
+.button {
+    transition: all 0.1s ease;
 }
 
 #about_me {
@@ -815,7 +922,7 @@ textarea {
     margin: 0.4em;
 }
 
-#edit_profile #profile_info #choose_photo_input, #edit_profile #profile_info #remove_photo_input {
+.choose_photo_input, #edit_profile #profile_info #remove_photo_input {
     display: none;
 }
 
@@ -1090,7 +1197,7 @@ body.residence_page #review_section {
     border-radius: 6px;
     padding: 1em;
 
-    
+
 }
 
 body.residence_page #review_section > h1 {
@@ -1116,13 +1223,13 @@ body.residence_page #review_section > h1 {
     display: grid;
     grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.5fr 0.5fr 2fr;
-    grid-template-areas: 
-    "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating options" 
-    "comment_user_info comment_title comment_title comment_title options" 
+    grid-template-areas:
+    "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating options"
+    "comment_user_info comment_title comment_title comment_title options"
     "comment_user_info comment_content comment_content comment_content options";
   }
-  
-.comment_date_and_rating { 
+
+.comment_date_and_rating {
     grid-area: comment_date_and_rating;
     display: flex;
     flex-direction: row;
@@ -1141,15 +1248,15 @@ body.residence_page #review_section > h1 {
 
 }
 
-.comment_content { 
-    grid-area: comment_content; 
+.comment_content {
+    grid-area: comment_content;
     margin: 1em 0em 0em 0em;
     font-size: smaller;
     color: rgb(34, 34, 34);
 }
-  
-.comment_title { 
-    grid-area: comment_title; 
+
+.comment_title {
+    grid-area: comment_title;
     margin: 0em;
     font-size: larger;
     font-weight: 600;
@@ -1164,14 +1271,14 @@ body.residence_page #review_section > h1 {
 
 
 .comment_user_info {
-    
-    grid-area: comment_user_info; 
+
+    grid-area: comment_user_info;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 1em;
-    
+
 }
 
 .comment_user_info p {
@@ -1211,17 +1318,17 @@ body.residence_page #review_section > h1 {
     display: grid;
     grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.5fr 0.5fr 2fr;
-    grid-template-areas: 
-    "comment_user_info reply_date reply_date reply_date options" 
-    "comment_user_info comment_title comment_title comment_title options" 
+    grid-template-areas:
+    "comment_user_info reply_date reply_date reply_date options"
+    "comment_user_info comment_title comment_title comment_title options"
     "comment_user_info comment_content comment_content comment_content options";
 }
 
-.reply_date { 
+.reply_date {
     grid-area: reply_date;
     display: flex;
     flex-direction: row;
-    
+
 }
 
 .reply_date h3 {
@@ -1231,16 +1338,16 @@ body.residence_page #review_section > h1 {
     margin-right: 1em;
 }
 
-input.comment_title { 
+input.comment_title {
     margin: 0em;
     font-size: medium;
     font-weight: 400;
 }
 
-textarea.comment_content { 
+textarea.comment_content {
     padding-left: 1em;
     font-size: medium;
-} 
+}
 
 .submit_reply {
 
@@ -1300,7 +1407,7 @@ form.comment_content {
 }
 
 body.residence_page #residence-images a.prev, body.residence_page #residence-images a.next{
-    
+
     color: white;
 
 }
@@ -1442,6 +1549,30 @@ body.rent_house #rent_form {
 }
 
 
+#places_list h1 {
+    margin: 0.8em 0.3em;
+}
+
+#places_list .my_places_title h1 {
+    margin: 0 0.3em;
+}
+
+#places_list .my_places_title {
+    display: flex;
+    margin: 0.8em auto;
+    flex-direction: row;
+}
+
+.places_list_entry {
+    display: flex;
+    flex-direction: row;
+}
+
+.places_list_entry .place_operations {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 body.rent_house .disabled {
 
     background-color: grey;

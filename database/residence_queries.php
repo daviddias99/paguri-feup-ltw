@@ -9,9 +9,9 @@
 
         $stmt = $dbh->prepare(
             'SELECT residence.*, residencetype.name as typeStr , rating
-                FROM residence JOIN residencetype ON residence.type = residenceTypeID 
+                FROM residence JOIN residencetype ON residence.type = residenceTypeID
                                 LEFT OUTER JOIN (SELECT lodge, avg(rating) as rating
-                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                                    FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                                     GROUP BY lodge) as avgRatingPerResidence
                                 ON residence.residenceID = avgRatingPerResidence.lodge'
         );
@@ -33,7 +33,7 @@
     {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT name FROM commodity');
+        $stmt = $dbh->prepare('SELECT * FROM commodity');
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -56,11 +56,11 @@ function getResidenceInfo($residenceID)
     global $dbh;
 
     $stmt = $dbh->prepare(
-        '        SELECT residence.*, residencetype.name as type , rating
-        FROM residence JOIN residencetype 
-                        ON residence.type = residenceTypeID 
+        'SELECT residence.*, residencetype.name as type , rating
+        FROM residence JOIN residencetype
+                        ON residence.type = residenceTypeID
                        LEFT JOIN (SELECT lodge, avg(rating) as rating
-                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                             FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                              GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
@@ -119,16 +119,16 @@ function getResidenceInfo($residenceID)
         global $dbh;
 
         $query_vals = array();
-        $query_base = 
+        $query_base =
             'SELECT residence.*, residencetype.name as typeStr, rating
-            FROM residence JOIN residencetype ON residence.type = residenceTypeID 
+            FROM residence JOIN residencetype ON residence.type = residenceTypeID
                         LEFT JOIN (SELECT lodge, avg(rating) as rating
-                                        FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                                        FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                                         GROUP BY lodge
                                         ) as avgRatingPerResidence
                             ON residence.residenceID = avgRatingPerResidence.lodge
-            WHERE 1=1'; 
-        
+            WHERE 1=1';
+
         if (is_numeric($capacity)) {
             $query_base .= ' AND capacity >= ?';
             array_push($query_vals, intval($capacity));
@@ -170,9 +170,9 @@ function getResidenceInfo($residenceID)
 
         $stmt = $dbh->prepare(
             'SELECT lodge, avg(rating) as rating
-            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
             GROUP BY lodge'
-                
+
         );
 
         $stmt->execute();
@@ -186,7 +186,7 @@ function getResidenceInfo($residenceID)
         $stmt = $dbh->prepare(
             'SELECT rating
             FROM residence LEFT JOIN (SELECT lodge, avg(rating) as rating
-                            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID) 
+                            FROM comment JOIN reservation ON (comment.booking = reservation.reservationID)
                             GROUP BY lodge
                             ) as avgRatingPerResidence
                         ON residence.residenceID = avgRatingPerResidence.lodge
@@ -204,11 +204,11 @@ function getResidenceInfo($residenceID)
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'INSERT INTO 
-                residence(owner, title, description, pricePerDay, capacity, nBedrooms, 
+            'INSERT INTO
+                residence(owner, title, description, pricePerDay, capacity, nBedrooms,
                 nBathrooms, nBeds, type, address, city, country, latitude, longitude)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-            
+
         try{
             $stmt->execute(array(
                     $residenceObj['owner'],
@@ -227,6 +227,15 @@ function getResidenceInfo($residenceID)
                     $residenceObj['longitude']
                 )
             );
+
+            $residenceID = $dbh->lastInsertId();
+
+            $commodities = json_decode($residenceObj['commodities']);
+
+            foreach ($commodities as $commodity) {
+                $commodityStmt = $dbh->prepare('INSERT INTO residencehascommodity VALUES (?, ?)');
+                $commodityStmt->execute(array($residenceID, $commodity));
+            }
         }
         catch(PDOException $Exception) {
             return FALSE;
@@ -234,7 +243,7 @@ function getResidenceInfo($residenceID)
 
         if ($stmt->rowCount() <= 0) return FALSE;
 
-        return $dbh->lastInsertId();
+        return $residenceID;
     }
 
 
@@ -310,7 +319,7 @@ function getResidenceInfo($residenceID)
                     city = ?,
                     country = ?,
                     latitude = ?,
-                    longitude = ?                
+                    longitude = ?
             WHERE residenceID = ?');
 
         try {
@@ -340,6 +349,64 @@ function getResidenceInfo($residenceID)
 
         if ($stmt->rowCount() <= 0) return FALSE;
 
-        return TRUE;        
+        return TRUE;
     }
-?>
+
+    function getUserResidences($userID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT residence.*
+                               FROM residence, user
+                               WHERE userID = owner AND userID = ?');
+
+        $stmt->execute(array($userID));
+
+        return $stmt->fetchAll();
+    }
+
+    function getCommoditiesAsKeysString($id) {
+        $commodities = getResidenceCommodities($id);
+        $commoditiesKeys = array();
+
+        foreach ($commodities as $commodity) {
+            array_push($commoditiesKeys, $commodity['commodityID']);
+        }
+
+        return json_encode($commoditiesKeys);
+    }
+
+    function addResidencePhoto($residenceID, $path) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('INSERT INTO residencePhoto(lodge, filepath)
+                               VALUES (?, ?)');
+        $stmt->execute(array($residenceID, $path));
+
+        $photoID = $dbh->lastInsertId();
+
+        $stmt = $dbh->prepare('UPDATE residencePhoto
+                               SET filepath = ?
+                               WHERE photoID = ?');
+        $stmt->execute(array($photoID . $path, $photoID));
+
+        return $photoID . $path;
+    }
+
+    function getResidencePhotoPath($photoID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT filepath
+                               FROM residencePhoto
+                               WHERE photoID = ?');
+        $stmt->execute(array($photoID));
+
+        return $stmt->fetch()['filepath'];
+    }
+
+    function removeResidencePhoto($photoID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('DELETE FROM residencePhoto WHERE photoID = ?');
+
+        $stmt->execute(array($photoID));
+    }

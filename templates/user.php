@@ -44,10 +44,11 @@ function draw_edit_profile($user)
         <form id="profile_info" action="../actions/action_edit_profile.php" method="post" enctype="multipart/form-data">
             <img id="photo_preview" src=" ../images/users/thumbnails_medium/<?= $user['photo'] ?>" class="profile_pic">
 
+            <input type="hidden" name="userID" value=<?= $user['userID'] ?> />
             <input type="hidden" name="username" value=<?= $user['username'] ?> />
 
-            <label id="choose_photo" class="button">Choose
-                <input id="choose_photo_input" type="file" name="image">
+            <label class="button choose_photo">Choose
+                <input class="choose_photo_input" type="file" name="image">
             </label>
 
             <label id="remove_photo" class="button">Remove

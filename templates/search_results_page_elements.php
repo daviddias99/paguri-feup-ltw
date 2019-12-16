@@ -46,7 +46,7 @@ function draw_main()
 <?php }
 
 function draw_left_side()
-{   
+{
 
     global $location;
 
@@ -57,7 +57,7 @@ function draw_left_side()
         <header id="results_header">
             <h1></h1>
             <h2></h2>
-            <label> Location 
+            <label> Location
                 <input id="location" type="text" name="location" value="<?= $location ?>" required>
             </label>
 
@@ -128,15 +128,15 @@ function draw_right_side()
             <label>Type:
                 <select id="housing_type" name="type">
 
-                    <option 
+                    <option
                             value=""
                             <?= $type_filter === "" ? "selected" : "" ?>>Any
 
                     <?php foreach ($types as $type) { ?>
 
-                        <option 
+                        <option
                             value="<?= $type['name'] ?>"
-                            <?= $type['name'] === $type_filter ? "selected" : "" ?>> 
+                            <?= $type['name'] === $type_filter ? "selected" : "" ?>>
                             <?= ucfirst($type['name']) ?>
 
                         <?php } ?>
@@ -162,10 +162,10 @@ function draw_right_side()
                 foreach ($commodities as $commodity) { ?>
 
                 <label>
-                    <input 
-                        type="checkbox" 
-                        name="commodity" 
-                        value="<?= $commodity['name'] ?>" 
+                    <input
+                        type="checkbox"
+                        name="commodity"
+                        value="<?= $commodity['name'] ?>"
                         <?= in_array($commodity['name'], $commodities_filters) ? "checked" : "" ?>>
                         <?= ucfirst($commodity['name']) ?>
                 </label>

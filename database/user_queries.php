@@ -186,12 +186,25 @@ function updateProfilePicture($username, $photoID)
     return $oldPhotoID;
 }
 
-function getUserRowID($username)
-{
-    global $dbh;
+    function getUserID($username) {
+        global $dbh;
 
     $stmt = $dbh->prepare('SELECT RowID FROM user WHERE username = ?');
     $stmt->execute(array($username));
 
-    return $stmt->fetch()['rowid'];
-}
+        return $stmt->fetch()['userID'];
+    }
+
+    function userHasResidence($username, $residenceID)
+    {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT *
+                                FROM residence, user
+                                WHERE userID = owner AND username = ? AND residenceID = ?');
+
+        $stmt->execute(array($username, $residenceID));
+
+        return $stmt->fetch();
+    }
+?>
