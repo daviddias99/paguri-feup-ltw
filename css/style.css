@@ -1373,10 +1373,6 @@ body.residence_page #residence-images a.prev, body.residence_page #residence-ima
 
 /*Rent house page*/
 
-body.rent_house {
-
-    height: 90vh;
-}
 
 body.rent_house h1{
 
@@ -1402,7 +1398,7 @@ body.rent_house #residence_info_simplified{
     flex-direction: column;
     border-radius: 6px;
     padding: 1em;
-    margin: 3em auto auto auto;
+    margin: 1% auto auto auto;
 
 }
 

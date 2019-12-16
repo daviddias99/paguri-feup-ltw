@@ -34,18 +34,18 @@ function buildResidenceHTML(property){
     resultHTML = 
         '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
         '<section class="result">' +    
-        '<section class="image">' +
-        '<img src="../resources/house_image_test.jpeg">' +
-        '</section>' +  
-        '<section class="info">' + 
-        '<h1 class="info_title">' + property['title'] + '</h1>' +
-        '<h2 class="info_type_and_location">' + property['type'] + ' &#8226 ' + property['address']  + '</h2>' +
-        '<p class="info_description">'  + descriptionTrimmed + '</p>' +
-        '<p class="info_ppd">' + priceSimple +'</p>' +
-        '<p class="info_score">'+ property['rating']+'</p>' +
-        '<p class="info_capacity">' + property['capacity']+'</p>' +
-        '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
-        '</section>' +
+            '<section class="image">' +
+                '<img src="../resources/house_image_test.jpeg">' +
+            '</section>' +  
+            '<section class="info">' + 
+                '<h1 class="info_title">' + property['title'] + '</h1>' +
+                '<h2 class="info_type_and_location">' + property['type'] + ' &#8226 ' + property['address']  + '</h2>' +
+                '<p class="info_description">'  + descriptionTrimmed + '</p>' +
+                '<p class="info_ppd">' + priceSimple +'</p>' +
+                '<p class="info_score">'+ property['rating']+'</p>' +
+                '<p class="info_capacity">' + property['capacity']+'</p>' +
+                '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+            '</section>' +
         '</section>' +
         '</a>'    
 
