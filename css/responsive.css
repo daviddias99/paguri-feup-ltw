@@ -31,30 +31,81 @@
     }
 }
 
+@media (max-width: 60em) {
+
+    body.search_results #main {
+
+        width: 100%;
+        
+    }
+
+    body.search_results #main #results {
+
+        padding: 0.5em;
+    }
+
+    .result {
+
+        color: black;
+        margin: 1em 0em 0em 0em;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+    
+    }
+
+    .result:hover {
+
+        color: black;
+        margin: 1em 0em 0em 0em;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+    
+    }
+
+    .result .image {
+
+        height: auto;
+        width: 90%;
+        margin: 0em auto 1em auto;
+        padding: 0em;
+    }
+    
+     .result .info {
+    
+        width: 100%;
+        grid-template-areas:
+            "type_and_location type_and_location  type_and_location rating"
+            "title title title title"
+            "desc desc desc desc"
+            "ppd ppd total_price total_price"
+            "nBedrooms nBeds . .";
+    }
+
+    .result .info .info_ppd {
+        text-align: left;
+    }
+    
+    
+    .result .info .total_price {
+       text-align: left;
+    }
+    
+    
+}
+
 @media (max-width: 40em) {
     
     #site_header nav{
         display:none;
     }
 
-    body.search_results {
-    
-        display: grid;
-    
-        width: 100%;
-        grid-template-columns: auto;
-        grid-template-rows: fit-content(3.5em) auto;
-    
-        grid-template-areas:
-        "header"
-        "main"
-        ;
-    }
-    
     body.search_results #main {
     
-        grid-area: main;
-        background-color: #f0f0f0;
+
         width: 100%;
         display: flex;
         flex-direction: column-reverse;
