@@ -6,13 +6,17 @@
     $request_method = $_SERVER['REQUEST_METHOD'];
     $accept_header = $_SERVER['HTTP_ACCEPT'];
 
-    $response = array();
-
     if ($accept_header != 'application/json') {
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
+    if (!isset($_SESSION['userID'])) {
+        api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate itself to access this resource.');
+    }
+
     include_once("../database/user_queries.php");
+
+    $response = array();
 
     if($request_method == 'GET') {
         

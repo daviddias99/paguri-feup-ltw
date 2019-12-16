@@ -12,8 +12,9 @@
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
-    if (!isset($_SESSION['username']))
-        die("User not logged in!");
+    if (!isset($_SESSION['userID'])) {
+        api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate itself to access this resource.');
+    }
 
     include_once("../database/residence_queries.php");
     include_once("../database/user_queries.php");
@@ -58,7 +59,7 @@
 
     else if ($request_method == 'PUT') {
 
-        if(! array_key_exists('id', $_GET)) {
+        if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
@@ -81,10 +82,14 @@
         if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
-
-        if (getResidenceInfo($_GET['id']) == FALSE) {
+        
+        $residenceToDelete = getResidenceInfo($_GET['id']);
+        if ($residenceToDelete == FALSE) {
             api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
         }
+
+        if ($_SESSION['userID'] != $residenceToDelete['owner'])
+            api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the residence to delete it.');
 
         $deletedRes = deleteResidence($_GET['id']);
         if ($deletedRes == FALSE) {
@@ -155,6 +160,9 @@
 
         if(!getResidenceTypeWithID($values['type']))
             api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
+    
+        if($_SESSION['userID'] != $values['owner'])
+            api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the provided residence.');
     }
 
 ?>
