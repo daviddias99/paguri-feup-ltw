@@ -63,6 +63,20 @@ document.getElementById("submit_button").onclick = function (event) {
     removedImages.forEach(image => {
         remove(image);
     });
+
+    const redirectForm = document.createElement('form');
+    redirectForm.method = 'post';
+    redirectForm.action = '../pages/edit_place.php';
+
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = id;
+
+    redirectForm.appendChild(idInput);
+    document.body.appendChild(redirectForm);
+
+    redirectForm.submit();
 };
 
 function send(id, image) {
@@ -108,8 +122,7 @@ document.querySelector(".choose_photo").onchange = function (event) {
             const preview = document.createElement('img');
 
             const del = document.createElement('span');
-            del.setAttribute('class', 'remove_image button');
-            del.innerHTML = "X";
+            del.setAttribute('class', 'remove_image fas fa-trash-alt');
             del.onclick = removeImage;
 
             section.appendChild(preview);

@@ -223,7 +223,7 @@ function draw_edit_place($place)
             <?php foreach ($photos as $photo) { ?>
                 <section class="image_preview" id="<?= $photo['photoID'] ?>">
                     <img src="../images/properties/originals/<?= $photo['filepath']?>">
-                    <span class="remove_image button">X</span>
+                    <span class="remove_image fas fa-trash-alt"></span>
                 </section>
             <?php } ?>
 
