@@ -1,22 +1,24 @@
 <?php
 
     // TODO authentication with sessions
-    // implement delete and put?
-    // how to get info from PUT and DELETE?
 
+    include_once('../includes/config.php');
     include_once('./response_status.php');
 
     $request_method = $_SERVER['REQUEST_METHOD'];
     $accept_header = $_SERVER['HTTP_ACCEPT'];
 
-    $response = array();
-
     if ($accept_header != 'application/json') {
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
+    if (!isset($_SESSION['username']))
+        die("User not logged in!");
+
     include_once("../database/residence_queries.php");
     include_once("../database/user_queries.php");
+
+    $response = array();
 
     if($request_method == 'GET') {
 

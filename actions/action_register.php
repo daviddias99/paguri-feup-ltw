@@ -8,8 +8,13 @@
     $lastName = $_POST['lastName'];
     $password = $_POST['password'];
 
-    if (createUser($username, $email, $firstName, $lastName, $password))
-        header('Location: ../pages/front_page.php');
-    else
+
+    $newUserID = createUser($username, $email, $firstName, $lastName, $password);
+    if ($newUserID == FALSE)
         header('Location: ../pages/register.php');
+    else {
+        $_SESSION['username'] = $username;
+        $_SESSION['userID'] = $newUserID;
+        header('Location: ../pages/front_page.php');
+    }
 ?>

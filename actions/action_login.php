@@ -8,6 +8,7 @@
     if (validLogin($username, $password)) {
         $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
         $_SESSION['username'] = $username;
+        $_SESSION['userID'] = getUserIDByUsername($username);
     } else {
         $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
     }

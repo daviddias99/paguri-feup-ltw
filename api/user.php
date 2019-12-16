@@ -1,5 +1,6 @@
 <?php
 
+    include_once('../includes/config.php');
     include_once('./response_status.php');
 
     $request_method = $_SERVER['REQUEST_METHOD'];
