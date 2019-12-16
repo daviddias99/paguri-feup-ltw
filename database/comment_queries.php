@@ -56,4 +56,22 @@
         $stmt->execute(array($commentID));
     }
 
+
+    function addReply($author,$parent,$title,$content,$datestamp){
+
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+                reply(author, parent, title, content, datestamp)
+                VALUES (?,?,?,?,?)');
+
+            try{
+
+                $stmt->execute(array($author,$parent,$title,$content,$datestamp));
+            }
+            catch(PDOException $Exception) {
+                return FALSE;
+            }
+    }
 ?>
