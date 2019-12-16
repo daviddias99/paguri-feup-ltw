@@ -37,40 +37,7 @@
         display: flex;
         flex-direction: column;
     }
-}
 
-@media (max-width: 40em) {
-    body.front_page, body.user_profile {
-        background: none;
-    }
-
-    .formCard {
-        width: auto;
-        background-color: white;
-        border-radius: 0;
-        box-shadow: none;
-        align-content: center;
-        padding: 0;
-    }
-
-    .formCard h1 {
-        margin-top: 0.3em;
-        margin-bottom: 0.3em;
-    }
-
-    .form_entry {
-        margin: 0.3em;
-    }
-
-    #register form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #search_box #submit_button {
-        grid-area: submit;
-        margin: 1em 0.3em;
-    }
 
     .navbar .menu {
         background-color: #475c7a;
@@ -136,5 +103,256 @@
     #profile p {
         word-wrap: break-word;
     }
+
+
+    body.search_results #main {
+
+        width: 100%;
+
+    }
+
+    body.search_results #main #results {
+
+        padding: 0.5em;
+    }
+
+    .result {
+
+        color: black;
+        margin: 1em 0em 0em 0em;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+
+    }
+
+    .result:hover {
+
+        color: black;
+        margin: 1em 0em 0em 0em;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+
+    }
+
+    .result .image {
+
+        height: auto;
+        width: 90%;
+        margin: 0em auto 1em auto;
+        padding: 0em;
+    }
+
+     .result .info {
+
+        width: 100%;
+        grid-template-areas:
+            "type_and_location type_and_location  type_and_location rating"
+            "title title title title"
+            "desc desc desc desc"
+            "ppd ppd total_price total_price"
+            "nBedrooms nBeds . .";
+    }
+
+    .result .info .info_ppd {
+        text-align: left;
+    }
+
+
+    .result .info .total_price {
+       text-align: left;
+    }
 }
 
+@media (max-width: 40em) {
+    body.front_page, body.user_profile {
+        background: none;
+    }
+
+    .formCard {
+        width: auto;
+        background-color: white;
+        border-radius: 0;
+        box-shadow: none;
+        align-content: center;
+        padding: 0;
+    }
+
+    .formCard h1 {
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+    }
+
+    .form_entry {
+        margin: 0.3em;
+    }
+
+    #register form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #search_box #submit_button {
+        grid-area: submit;
+        margin: 1em 0.3em;
+    }
+
+    body.search_results #main {
+
+
+        width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+
+    }
+
+    /* Search results page right side*/
+
+    body.search_results #right_side {
+        width: 100%;
+    }
+
+    body.search_results #right_side #map {
+        display: none;
+    }
+
+
+    /* Search results page left side*/
+
+    body.search_results #left_side {
+        width: 100%;
+    }
+
+    body.search_results #left_side header{
+
+        display: flex;
+        flex-direction: column;
+
+        box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.75);
+    }
+
+
+    body.search_results #left_side header h1{
+        font-size: x-large;
+        margin: 0.5em;
+        text-align: center;
+
+    }
+
+    body.search_results #left_side header h2{
+        display: none;
+    }
+
+
+    body.search_results #left_side header label{
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        margin-bottom: 1em;
+
+    }
+
+    body.search_results #left_side #results{
+
+        height: 100%;
+        overflow-y: initial;
+        position: relative;
+    }
+
+    /* Search_results page filters */
+
+    body.search_results #filters {
+
+        width: 100%;
+        grid-template-areas:
+        "title . ."
+        "dates more_filters more_filters"
+        "price rating type"
+        "commodities commodities commodities"
+        "filter_bttn filter_bttn filter_bttn";
+        align-items: center;
+    }
+
+
+    body.search_results #filters #more_filters {
+        grid-area: more_filters;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    body.search_results #filters #title {
+
+        grid-area: title;
+        margin: 0;
+        font-size: 1.5em;
+
+    }
+
+
+    body.search_results #filters #commodities {
+        grid-area: commodities;
+        display: flex;
+        flex-direction: column;
+    }
+
+    body.search_results #filters #price { grid-area: price; }
+    body.search_results #filters #rating { grid-area: rating; }
+    body.search_results #filters #type { grid-area: type; }
+    body.search_results #filters #dates { grid-area: dates; }
+    body.search_results #filters button { grid-area: filter_bttn; }
+
+    /*Search results page single result style and layout*/
+    .result {
+
+        color: black;
+        margin: 1em 0em 0em 0em;
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+
+    }
+
+    .result .image {
+
+        height: auto;
+        width: 90%;
+        margin: 0em auto 1em auto;
+        padding: 0em;
+    }
+
+    .result .info {
+
+        width: 100%;
+        grid-template-areas:
+            "type_and_location type_and_location  type_and_location rating"
+            "title title title title"
+            "desc desc desc desc"
+            "ppd ppd total_price total_price"
+            "nBedrooms nBeds . .";
+    }
+
+    .result .info .info_ppd {
+        text-align: left;
+    }
+
+
+    .result .info .total_price {
+    text-align: left;
+    }
+
+
+    .result img {
+
+        width:100%;
+        object-fit: cover;
+        height: 14.4em;
+        box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    }
+}

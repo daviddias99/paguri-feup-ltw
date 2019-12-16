@@ -243,6 +243,62 @@ body #search_box #map {
     margin-top:1em;
 }
 
+.search_results_info_window {
+    display: grid;
+    grid-template-areas:
+        "img img"
+        "type type"
+        "title title"
+        "pricePerDay pricePerDay"
+        "rating totalPrice";
+    text-decoration: none;
+    color: black;
+}
+
+.search_results_info_window i {
+    color: orange;
+}
+
+.search_results_info_window  > * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.search_results_info_window > img {
+    grid-area: img;
+    text-align: center;
+}
+
+.search_results_info_window > h3:nth-of-type(1) {
+    grid-area: type;
+    text-align: left;
+    color: grey;
+}
+
+.search_results_info_window > h3:first-letter, .search_results_info_window > h2:first-letter {
+    text-transform: uppercase;
+}
+
+.search_results_info_window > h2 {
+    grid-area: title;
+    text-align: left;
+}
+
+.search_results_info_window > h3:nth-of-type(2) {
+    grid-area: pricePerDay;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(1) {
+    grid-area: rating;
+    text-align: left;
+}
+
+.search_results_info_window > p:nth-of-type(2) {
+    grid-area: totalPrice;
+    text-align: right;
+}
+
 .add_house_info_window {
     display: grid;
     grid-template-areas:
@@ -353,8 +409,10 @@ body.front_page {
 body.search_results #filters {
 
     width: 94%;
+    background-color: #fdfdfd;
     margin: auto;
     display: grid;
+    padding: 1em;
     grid-template-columns: 1.1fr 0.6fr 0.5fr;
     grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
     grid-gap: 0.5em;
@@ -367,24 +425,22 @@ body.search_results #filters {
     border-top: 1px solid #cacaca;
     border-bottom: 4px solid  #475c7a;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    padding: 1em;
-    background-color: #fdfdfd;
     align-items: center;
 }
 
 body.search_results #filters input[type="number"] {
 
-    height: 0.5em;
+    height: 1em;
 }
 
 body.search_results #filters #rating input[type="number"] {
 
-    width: 3em;
+    width: 4em;
 }
 
 body.search_results #filters #more_filters input[type="number"] {
 
-    width: 3em;
+    width: 4em;
 }
 
 body.search_results #filters #price input[type="number"] {
@@ -464,13 +520,14 @@ body.search_results #filters button { grid-area: filter_bttn; }
 
     width: 65%;
     display: grid;
-    grid-template-columns: 2.1fr 2.3fr 0.5fr 0.5fr 0.5fr;
-    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr;
+    grid-template-columns: 2fr 2fr 1.25fr 1.25fr;
+    grid-template-rows: 0.5fr 0.5fr 2.5fr 0.5fr 0.5fr;
     grid-template-areas:
-    "type_and_location type_and_location . rating rating"
-    "title title title title ."
-    "desc desc desc desc ."
-    "nBedrooms nBeds ppd ppd ppd";
+        "type_and_location type_and_location . rating"
+        "title title title title"
+        "desc desc desc desc"
+        ". . ppd ppd"
+        "nBedrooms nBeds total_price total_price";
 }
 
  .result .info .info_title {
@@ -516,7 +573,7 @@ body.search_results #filters button { grid-area: filter_bttn; }
  .result .info .info_bedrooms { grid-area: nBedrooms; }
 
  .result .info .info_bedrooms:after {
-    content:" Bedroom";
+    content: " Bedrooms";
 }
 
  .result .info .info_capacity:before {
@@ -535,24 +592,43 @@ body.search_results #filters button { grid-area: filter_bttn; }
     color: white;
     border: 1em solid #475c7a;
     margin: 0;
-    justify-self: center;
     align-self: center;
+    text-align: center;
 }
 
  .result .info .info_score:after {
     content:"\2605";
 }
 
- .result .info .info_ppd:before {
-    content:" \2022 ";
-}
-
  .result .info .info_ppd {
     grid-area: ppd;
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.result .info .info_ppd:before {
+   content:"€";
+   font-weight: 500;
 }
 
  .result .info .info_ppd:after {
-    content:"€ per day";
+    content:" per night";
+    font-weight: 500;
+}
+
+.result .info .total_price {
+   grid-area: total_price;
+   text-align: right;
+   margin-right: 10px;
+   font-weight: 700;
+}
+
+.result .info .total_price:before {
+   content:"Total of €";
+   font-weight: 500;
 }
 
  .result img {
@@ -825,8 +901,51 @@ textarea {
 
 #edit_profile #change_password .button { grid-area: submit }
 
+#edit_profile #change_password .button { grid-area: submit }
+
+#login form {
+    display: flex;
+    flex-direction: column;
+}
+
+#register form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "username username"
+                         "email email"
+                         "first-name last-name"
+                         "password confirm-password"
+                         "submit submit";
+}
+
+#register #username { grid-area: username; }
+
+#register #password { grid-area: password; }
+
+#register #email { grid-area: email; }
+
+#register #first_name { grid-area: first-name; }
+
+#register #last_name { grid-area: last-name; }
+
+#register #password { grid-area: password; }
+
+#register #conf_password { grid-area: confirm-password; }
+
+#register .button { grid-area: submit; }
+
+#login .button, #register .button {
+    margin: 0.5em;
+}
 
 /*Residence info page*/
+
+body.residence_page a {
+
+    text-decoration: none;
+    color: black;
+}
 
 body.residence_page #map {
     height: 60%;
@@ -836,6 +955,7 @@ body.residence_page #map {
 body.residence_page #main {
 
     padding: 1em;
+    height: 45em;
 }
 
 #residence_info h1{
@@ -853,14 +973,15 @@ body.residence_page #left_side {
 body.residence_page #right_side {
 
     width: 60%;
-    background-color: fuchsia;
+    background-color: white;
     margin: 3em;
+    padding: auto 0 auto 0;
 }
 
 
 body.residence_page #residence_info {
 
-    height: 70%;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 0.7fr 0.6fr 2.3fr 0.7fr 0.7fr 1fr;
@@ -870,7 +991,7 @@ body.residence_page #residence_info {
     "description description description description"
     "properties properties properties properties"
     "commodities commodities commodities commodities"
-    "owner owner . .";
+    "owner owner rent_button rent_button ";
   }
 
 body.residence_page #residence_info .ri_title {
@@ -968,7 +1089,7 @@ body.residence_page #residence_info #ri_owner h3{
     margin-bottom: 0.5em;
 }
 
-body.residence_page #residence_info #ri_owner #owner_avatar {
+body.residence_page #residence_info #ri_owner #owner_avatar a{
 
     display: flex;
     flex-direction: row;
@@ -983,142 +1104,415 @@ body.residence_page #residence_info #ri_owner #owner_avatar img{
     height: 50px;
     border-radius: 50%;
     margin-right: 0.5em;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
 }
+
+body.residence_page #rent_action_form {
+    grid-area: rent_button;
+    align-self: center;
+    height: 40%;
+    width: 80%;
+}
+
+body.residence_page #rent_button_active {
+
+    grid-area: rent_button;
+    background-color: var(--color-2);
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    text-decoration: none;
+    padding: 0.4em 0.6em;
+    width: auto;
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+    height: 100%;
+    width: 100%;
+}
+
+body.residence_page #rent_button_inactive {
+
+    grid-area: rent_button;
+    background-color: rgb(100,100,100);
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    text-decoration: none;
+    padding: 0.4em 0.6em;
+    width: auto;
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+    height: 100%;
+    width: 100%;
+}
+
+
+/*Review Section*/
 
 body.residence_page #review_section {
 
     background-color: white;
-    width: 95%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 1em;
+    width: 60%;
+    margin: 1em 0 0 2em;
     border-radius: 6px;
+    padding: 1em;
+
+
+}
+
+body.residence_page #review_section > h1 {
+
+    border-bottom: solid 2px var(--color-4);
+    width: 20%;
+    margin: 1em 0em 1em 0em;
+
+}
+
+.review {
+    width: 100%;
+}
+
+
+.main_review {
+
+    width: 100%;
+    height: 10em;
+    margin-bottom: 2em;
+    border-top: 1px solid rgb(200,200,200);
+
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    grid-template-areas:
+    "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating options"
+    "comment_user_info comment_title comment_title comment_title options"
+    "comment_user_info comment_content comment_content comment_content options";
+  }
+
+.comment_date_and_rating {
+    grid-area: comment_date_and_rating;
+    display: flex;
+    flex-direction: row;
+    padding-left: 0.5em;
+}
+
+.comment_date_and_rating h3 {
+    font-size: smaller;
+    color: rgb(34, 34, 34);
+    margin-left: 1em;
+}
+
+.checked, .fa-star-half-o, .fa-star-o{
+  color: orange;
+  font-size: larger;
+
+}
+
+.comment_content {
+    grid-area: comment_content;
+    margin: 1em 0em 0em 0em;
+    font-size: smaller;
+    color: rgb(34, 34, 34);
+}
+
+.comment_title {
+    grid-area: comment_title;
+    margin: 0em;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.rating_display {
+
+    margin: auto 0 auto 0;
+    display: flex;
+
+}
+
+
+.comment_user_info {
+
+    grid-area: comment_user_info;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 1em;
 
 }
 
-body.residence_page .review {
+.comment_user_info p {
 
-    width: 70%;
+    text-align: center;
+    margin: 0em;
 }
 
-body.residence_page .main_review {
-
-    width: 90%;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid black;
-}
-
-
-#review_section > h1{
-
-    border-bottom: solid 2px var(--color-4);
-    width: 8%;
-    margin: 1em 0em 1em 0em;
-}
-
-body.residence_page .review .reviewer_avatar {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-body.residence_page .review .comment_header {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #e7a6bd;
-    border-bottom: 2px solid black;
-    padding: 0em 1em;
-
-}
-
-body.residence_page .review .comment_header h1{
-    margin: 0;
-    font-size: 1.3em;
-}
-
-body.residence_page .review .reviewer_avatar .reviewer_name {
-
-    font-size: larger;
-}
-
-body.residence_page .review .reviewer_avatar .reviewer_username {
+.comment_user_info .reviewer_username {
 
     font-size: smaller;
-    color: rgb(40,40,40);
-    margin-left: 0.5em;
+    font-style: italic;
+    color: rgb(34, 34, 34);
 }
 
-body.residence_page .review .comment_header .review_date {
+.comment_user_info img{
+    vertical-align: middle;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 1em;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
 
+.replies {
+
+    padding-left: 4em;
+}
+
+.reply {
+
+    width: 100%;
+    height: 10em;
+    margin-bottom: 2em;
+    border-top: 1px solid rgb(200,200,200);
+
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    grid-template-areas:
+    "comment_user_info reply_date reply_date reply_date options"
+    "comment_user_info comment_title comment_title comment_title options"
+    "comment_user_info comment_content comment_content comment_content options";
+}
+
+.reply_date {
+    grid-area: reply_date;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.reply_date h3 {
     font-size: smaller;
-    color: rgb(40,40,40);
-    margin-left: 0.5em;
+    color: rgb(34, 34, 34);
+    margin-left: 0em;
+    margin-right: 1em;
 }
 
-body.residence_page .review .review_date{
+input.comment_title {
+    margin: 0em;
+    font-size: medium;
+    font-weight: 400;
+}
 
+textarea.comment_content {
+    padding-left: 1em;
     font-size: medium;
 }
 
-body.residence_page .review .review_content {
+.submit_reply {
 
-    font-size: 1em;
-    margin-left: 1em;
+    grid-area: options;
+    align-self: end;
+    width: 50%;
+    justify-self: center;
 }
 
-body.residence_page .review a{
-    text-decoration: none;
-    color: black;
-}
+form.comment_content {
 
-body.residence_page .review .reviewer_avatar img {
-
-    vertical-align: middle;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 0.5em;
-}
-
-
-#login form {
     display: flex;
     flex-direction: column;
 }
 
-#register form {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas: "username username"
-                         "email email"
-                         "first-name last-name"
-                         "password confirm-password"
-                         "submit submit";
+/*Residence page image*/
+
+.slide_show_img {
+
+    width: 1050px;
+    height: 520px;
 }
 
-#register #username { grid-area: username; }
+#right_side * {box-sizing:border-box}
 
-#register #password { grid-area: password; }
+#residence-images {
 
-#register #email { grid-area: email; }
-
-#register #first_name { grid-area: first-name; }
-
-#register #last_name { grid-area: last-name; }
-
-#register #password { grid-area: password; }
-
-#register #conf_password { grid-area: confirm-password; }
-
-#register .button { grid-area: submit; }
-
-#login .button, #register .button {
-    margin: 0.5em;
+    box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
 }
+
+/* Slideshow container */
+.slideshow-container {
+  width: 100%;
+  position: relative;
+  margin: auto;
+
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+body.residence_page #residence-images a.prev, body.residence_page #residence-images a.next{
+
+    color: white;
+
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/*Rent house page*/
+
+
+body.rent_house h1{
+
+    border-bottom: solid 2px var(--color-4);
+    width: 40%;
+    margin: 1em 0em 1em 0em;
+}
+
+body.rent_house #availabilities h2{
+
+    border-bottom: solid 2px var(--color-5);
+    width: 20%;
+    margin-top: 0em;
+}
+
+
+body.rent_house #residence_info_simplified{
+
+    background-color: white;
+    width: 50%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    padding: 1em;
+    margin: 1% auto auto auto;
+
+}
+
+body.rent_house #residence_summary{
+    width: 100%;
+}
+
+body.rent_house #residence_summary a{
+    text-decoration: none;
+}
+
+body.rent_house #residence_summary  .result:hover {
+
+    border-bottom: 4px solid  #685d79;;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+
+}
+
+body.rent_house  #display_price {
+
+    border: 1px solid black;
+    width:50%;
+    padding: 1em 1em 1em 1em;
+    margin: 1em auto 1em auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body.rent_house  #display_price p {
+
+    margin-left: 1em;
+}
+
+
+body.rent_house #rent_form {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+body.rent_house .disabled {
+
+    background-color: grey;
+}
+

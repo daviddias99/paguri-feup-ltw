@@ -8,6 +8,7 @@ let search_radius = 2; //km
 
 /* Variable used to store reference to return from setTimeout */
 let address_timeout;
+let center_changed_timeout;
 
 function encodeForAjax(data) {
     return Object.keys(data).map(function(k){
@@ -28,8 +29,9 @@ function updateAddressInfo(event) {
     const current_page = getCurrentMapPage();
     switch(current_page) {
       case "search_results":
-          filterResidencesInRadius(coords, search_radius);
-          filterMarkersInRadius(coords, search_radius); 
+          updateURLFilters();
+          filterUpdateHandler(coords, search_radius);
+          buildResultsHeaderHTML(document.getElementById("results_header"));
           break;
 
       case "add_house":
@@ -63,7 +65,7 @@ function updateAddressInfo(event) {
     }
 
     moveMap(coords);    
-    setMapZoom(18);
+    setMapZoom(16);
 }
 
 function updateInputsValues(event, latLng) {
@@ -71,17 +73,22 @@ function updateInputsValues(event, latLng) {
     if(!checkMapsAPIResponse(response)) return;
 
     const best_result = response.results[0];
+    const address = best_result.formatted_address;
 
     const current_page = getCurrentMapPage();
     switch(current_page) {
       case "search_results":
+
+          document.getElementById("location").value = address;
+          updateURLFilters();
+          buildResultsHeaderHTML(document.getElementById("results_header"));
+          filterUpdateHandler(latLng, search_radius);
           break;
 
       case "add_house":
 
           const title = document.getElementById("title").value || "New residence";
           const addressInfo = parseAddressInfo(best_result);
-          const address = best_result.formatted_address;
 
           const house_type_select = document.getElementById("house_type");
             
@@ -99,12 +106,13 @@ function updateInputsValues(event, latLng) {
           document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
           document.getElementById("country").value = markerInfo.country;
           document.getElementById("location").value = address;
+
+
+          moveMap(latLng);  
           break;
       default:
           throw new Error("Unknown current page.");
-    }
-
-    moveMap(latLng);    
+    }  
 }
 
 function checkMapsAPIResponse(response) {
@@ -178,22 +186,15 @@ function reverseGeocoding(latLng) {
   request.send();
 }
 
-
-function buildResultsHeaderHTML(results_header,address){
-
-  let h1 = document.createElement("h1");
-  h1.innerHTML = "Showing places near '" + address + "'" ;
-
-  results_header.replaceChild(h1,results_header.firstElementChild);
-
-}
-
 function handleAddressChangeClick(event) {
 
-  let address = document.getElementById('location').value;  
-  buildResultsHeaderHTML(document.getElementById("results_header"),address);
+  if (current_page == "search_results") {
+    buildResultsHeaderHTML(document.getElementById("results_header"));
+  }
 
+  const address = document.getElementById('location').value;  
   if (address.length == 0) return;
+  
   getAddressInfo(address);
 }
 
@@ -205,13 +206,22 @@ function handleAddressChangeInput(event) {
   address_timeout = setTimeout(() => getAddressInfo(address), 1000);
 }
 
+function handleAddressChangePan(event) {
+  clearTimeout(center_changed_timeout);
+
+  center_changed_timeout = setTimeout(function() {
+    const coords = currentMapLocation();
+    reverseGeocoding(coords);
+  }, 500);
+}
+
 // install event listeners
 const current_page = getCurrentMapPage();
 switch(current_page) {
   case "search_results":
-      handleAddressChangeClick();
+      setTimeout(handleAddressChangeClick, 500);
       document.getElementById("filter_button").addEventListener("click", handleAddressChangeClick);
-      document.getElementById("search_button").addEventListener("click", handleAddressChangeClick);
+      document.getElementById("location").addEventListener("input", handleAddressChangeInput);
       break;
 
   case "add_house":

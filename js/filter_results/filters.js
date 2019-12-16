@@ -1,11 +1,15 @@
 'use strict'
 
+let prev_filter_state = null;
+let prev_residences_response = null;
+
 class FilterState {
 
-    constructor(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
+    constructor(location, checkin, checkout, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commodities) {
 
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.location = location;
+        this.checkin = checkin;
+        this.checkout = checkout;
         this.priceFrom = priceFrom;
         this.priceTo = priceTo;
         this.ratingFrom = ratingFrom;
@@ -16,20 +20,57 @@ class FilterState {
         this.commodities = commodities;
     }
 
+    urlString() {
+        let urlStr = "?";
+
+        if (this.location != "") urlStr += "location=" + this.location + "&";
+        if (this.checkin != "") urlStr += "checkin=" + this.checkin + "&";
+        if (this.checkout != "") urlStr += "checkout=" + this.checkout + "&";
+        if (this.priceFrom != "") urlStr += "min_price=" + this.priceFrom + "&";
+        if (this.priceTo != "") urlStr += "max_price=" + this.priceTo + "&";
+        if (this.ratingFrom != "") urlStr += "min_rating=" + this.ratingFrom + "&";
+        if (this.ratingTo != "") urlStr += "max_rating=" + this.ratingTo + "&";
+        if (this.type != "") urlStr += "type=" + this.type + "&";
+        if (this.nBeds != "") urlStr += "min_beds=" + this.nBeds + "&";
+        if (this.capacity != "") urlStr += "guest_count=" + this.capacity + "&";
+
+        if (Object.keys(this.commodities).length > 0) {
+            let first = true;
+            for (const commodity in this.commodities) {
+                if (this.commodities[commodity] == true) {
+                    if (first) {
+                        urlStr += "commodities=";
+                        first = false;
+                    }
+                    urlStr += commodity + ","
+                }
+            }
+            // remove trailing comma
+            urlStr = urlStr.substr(0, urlStr.length-1);
+            urlStr += "&";
+        }
+
+        // remove trailing & or ?
+        urlStr = urlStr.substr(0, urlStr.length-1);
+
+        return urlStr;
+    }
+
 }
 
 function getCurrentFilterState() {
 
-    let nBeds = document.getElementById("nBeds").value
-    let capacity = document.getElementById("capacity").value
-    let dateFrom = document.getElementById("check_in").value
-    let dateTo = document.getElementById("check_out").value
-    let type = document.getElementById("housing_type").value
-    let priceFrom = document.getElementById("minPrice").value
-    let priceTo = document.getElementById("maxPrice").value
-    let ratingFrom = document.getElementById("minRating").value
-    let ratingTo = document.getElementById("maxRating").value
-    let commodities = document.getElementsByName("commodity")
+    const location = document.getElementById("location").value;
+    const nBeds = document.getElementById("nBeds").value;
+    const capacity = document.getElementById("capacity").value;
+    const checkin = document.getElementById("check_in").value;
+    const checkout = document.getElementById("check_out").value;
+    const type = document.getElementById("housing_type").value;
+    const priceFrom = document.getElementById("minPrice").value;
+    const priceTo = document.getElementById("maxPrice").value;
+    const ratingFrom = document.getElementById("minRating").value;
+    const ratingTo = document.getElementById("maxRating").value;
+    const commodities = document.getElementsByName("commodity");
     let commoditiesObj = {};
 
     for (let i = 0; i < commodities.length; i++) {
@@ -37,7 +78,7 @@ function getCurrentFilterState() {
         commoditiesObj[commodity.value] = commodity.checked;
     }
 
-    return new FilterState(dateFrom, dateTo, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
+    return new FilterState(location, checkin, checkout, priceFrom, priceTo, ratingFrom, ratingTo, type, nBeds, capacity, commoditiesObj)
 }
 
 function simplifyPrice(price) {
@@ -52,37 +93,55 @@ function simplifyPrice(price) {
         return price;
 }
 
+function reservationNumberOfDays() {
+    const checkin = document.getElementById("check_in").value
+    const checkout = document.getElementById("check_out").value
+    let nDays = 1;
+    if (checkin != "" && checkout != "")
+        nDays = Math.ceil(Math.abs(new Date(checkout.replace(/-/g, '/')) - new Date(checkin.replace(/-/g, '/'))) / (1000 * 60 * 60 * 24));
+    return nDays;
+}
+
 
 function buildResidenceHTML(property){
 
-    let descriptionTrimmed =property['description'].length > 180 ? property['description'].substr(0, 180) + "..." : property['description'];
-    let priceSimple = simplifyPrice(property['pricePerDay']);
+    const descriptionTrimmed =property['description'].length > 180 ? property['description'].substr(0, 180) + "..." : property['description'];
+    const ppdSimple = simplifyPrice(property['pricePerDay']);
+    const totalPriceSimple = simplifyPrice(property['pricePerDay'] * reservationNumberOfDays());
 
     let resultHTML = "";
 
+    property['rating'] = (property['rating'] == null ? '--' : (property['rating']/2).toFixed(2));
+
     if (property['rating'] == null)
         property['rating'] = '-- ';
+    
+    let typeStr = property['typeStr'];
+    if (typeStr.length > 0)
+        typeStr = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
 
     resultHTML = 
         '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
-        '<section class="result">' +    
-        '<section class="image">' +
-        '<img src="../resources/house_image_test.jpeg">' +
-        '</section>' +  
-        '<section class="info">' + 
-        '<h1 class="info_title">' + property['title'] + '</h1>' +
-        '<h2 class="info_type_and_location">' + property['typeStr'] + ' &#8226 ' + property['address']  + '</h2>' +
-        '<p class="info_description">'  + descriptionTrimmed + '</p>' +
-        '<p class="info_ppd">' + priceSimple +'</p>' +
-        '<p class="info_score">'+ property['rating']+'</p>' +
-        '<p class="info_capacity">' + property['capacity']+'</p>' +
-        '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
-        '</section>' +
-        '</section>' +
+            '<section class="result">' +    
+                '<section class="image">' +
+                    '<img src="../resources/house_image_test.jpeg">' +
+                '</section>' +  
+                '<section class="info">' + 
+                    '<h1 class="info_title">' + property['title'] + '</h1>' +
+                    '<h2 class="info_type_and_location">' + typeStr + ' &#8226 ' + property['address']  + '</h2>' +
+                    '<p class="info_description">'  + descriptionTrimmed + '</p>' +
+                    '<p class="total_price">' + totalPriceSimple + '</p>' +
+                    '<p class="info_ppd">' + ppdSimple +'</p>' +
+                    '<p class="info_score">'+ property['rating']+'</p>' +
+                    '<p class="info_capacity">' + property['capacity']+'</p>' +
+                    '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+                '</section>' +
+            '</section>' +
         '</a>'    
 
     return resultHTML;
 }
+
 
 function buildResidenceListHTML(properties){
 
@@ -94,7 +153,19 @@ function buildResidenceListHTML(properties){
     return innerHTML;
 }
 
-function buildResultCountHeader(results_header,count){
+function buildResultsHeaderHTML(results_header){
+
+    const address = document.getElementById('location').value;  
+    let h1 = document.createElement("h1");
+    if (address.length > 0)
+        h1.innerHTML = "Showing places near '" + address + "'" ;
+    else
+        h1.innerHTML = "Showing available places";
+    results_header.replaceChild(h1,results_header.firstElementChild);
+
+}
+
+function buildResultCountHeader(results_header, count){
 
     let h2 = document.createElement("h2");
     h2.innerHTML = count + " results found (Wow!)" ;
@@ -103,32 +174,56 @@ function buildResultCountHeader(results_header,count){
   
     return results_header;
   
-  }
+}
 
-function updateSearchResults() {
-
-    let results_section = document.getElementById("results");
-    results_section.innerHTML = "";
+function updateSearchResults(event) {
 
     // Array that contains the properties that match the filters
-    let response = JSON.parse(this.responseText);
+    let response = JSON.parse(event.target.responseText);
 
+    // same residences as before, no need to update
+    if (JSON.stringify(response) === JSON.stringify(prev_residences_response)) {
+        return;
+    }
+
+    prev_residences_response = JSON.parse(JSON.stringify(response));
+
+    // update residences section
+    let results_section = document.getElementById("results");
+    results_section.innerHTML = buildResidenceListHTML(response);
     buildResultCountHeader(document.getElementById("results_header"),response.length);
-    results_section.innerHTML =  buildResidenceListHTML(response);
+    
+    // update markers
+    clearMarkers();
+    addMarkers(response);
 }
 
 
-function filterResidencesInRadius(coords, radius) {
+function filterUpdateHandler(coords, radius) {
 
-    var filterState = getCurrentFilterState();
-    var location = {coords: coords, radius: radius};
+    const filterState = getCurrentFilterState();
+    
+    // state did not change
+    if (JSON.stringify(prev_filter_state) === JSON.stringify(filterState)) {
+        return;
+    }
+
+    prev_filter_state = filterState;
+
+    const location = {coords: coords, radius: radius};
+
+    const encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
+    const encodedLocationData = encodeURIComponent(JSON.stringify(location));
 
     let request = new XMLHttpRequest();
-    let encodedFilterData = encodeURIComponent(JSON.stringify(filterState));
-    let encodedLocationData = encodeURIComponent(JSON.stringify(location));
-
     request.onload = updateSearchResults;
     request.open("get", "../ajax/residence_search.php?filter_data=" + encodedFilterData + '&location_data=' + encodedLocationData);
     request.send();
 
 }
+
+function updateURLFilters() {
+    window.history.pushState(null, '', window.location.pathname + getCurrentFilterState().urlString());
+}
+
+document.getElementById("filter_button").addEventListener("click", updateURLFilters);
