@@ -342,8 +342,10 @@ body.front_page {
 body.search_results #filters {
 
     width: 94%;
+    background-color: #fdfdfd;
     margin: auto;
     display: grid;
+    padding: 1em;
     grid-template-columns: 1.1fr 0.6fr 0.5fr;
     grid-template-rows: 0.5fr 1.1fr 1.1fr 1.2fr 0.2fr;
     grid-gap: 0.5em;
@@ -356,24 +358,22 @@ body.search_results #filters {
     border-top: 1px solid #cacaca;
     border-bottom: 4px solid  #475c7a;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    padding: 1em;
-    background-color: #fdfdfd;
     align-items: center;
 }
 
 body.search_results #filters input[type="number"] {
 
-    height: 0.5em;
+    height: 1em;
 }
 
 body.search_results #filters #rating input[type="number"] {
 
-    width: 3em;
+    width: 4em;
 }
 
 body.search_results #filters #more_filters input[type="number"] {
 
-    width: 3em;
+    width: 4em;
 }
 
 body.search_results #filters #price input[type="number"] {
@@ -525,7 +525,6 @@ body.search_results #filters button { grid-area: filter_bttn; }
     color: white;
     border: 1em solid #475c7a;
     margin: 0;
-    /*justify-self: center;*/
     align-self: center;
     text-align: center;
 }
