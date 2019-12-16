@@ -186,19 +186,12 @@ function updateProfilePicture($username, $photoID)
     return $oldPhotoID;
 }
 
-<<<<<<< HEAD
     function getUserID($username) {
         global $dbh;
-=======
-function getUserRowID($username)
-{
-    global $dbh;
->>>>>>> master
 
     $stmt = $dbh->prepare('SELECT RowID FROM user WHERE username = ?');
     $stmt->execute(array($username));
 
-<<<<<<< HEAD
         return $stmt->fetch()['userID'];
     }
 
@@ -215,7 +208,3 @@ function getUserRowID($username)
         return $stmt->fetch();
     }
 ?>
-=======
-    return $stmt->fetch()['rowid'];
-}
->>>>>>> master

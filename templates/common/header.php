@@ -12,21 +12,6 @@ function draw_header($body_class, $scripts)
     <!DOCTYPE html>
     <html lang="en-US">
 
-<<<<<<< HEAD
-    <head>
-        <title>Paguri</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
-        <link href="../css/style.css" rel="stylesheet">
-        <link href="../css/responsive.css" rel="stylesheet">
-        <?php if ($scripts != null) foreach ($scripts as $script) { ?>
-            <script src="../js/<?= $script ?>" defer></script>
-        <?php } ?>
-    </head>
-=======
         <head>
             <title>Paguri</title>
             <meta charset="UTF-8">
@@ -41,7 +26,6 @@ function draw_header($body_class, $scripts)
                      <script src="../js/<?=$script?>" defer></script>
             <?php } ?>
         </head>
->>>>>>> 4a93eb524087cb36227277b5d00d889022c21880
 
     <body class=<?= $body_class ?>>
         <nav class="navbar">
