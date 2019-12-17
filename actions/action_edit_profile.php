@@ -3,13 +3,13 @@
     include_once('../database/user_queries.php');
 
 
-    if(!isset($_SESSION['userID']) || 
-        !isset($_POST['userID']) || 
-        !isset($_POST['username']) || 
-        !isset($_POST['newUsername']) || 
-        !isset($_POST['email']) || 
-        !isset($_POST['firstName']) || 
-        !isset($_POST['lastName']) || 
+    if(!isset($_SESSION['userID']) ||
+        !isset($_POST['userID']) ||
+        !isset($_POST['username']) ||
+        !isset($_POST['newUsername']) ||
+        !isset($_POST['email']) ||
+        !isset($_POST['firstName']) ||
+        !isset($_POST['lastName']) ||
         !isset($_POST['bio'])) {
         header('Location: ../pages/front_page.php');
     }
@@ -50,10 +50,10 @@
         $supportedFormats = array(IMAGETYPE_JPEG => '.jpg', IMAGETYPE_PNG => '.png');
 
         $imgType = exif_imagetype($tmpPath);
-        $extension = $supportedFormats[$imgType];
-
-        if ($extension == null)
+        if (! isset($supportedFormats[$imgType]))
             die();
+
+        $extension = $supportedFormats[$imgType];
 
         $userRowID = getUserID($username);
 
