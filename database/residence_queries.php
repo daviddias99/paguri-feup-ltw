@@ -56,7 +56,7 @@ function getResidenceInfo($residenceID)
     global $dbh;
 
     $stmt = $dbh->prepare(
-        'SELECT residence.*, residencetype.name as type , rating
+        'SELECT residence.*, residenceTypeID, residencetype.name as type , rating
         FROM residence JOIN residencetype
                         ON residence.type = residenceTypeID
                        LEFT JOIN (SELECT lodge, avg(rating) as rating
@@ -93,7 +93,7 @@ function getResidenceInfo($residenceID)
     {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT filepath, priority FROM residencePhoto WHERE lodge = ?');
+        $stmt = $dbh->prepare('SELECT *, priority FROM residencePhoto WHERE lodge = ?');
         $stmt->execute(array($residenceID));
         return $stmt->fetchAll();
     }
@@ -104,7 +104,7 @@ function getResidenceInfo($residenceID)
         global $dbh;
 
         $stmt = $dbh->prepare(
-            'SELECT name
+            'SELECT *
                 FROM residenceHasCommodity JOIN commodity
                 ON item = commodityID
                 WHERE lodge = ?'

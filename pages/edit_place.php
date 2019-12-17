@@ -9,8 +9,9 @@
     if (! isset($_SESSION['username']))
         die("User not logged in!");
 
-    $placeID = $_POST['id'];
+    $placeID = $_GET['id'];
     $username = $_SESSION['username'];
+
 
     if (! userHasResidence($username, $placeID))
         die("Not your place.");
