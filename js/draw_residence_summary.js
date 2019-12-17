@@ -33,13 +33,15 @@ function buildResidenceHTML(property){
 
     let resultHTML = "";
 
+    let photoPath = property['photoPaths'].length == 0 ? "../resources/medium-none.jpg" : "../images/properties/medium/" + property['photoPaths'][0];
+
     property['rating'] = (property['rating'] == null ? '--' : (property['rating']/2).toFixed(2));
 
     resultHTML = 
         '<a href="../pages/view_house.php?id=' + property['residenceID'] + '">' +
         '<section class="result">' +    
             '<section class="image">' +
-                '<img src="../resources/house_image_test.jpeg">' +
+            '<img src="'+ photoPath+ '">' +
             '</section>' +  
             '<section class="info">' + 
                 '<h1 class="info_title">' + htmlEntities(property['title']) + '</h1>' +
