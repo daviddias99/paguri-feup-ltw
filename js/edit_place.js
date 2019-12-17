@@ -57,6 +57,7 @@ document.getElementById("submit_button").onclick = function (event) {
     request.send();
 
     Object.keys(images).forEach(key => {
+        console.log("sending image");
         send(id, images[key]);
     });
 
@@ -64,19 +65,19 @@ document.getElementById("submit_button").onclick = function (event) {
         remove(image);
     });
 
-    const redirectForm = document.createElement('form');
-    redirectForm.method = 'post';
-    redirectForm.action = '../pages/edit_place.php';
+    // const redirectForm = document.createElement('form');
+    // redirectForm.method = 'post';
+    // redirectForm.action = '../pages/edit_place.php';
 
-    const idInput = document.createElement('input');
-    idInput.type = 'hidden';
-    idInput.name = 'id';
-    idInput.value = id;
+    // const idInput = document.createElement('input');
+    // idInput.type = 'hidden';
+    // idInput.name = 'id';
+    // idInput.value = id;
 
-    redirectForm.appendChild(idInput);
-    document.body.appendChild(redirectForm);
+    // redirectForm.appendChild(idInput);
+    // document.body.appendChild(redirectForm);
 
-    redirectForm.submit();
+    // redirectForm.submit();
 };
 
 function send(id, image) {
@@ -133,23 +134,29 @@ document.querySelector(".choose_photo").onchange = function (event) {
             const img = document.createElement('img');
 
             img.onload = function () {
+                const width = this.width;
+                const height = this.height;
 
-                const dstHeight = 256;
-                const dstWidth = 256;
+                const dstHeight = 180;
+                const dstWidth = 300;
                 const dstX = 0;
                 const dstY = 0;
 
-                const square = Math.min(this.height, this.width);
-                const srcHeight = square;
-                const srcWidth = square;
-                const srcX = this.width > square ? (this.width - square) / 2 : 0;
-                const srcY = this.height > square ? (this.height - square) / 2 : 0;
+                const widthRatio = width / dstWidth;
+                const heightRatio = height / dstHeight;
+                const ratio = heightRatio > widthRatio ? widthRatio : heightRatio;
+
+                const srcWidth = width * ratio / widthRatio;
+                const srcHeight = height * ratio / heightRatio;
+
+                const srcX = heightRatio >= widthRatio ? 0 : (width - srcWidth) / 2;
+                const srcY = widthRatio >= heightRatio ? 0 : (height - srcHeight) / 2;
 
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
-                canvas.width = dstHeight;
-                canvas.height = dstWidth;
+                canvas.width = dstWidth;
+                canvas.height = dstHeight;
 
                 ctx.drawImage(this, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight);
 
@@ -167,7 +174,6 @@ document.querySelectorAll(".image_preview .remove_image").forEach(element => {
     element.onclick = (event) => {
         event.target.parentNode.remove();
         removedImages.push(event.target.parentNode.id);
-        console.log("nao esta a remover");
     }
 });
 
