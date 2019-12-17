@@ -50,6 +50,8 @@ function draw_header($body_class, $scripts)
     function draw_logged_in_nav($username)
     {
         $user = getUserInfo($username);
+        if ($user == FALSE) return;
+        
         $photoPath = "../images/users/thumbnails_small/" . $user['photo'];
         ?>
         <input type="checkbox" class="hamburger-btn" id="hamburger-btn" />
