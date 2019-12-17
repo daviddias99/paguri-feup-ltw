@@ -1,7 +1,5 @@
 <?php
 
-    // TODO authentication with sessions
-
     include_once('../includes/config.php');
     include_once('./response_status.php');
 
