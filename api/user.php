@@ -14,7 +14,14 @@
 
     $response = array();
 
+    $isAdmin = isset($_SESSION['isAdmin']);
+    $isLoggedIn = isset($_SESSION['userID']);
+
     if($request_method == 'GET') {
+
+        if (!$isLoggedIn && !$isAdmin) {
+            api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate yourself to access this resource.');
+        }
         
         if(array_key_exists('id', $_GET)) {
             $info = getUserInfoById($_GET['id']);
@@ -23,7 +30,7 @@
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given id.');
             }
 
-            if ($_SESSION['userID'] != $info['userID'])
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
                 api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
 
             $response['user'] = $info;
@@ -35,7 +42,7 @@
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given username.');
             }
 
-            if ($_SESSION['userID'] != $info['userID'])
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
                 api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
@@ -47,13 +54,13 @@
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given email.');
             }
 
-            if ($_SESSION['userID'] != $info['userID'])
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
                 api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
         }
         else {
-            if (!isset($_SESSION['isAdmin']))
+            if (!$isAdmin)
                 api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
 
             $response['users'] = getAllUsers();
