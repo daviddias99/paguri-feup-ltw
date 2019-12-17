@@ -1,6 +1,7 @@
 <?php
 include_once('../database/residence_queries.php');
 include_once('../database/user_queries.php');
+include_once('../templates/helper_functions.php');
 ?>
 
 <?php function draw_add_house()

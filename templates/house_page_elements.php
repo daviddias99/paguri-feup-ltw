@@ -1,6 +1,7 @@
 <?php
 
     include_once('../includes/config.php');
+    include_once('../templates/helper_functions.php');
     include_once('../database/residence_queries.php');
     include_once('../database/user_queries.php');
 
@@ -94,18 +95,6 @@
     }
     ?>
 
-    <?php function simplifyPrice($price)
-    {
-        if (number_format($price / 1000000000, 2) >= 1)
-            return number_format($price / 1000000000, 2) . 'B';
-        else if (number_format($price / 1000000, 3) >= 1)
-            return number_format($price / 1000000, 2) . 'M';
-        else if (number_format($price / 1000, 3) >= 1)
-            return number_format($price / 1000, 3) . 'K';
-        else
-            return $price;
-    }
-    ?>
 
     <?php function drawReviews($comments)
     { ?>
