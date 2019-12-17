@@ -1,2 +1,5 @@
 **/*.db
-images/
+/images/
+!/images/users/originals/default.jpg
+!/images/users/thumbnails_medium/default.jpg
+!/images/users/thumbnails_small/default.jpg
