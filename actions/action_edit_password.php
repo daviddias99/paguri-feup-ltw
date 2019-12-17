@@ -1,16 +1,28 @@
 <?php
-include_once('../includes/config.php');
-include_once('../database/user_queries.php');
+    include_once('../includes/config.php');
+    include_once('../database/user_queries.php');
 
-$username = $_POST['username'];
+    if(!isset($_SESSION['username']) || 
+        !isset($_POST['username']) || 
+        !isset($_POST['password']) || 
+        !isset($_POST['pwConfirmation'])) {
+        header('Location: ../pages/front_page.php');
+    }
 
-if ((!isset($_SESSION['username']) or $username != $_SESSION['username']))
-    die();
+    $username = $_POST['username'];
 
-$password = $_POST['password'];
-$pwConfirmation = $_POST['pwConfirmation'];
+    if ($username != $_SESSION['username']) {
+        header('Location: ../pages/front_page.php');
+        die();
+    }
 
-if (strlen($password) >= 6 and $password === $pwConfirmation)
+    $password = $_POST['password'];
+    $pwConfirmation = $_POST['pwConfirmation'];
+
+    if (strlen($password) < 6 or $password !== $pwConfirmation) {
+        header('Location: ../pages/front_page.php');        
+    }
+
     updateUserPassword($username, $password);
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+?>

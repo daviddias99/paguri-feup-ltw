@@ -4,7 +4,7 @@
     <h1> Something went wrong :( </h1>
     <?php
         if($message != null){ ?>
-        <h2><?=ucfirst($message)?></h2>
+        <h2><?= htmlentities(ucfirst($message)) ?></h2>
         <?php }
             
     ?>

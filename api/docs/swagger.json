@@ -1,0 +1,737 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "REST API for the Paguri web application.\n",
+    "version" : "1.0.0",
+    "title" : "Paguri REST API",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "mario.g.mesquita@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/P1684/Paguri/1.0.0",
+  "tags" : [ {
+    "name" : "residence",
+    "description" : "Interface to interact with Residences"
+  }, {
+    "name" : "user",
+    "description" : "Operations about users"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/residence.php" : {
+      "get" : {
+        "tags" : [ "residence" ],
+        "summary" : "Retrieve all the residences",
+        "operationId" : "getResidences",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the residences.",
+            "schema" : {
+              "$ref" : "#/definitions/ResidencesResponse"
+            }
+          },
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "residence" ],
+        "summary" : "Add a new residence",
+        "operationId" : "addResidence",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Residence object to be added to the database.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ResidenceBody"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created new residence.",
+            "headers" : {
+              "Location" : {
+                "type" : "string",
+                "description" : "Location of newly created Residence."
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing / invalid body values or wrong Accept Header.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "500" : {
+            "description" : "Error inserting residence in the database.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "residence" ],
+        "operationId" : "updateResidences",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "405" : {
+            "description" : "Method not allowed.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "residence" ],
+        "operationId" : "deleteResidences",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "405" : {
+            "description" : "Method not allowed.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      }
+    },
+    "/residence.php/{id}" : {
+      "get" : {
+        "tags" : [ "residence" ],
+        "summary" : "Retrieves residence with given ID",
+        "description" : "ID must be provided through a query string '?id={id}'.",
+        "operationId" : "getResidence",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the residence to fetch.",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved the residence.",
+            "schema" : {
+              "$ref" : "#/definitions/ResidenceResponse"
+            }
+          },
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "404" : {
+            "description" : "Residence with given ID does not exist.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "residence" ],
+        "summary" : "Update an existing residence",
+        "description" : "Parameters must be provided through a query string '?param={val}'. User must be logged in and the owner of the residence for this request.",
+        "operationId" : "updateResidence",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the residence to update.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "owner",
+          "in" : "path",
+          "description" : "Owner of the residence. Primary key of a User.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "title",
+          "in" : "path",
+          "description" : "Title of the residence.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "description",
+          "in" : "path",
+          "description" : "Description of the residence.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pricePerDay",
+          "in" : "path",
+          "description" : "Price per day of the residence.",
+          "required" : true,
+          "type" : "number",
+          "format" : "double"
+        }, {
+          "name" : "capacity",
+          "in" : "path",
+          "description" : "Capacity of the residence.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nBedrooms",
+          "in" : "path",
+          "description" : "Number of bedrooms of the residence.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nBathrooms",
+          "in" : "path",
+          "description" : "Number of bathrooms of the residence.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nBeds",
+          "in" : "path",
+          "description" : "Number of beds of the residence.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "description" : "Type of the residence. Primary key of a ResidenceType.",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "address",
+          "in" : "path",
+          "description" : "Address of the residence.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "city",
+          "in" : "path",
+          "description" : "City of the residence.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "path",
+          "description" : "Country of the residence.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "latitude",
+          "in" : "path",
+          "description" : "Latitude of the residence.",
+          "required" : true,
+          "type" : "number",
+          "format" : "double"
+        }, {
+          "name" : "longitude",
+          "in" : "path",
+          "description" : "Longitude of the residence.",
+          "required" : true,
+          "type" : "number",
+          "format" : "double"
+        }, {
+          "name" : "commodities",
+          "in" : "path",
+          "description" : "JSON string representing an array of the commodities of the residence.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Update was successfull."
+          },
+          "400" : {
+            "description" : "Missing / invalid parameters or wrong Accept Header.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "403" : {
+            "description" : "You do not have permissions to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "404" : {
+            "description" : "Residence to update not found.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "500" : {
+            "description" : "Error while updating the residence on the database.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "residence" ],
+        "summary" : "Delete an existing residence",
+        "description" : "ID must be provided through a query string '?id={id}'. User must be logged in and the owner of the residence for this request.",
+        "operationId" : "deleteResidence",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the residence to delete.",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deletion was successfull."
+          },
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "403" : {
+            "description" : "You do not have permissions to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "404" : {
+            "description" : "Residence to delete not found.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "500" : {
+            "description" : "Error while deleting the residence on the database.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      }
+    },
+    "/user.php" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Retrieve all users",
+        "description" : "This can only be done by an admin.",
+        "operationId" : "getUsers",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success.",
+            "schema" : {
+              "$ref" : "#/definitions/UsersResponse"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "403" : {
+            "description" : "You do not have permissions to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Create user",
+        "description" : "Any user can request this.",
+        "operationId" : "createUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/UserBody"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "User succesfully created.",
+            "headers" : {
+              "Location" : {
+                "type" : "string",
+                "description" : "Location of newly created User."
+              }
+            }
+          },
+          "400" : {
+            "description" : "Missing or invalid body values.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "500" : {
+            "description" : "Error while creating the user on the database.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      }
+    },
+    "/user.php/{key}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Retrieve user by ID, username or email",
+        "description" : "Retrieves user by its ID, username or email. Should be provided as id={id}, username={username} or email={email} in the url query string. User must be logged in and can only access information about itself.",
+        "operationId" : "getUserByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "ID, Username or Emai of User to retrieve",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved User.",
+            "schema" : {
+              "$ref" : "#/definitions/UserResponse"
+            }
+          },
+          "400" : {
+            "description" : "Accept Header must be application/json.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "401" : {
+            "description" : "You must authenticate yourself to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "403" : {
+            "description" : "You do not have permissions to access this resource",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          },
+          "404" : {
+            "description" : "User with given key was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMsg"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Residence" : {
+      "type" : "object",
+      "properties" : {
+        "residenceID" : {
+          "type" : "integer",
+          "format" : "Residence PK"
+        },
+        "owner" : {
+          "type" : "integer",
+          "format" : "User PK"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "pricePerDay" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "capacity" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBedrooms" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBathrooms" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBeds" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "type" : {
+          "type" : "integer",
+          "format" : "ResidenceType PK"
+        },
+        "typeStr" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "latitude" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "longitude" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "ResidenceBody" : {
+      "type" : "object",
+      "properties" : {
+        "owner" : {
+          "type" : "integer",
+          "format" : "User PK"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "pricePerDay" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "capacity" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBedrooms" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBathrooms" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "nBeds" : {
+          "type" : "integer",
+          "minimum" : 0
+        },
+        "type" : {
+          "type" : "integer",
+          "format" : "ResidenceType PK"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "latitude" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "longitude" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "commodities" : {
+          "type" : "string",
+          "format" : "json array of ids"
+        }
+      }
+    },
+    "ResidenceResponse" : {
+      "type" : "object",
+      "properties" : {
+        "residence" : {
+          "$ref" : "#/definitions/Residence"
+        }
+      }
+    },
+    "ResidencesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "residences" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Residence"
+          }
+        }
+      }
+    },
+    "UserBody" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "userID" : {
+          "type" : "integer"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UserResponse" : {
+      "type" : "object",
+      "properties" : {
+        "user" : {
+          "$ref" : "#/definitions/User"
+        }
+      }
+    },
+    "UsersResponse" : {
+      "type" : "object",
+      "properties" : {
+        "users" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/User"
+          }
+        }
+      }
+    },
+    "ErrorMsg" : {
+      "type" : "object",
+      "properties" : {
+        "error" : {
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "responses" : {
+    "Unauthorized" : {
+      "description" : "You must authenticate yourself to access this resource",
+      "schema" : {
+        "$ref" : "#/definitions/ErrorMsg"
+      }
+    },
+    "Forbidden" : {
+      "description" : "You do not have permissions to access this resource",
+      "schema" : {
+        "$ref" : "#/definitions/ErrorMsg"
+      }
+    },
+    "InvalidHeader" : {
+      "description" : "Accept Header must be application/json.",
+      "schema" : {
+        "$ref" : "#/definitions/ErrorMsg"
+      }
+    }
+  }
+}

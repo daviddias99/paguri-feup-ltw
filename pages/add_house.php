@@ -6,7 +6,7 @@
     include_once('../templates/houses.php');
 
     if (! isset($_SESSION['username']))
-        die("User not logged in!");
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to add a residence."));
 
     draw_header('search_results', array('add_place.js'));
     add_map_includes();

@@ -1,3 +1,7 @@
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+}
 
 /**
  * Simplified the value of the price by adding the prefixes K, M or B (for thousands, millions or billions)
@@ -38,13 +42,13 @@ function buildResidenceHTML(property){
                 '<img src="../resources/house_image_test.jpeg">' +
             '</section>' +  
             '<section class="info">' + 
-                '<h1 class="info_title">' + property['title'] + '</h1>' +
-                '<h2 class="info_type_and_location">' + property['type'] + ' &#8226 ' + property['address']  + '</h2>' +
-                '<p class="info_description">'  + descriptionTrimmed + '</p>' +
-                '<p class="info_ppd">' + priceSimple +'</p>' +
-                '<p class="info_score">'+ property['rating']+'</p>' +
-                '<p class="info_capacity">' + property['capacity']+'</p>' +
-                '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+                '<h1 class="info_title">' + htmlEntities(property['title']) + '</h1>' +
+                '<h2 class="info_type_and_location">' + htmlEntities(property['type']) + ' &#8226 ' + property['address']  + '</h2>' +
+                '<p class="info_description">'  + htmlEntities(descriptionTrimmed) + '</p>' +
+                '<p class="info_ppd">' + htmlEntities(priceSimple) +'</p>' +
+                '<p class="info_score">'+ htmlEntities(property['rating']) +'</p>' +
+                '<p class="info_capacity">' + htmlEntities(property['capacity'] )+'</p>' +
+                '<p class="info_bedrooms"> '+ htmlEntities(property['nBedrooms']) +' </p>' +
             '</section>' +
         '</section>' +
         '</a>'    

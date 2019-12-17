@@ -187,22 +187,22 @@ function addInfoWindow(marker, markerInfo) {
             infoWindowContent = `
                 <a class="search_results_info_window" href="../pages/view_house.php?id=` + markerInfo.residenceID + `">
                     <img src="` + "https://picsum.photos/250/150" + `">
-                    <h3>` + markerInfo.type + `</h3>
-                    <h2>` + markerInfo.title + `</h2>
-                    <h3>€` + markerInfo.pricePerDay + ` per night!</h3>
+                    <h3>` + htmlEntities(markerInfo.type) + `</h3>
+                    <h2>` + htmlEntities(markerInfo.title) + `</h2>
+                    <h3>€` + htmlEntities(markerInfo.pricePerDay) + ` per night!</h3>
                     <p>` + starsHTML + `</p>
-                    <p>€` + markerInfo.totalPrice + ` total</p>
+                    <p>€` + htmlEntities(markerInfo.totalPrice) + ` total</p>
                 </div>`;
             break;
 
         case "add_house":
             infoWindowContent = `
                 <div class="add_house_info_window">
-                    <h4>` + markerInfo.title + `</h6>
-                    <p>` + markerInfo.type + `</p>
+                    <h4>` + htmlEntities(markerInfo.title) + `</h6>
+                    <p>` + htmlEntities(markerInfo.type) + `</p>
                     <p>99€</p>
-                    <p>` + markerInfo.city + `</p>
-                    <p>` + markerInfo.country + `</p>
+                    <p>` + htmlEntities(markerInfo.city) + `</p>
+                    <p>` + htmlEntities(markerInfo.country) + `</p>
                 </div>`;
             break;
         default:
