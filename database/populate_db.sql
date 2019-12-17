@@ -31,13 +31,6 @@ VALUES
     (2, '2019-09-21 12:00', '2019-12-21 12:00'),
     (3, '2019-10-21 12:00', '2019-11-29 12:00');
 
-INSERT INTO residencePhoto(lodge, filepath, priority)
-VALUES
-    (2, '', 10),
-    (2, '', 6),
-    (3, '', 2),
-    (3, '', 1);
-
 INSERT INTO comment(booking, title, content, rating, datestamp)
 VALUES
     (3, 'When will this be available???', 'I WANT TO GO TO MARSS', 0, '2019-09-15 12:24'),

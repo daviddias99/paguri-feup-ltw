@@ -65,31 +65,31 @@ include_once('../database/user_queries.php');
 <?php } ?>
 
 <?php
-function draw_house_type_options()
-{
-    $types = getResidenceTypes();
+    function draw_house_type_options()
+    {
+        $types = getResidenceTypes();
 
-    foreach ($types as $type) {
-        ?>
+        foreach ($types as $type) {
+?>
         <option value=<?= $type['residenceTypeID'] ?>><?= ucfirst($type['name']) ?></option>
 <?php
+        }
     }
-}
 ?>
 
 
 <?php
-function draw_commodity_checkboxes()
-{
-    $commodities = getAllCommodities();
-    foreach ($commodities as $commodity) {
-        ?>
+    function draw_commodity_checkboxes()
+    {
+        $commodities = getAllCommodities();
+        foreach ($commodities as $commodity) {
+?>
         <label>
             <input type="checkbox" class="commodities" name="commodities[]" value="<?= $commodity['commodityID'] ?>"> <?= ucfirst($commodity['name']) ?>
         </label>
 <?php
+        }
     }
-}
 ?>
 
 
@@ -99,7 +99,7 @@ function draw_list_user_places($userID)
     $user = getUserInfoById($userID);
     $userLoggedIn = (isset($_SESSION['username']) and $_SESSION['username'] == $user['username']);
     $places = getUserResidences($userID);
-    ?>
+?>
     <section id="places_list" class="card">
 
         <?php if ($userLoggedIn) { ?>
@@ -110,30 +110,30 @@ function draw_list_user_places($userID)
         <?php } else { ?>
             <h1><?= $user['firstName'] ?> <?= $user['lastName'] ?>'s places</h1>
         <?php }
-            if (sizeof($places) == 0) {
-                ?>
+            if ($places == 0) {
+        ?>
             <p class="empty_message">No listed places yet.</p>
             <?php } else {
 
-                    foreach ($places as $place) { ?>
+            foreach ($places as $place) { ?>
                 <section class="places_list_entry">
                     <?php
-                                draw_place_summary($place);
-                                if ($userLoggedIn)
-                                    draw_place_operations($place);
-                                ?>
+                        draw_place_summary($place);
+                        if ($userLoggedIn)
+                            draw_place_operations($place);
+                    ?>
                 </section>
         <?php }
-            } ?>
+                                                                                                                    } ?>
     </section>
 <?php
-}
+                                                                                                                }
 ?>
 
 <?php
-function draw_place_summary($place)
-{
-    ?>
+                                                                                                                function draw_place_summary($place)
+                                                                                                                {
+?>
     <section class="result">
         <section class="image">
             <img src="../resources/house_image_test.jpeg">
@@ -149,22 +149,17 @@ function draw_place_summary($place)
         </section>
     </section>
 <?php
-}
+    }
 ?>
 
 <?php
-function draw_place_operations($place)
-{ ?>
+    function draw_place_operations($place) {
+?>
     <section class="place_operations">
         <input type="hidden" value=<?= $place['residenceID'] ?>>
         <a class="button" id="" href="">Add availability</a>
         <a class="button" href="">Reservations</a>
-
-        <form class="post_link" action="../pages/edit_place.php" method="post">
-            <input type="hidden" name="id" value="<?= $place['residenceID'] ?>">
-            <input type="submit" class="button" value="Edit">
-        </form>
-
+        <a class="button" href="../pages/edit_place.php?id=<?=$place['residenceID'] ?>">Edit</a>
         <button class="button remove_reservation">Remove</button>
     </section>
 <?php } ?>
@@ -173,7 +168,7 @@ function draw_place_operations($place)
 <?php
 function draw_reservations($reservations)
 {
-    ?>
+?>
     <section id="user_reservations" class="card">
         <h1>My reservations</h1>
     </section>
@@ -187,7 +182,7 @@ function draw_reservations($reservations)
 function draw_edit_place($place)
 {
     $photos = getResidencePhotos($place['residenceID']);
-    ?>
+?>
     <section class="card" id="edit_place">
         <h1>Edit place information</h1>
 
@@ -216,18 +211,19 @@ function draw_edit_place($place)
             <input id="city" type="hidden" value="<?= $place['country'] ?>">
             <input id="country" type="hidden" value="<?= $place['city'] ?>">
 
-            <label class="choose_photo button">Choose
-                <input class="choose_photo_input" type="file" name="image" multiple>
-            </label>
+            <section id="edit_place_images">
+                <?php foreach ($photos as $photo) { ?>
+                    <section class="image_preview" id="<?= $photo['photoID'] ?>">
+                        <img src="../images/properties/medium/<?= $photo['filepath'] ?>">
+                        <div class="remove_image fas fa-trash-alt"></div>
+                    </section>
+                <?php } ?>
+                <label class="choose_photo button fas fa-plus">
+                    <input class="choose_photo_input" type="file" name="image" multiple>
+                </label>
+            </section>
 
-            <?php foreach ($photos as $photo) { ?>
-                <section class="image_preview" id="<?= $photo['photoID'] ?>">
-                    <img src="../images/properties/originals/<?= $photo['filepath']?>">
-                    <span class="remove_image fas fa-trash-alt"></span>
-                </section>
-            <?php } ?>
-
-            <input class="button" id="submit_button" type="submit" value="Edit">
+            <input class="button" id="submit_button" type="submit" value="Update">
         </form>
     </section>
 <?php

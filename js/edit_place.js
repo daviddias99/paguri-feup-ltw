@@ -9,6 +9,7 @@ function encodeForAjax(data) {
 const images = {};
 const removedImages = [];
 let lastImageID = 0;
+let numSent = 0;
 
 document.getElementById("submit_button").onclick = function (event) {
     event.preventDefault();
@@ -59,25 +60,14 @@ document.getElementById("submit_button").onclick = function (event) {
     Object.keys(images).forEach(key => {
         console.log("sending image");
         send(id, images[key]);
+        delete images[key];
     });
 
     removedImages.forEach(image => {
         remove(image);
     });
+    removedImages.length = 0;
 
-    // const redirectForm = document.createElement('form');
-    // redirectForm.method = 'post';
-    // redirectForm.action = '../pages/edit_place.php';
-
-    // const idInput = document.createElement('input');
-    // idInput.type = 'hidden';
-    // idInput.name = 'id';
-    // idInput.value = id;
-
-    // redirectForm.appendChild(idInput);
-    // document.body.appendChild(redirectForm);
-
-    // redirectForm.submit();
 };
 
 function send(id, image) {
@@ -89,6 +79,8 @@ function send(id, image) {
 
     request.open("POST", '../actions/action_add_house_image.php');
     request.send(formData);
+
+    request.onload = onLoad;
 }
 
 function remove(imageID) {
@@ -98,13 +90,20 @@ function remove(imageID) {
     request.setRequestHeader('Accept', 'application/json');
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.send(encodeForAjax({imageID: imageID }));
+
+    request.onload = onLoad;
+}
+
+function onLoad() {
+    numSent++;
+    if (numSent == Object.keys(images).length + removedImages.length)
+        window.location.reload();
 }
 
 
 
-
 const card = document.getElementById("edit_place");
-
+const imageSection = document.getElementById("edit_place_images");
 
 
 document.querySelector(".choose_photo").onchange = function (event) {
@@ -122,13 +121,13 @@ document.querySelector(".choose_photo").onchange = function (event) {
 
             const preview = document.createElement('img');
 
-            const del = document.createElement('span');
+            const del = document.createElement('div');
             del.setAttribute('class', 'remove_image fas fa-trash-alt');
             del.onclick = removeImage;
 
             section.appendChild(preview);
             section.appendChild(del);
-            card.appendChild(section);
+            imageSection.insertBefore(section, document.querySelector("#edit_place_images .choose_photo"));
 
 
             const img = document.createElement('img');
