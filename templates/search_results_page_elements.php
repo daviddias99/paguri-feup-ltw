@@ -135,9 +135,9 @@ function draw_right_side()
                     <?php foreach ($types as $type) { ?>
 
                         <option
-                            value="<?= $type['name'] ?>"
+                            value="<?= htmlentities($type['name']) ?>"
                             <?= $type['name'] === $type_filter ? "selected" : "" ?>>
-                            <?= ucfirst($type['name']) ?>
+                            <?= htmlentities(ucfirst($type['name'])) ?>
 
                         <?php } ?>
 
@@ -165,9 +165,9 @@ function draw_right_side()
                     <input
                         type="checkbox"
                         name="commodity"
-                        value="<?= $commodity['name'] ?>"
+                        value="<?= htmlentities($commodity['name']) ?>"
                         <?= in_array($commodity['name'], $commodities_filters) ? "checked" : "" ?>>
-                        <?= ucfirst($commodity['name']) ?>
+                        <?= htmlentities(ucfirst($commodity['name'])) ?>
                 </label>
 
             <?php } ?>

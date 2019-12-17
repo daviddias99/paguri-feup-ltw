@@ -6,7 +6,7 @@
     <ul>
         <?php foreach ($availabilities as $av) { ?>
 
-            <li><?= $av['startDate'] ?> to <?= $av['endDate'] ?></li>
+            <li><?= htmlentities($av['startDate']) ?> to <?= htmlentities($av['endDate']) ?></li>
         <?php } ?>
 
     </ul>
@@ -19,8 +19,8 @@
 
     <form id="rent_form" action="../actions/action_add_reservation.php" method="get">
 
-        <input type="hidden" name="residenceID" id="residenceID" value="<?= $residence['residenceID'] ?>">
-        <input type="hidden" id="pricePerDay" value="<?= $residence['pricePerDay'] ?>">
+        <input type="hidden" name="residenceID" id="residenceID" value="<?= htmlentities($residence['residenceID']) ?>">
+        <input type="hidden" id="pricePerDay" value="<?= htmlentities($residence['pricePerDay']) ?>">
 
         <label>
             Check-in:

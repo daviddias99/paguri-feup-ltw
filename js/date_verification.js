@@ -1,3 +1,7 @@
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 let checkin = document.getElementById('checkin_input');
 let checkout = document.getElementById('checkout_input');
 
@@ -36,7 +40,7 @@ function handleDates(changed) {
             }
 
 
-            checkout.value = checkin.value;
+            checkout.value = htmlEntities(checkin.value);
         }
         else if (changed == 'out') {
 
@@ -44,7 +48,7 @@ function handleDates(changed) {
                 checkout.value = today;
             }
 
-            checkin.value = checkout.value;
+            checkin.value = htmlEntities(checkout.value);
         }
 
     }

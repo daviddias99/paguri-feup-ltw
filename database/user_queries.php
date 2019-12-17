@@ -10,6 +10,18 @@ function getAllUsers()
     return $stmt->fetchAll();
 }
 
+function getUserIDByUsername($username) {
+    global $dbh;
+
+    $stmt = $dbh->prepare('SELECT userID FROM user WHERE username = ?');
+    try {
+        $stmt->execute(array($username));
+    } catch (PDOException $Exception) {
+        return FALSE;
+    }
+    return $stmt->fetch()['userID'];
+}
+
 function getUserInfo($username)
 {
     global $dbh;
@@ -115,7 +127,7 @@ function createUser($username, $email, $firstName, $lastName, $password)
     $stmt = $dbh->prepare('INSERT INTO user(username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)');
     $stmt->execute(array($username, $email, $firstName, $lastName, password_hash($password, PASSWORD_DEFAULT, $options)));
 
-    return TRUE;
+    return $dbh->lastInsertId();
 }
 
 function updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio)

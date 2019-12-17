@@ -20,7 +20,6 @@ h2 {
 body {
     margin: 0;
     font-family: 'Lato', sans-serif;
-
     height: 100%;
     background: url('../resources/santorini_blur.jpg') no-repeat center center fixed;
     background-size:     cover;                      /* <------ */
@@ -87,6 +86,10 @@ body > .content_wrapper {
     font-size: 1.2em;
 }
 
+.navbar .logo p{
+    color: white;
+}
+
 .navbar a {
     color: white;
     text-decoration: none;
@@ -96,7 +99,8 @@ body > .content_wrapper {
     padding-left: 1.5em;
 }
 
-.navbar li a {
+body .navbar li a {
+    color: white;
     display: flex;
     align-items: center;
 }
@@ -556,6 +560,9 @@ body.search_results #filters button { grid-area: filter_bttn; }
     height: 15em;
     margin-right: 0.5em;
     padding: 0.3em;
+    display: flex;
+    align-items:  center;
+    justify-content: center;
 }
 
  .result .info {
@@ -673,10 +680,12 @@ body.search_results #filters button { grid-area: filter_bttn; }
    font-weight: 500;
 }
 
-.result img {
-    width:100%;
+ .result img {
+
+    width: 300px;
+    height: 180px;
+
     object-fit: cover;
-    height: 14.4em;
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
 }
 
@@ -718,7 +727,6 @@ body.user_profile {
 
 #profile {
     display: grid;
-    grid-template-columns: auto auto auto min(0, 1fr);
     grid-template-rows: min-content auto min-content min-content;
     grid-template-areas: "image image image name"
                          "image image image info"
@@ -1020,7 +1028,6 @@ body.residence_page #right_side {
     width: 60%;
     background-color: white;
     margin: 3em;
-    padding: auto 0 auto 0;
 }
 
 
@@ -1058,7 +1065,6 @@ body.residence_page #residence_info .ri_rating {
 body.residence_page #residence_info .ri_rating h4{
 
     text-align: center;
-    padding: auto;
 }
 
 body.residence_page #residence_info .ri_owner { grid-area: owner; }
@@ -1317,7 +1323,7 @@ body.residence_page #review_section > h1 {
 .reply {
 
     width: 100%;
-    height: 10em;
+    height: 12em;
     margin-bottom: 2em;
     border-top: 1px solid rgb(200,200,200);
 
@@ -1373,8 +1379,8 @@ form.comment_content {
 
 .slide_show_img {
 
-    width: 1050px;
-    height: 520px;
+    width: 900px;
+    height: 534px;
 }
 
 #right_side * {box-sizing:border-box}
@@ -1386,9 +1392,9 @@ form.comment_content {
 
 /* Slideshow container */
 .slideshow-container {
-  width: 100%;
+  width: 900px;
   position: relative;
-  margin: auto;
+  margin: 2.5em 0 auto 5em;
 
 }
 
@@ -1584,6 +1590,102 @@ body.rent_house .disabled {
     background-color: grey;
 }
 
+
+/*User reservations page*/
+
+body.user_rentals #user_rentals{
+
+    width: auto;
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    height: auto;
+    padding: 1em;
+
+}
+
+body.user_rentals #user_rentals table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+body.user_rentals #user_rentals th, td {
+
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0.5em;
+}
+
+body.user_rentals #user_rentals th{
+    background-color: #f7cc97;
+}
+
+td:last-child {
+    padding: 0em 0em 0em 0.5em;
+    border: none;
+
+}
+
+td:first-child {
+    padding: 0em 0.5em 0em 0em;
+    border: none;
+
+}
+
+body.user_rentals #user_rentals th:last-child{
+    border: none;
+    background-color: white;
+}
+
+body.user_rentals #user_rentals th:first-child{
+    border: none;
+    background-color: white;
+}
+
+body.user_rentals #user_rentals td{
+    height: 100%;
+
+}
+
+body.user_rentals #user_rentals a {
+
+    text-decoration: underline;
+    color: black;
+}
+
+body.user_rentals #user_rentals th.last_header_cell {
+
+    border: none;
+}
+
+/*Write review page*/
+
+body.write_review #review_form{
+
+    width: auto;
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    height: auto;
+    padding: 1em;
+
+}
+
+body.write_review #review_form form {
+
+    display: flex;
+    flex-direction: column;
+}
+
+body.write_review #review_form form .comment_rating {
+
+    margin-top: 1em;
+    color: rgb(34, 34, 34);
+}
 #edit_place_form {
     display: flex;
     flex-direction: column;

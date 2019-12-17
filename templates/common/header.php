@@ -6,7 +6,7 @@ function draw_header($body_class, $scripts)
     $loggedIn = isset($_SESSION['username']);
 
     if ($loggedIn) {
-        $username = $_SESSION['username'];
+        $username = htmlentities($_SESSION['username']);
     }
     ?>
     <!DOCTYPE html>
@@ -22,7 +22,8 @@ function draw_header($body_class, $scripts)
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="../css/style.css" rel="stylesheet">
             <link href="../css/responsive.css" rel="stylesheet">
-            <?php if ($scripts != null) foreach ($scripts as $script) { ?>
+            <?php if (isset($scripts) and $scripts != NULL) 
+                    foreach ($scripts as $script) { ?>
                      <script src="../js/<?=$script?>" defer></script>
             <?php } ?>
         </head>
@@ -50,6 +51,8 @@ function draw_header($body_class, $scripts)
     function draw_logged_in_nav($username)
     {
         $user = getUserInfo($username);
+        if ($user == FALSE) return;
+        
         $photoPath = "../images/users/thumbnails_small/" . $user['photo'];
         ?>
         <input type="checkbox" class="hamburger-btn" id="hamburger-btn" />
@@ -67,7 +70,7 @@ function draw_header($body_class, $scripts)
                 </a>
             </li>
             <li>
-                <a href="../pages/reservations.php">
+                <a href="../pages/user_reservations.php?id=<?= $user['userID'] ?>">
                     My reservations
                 </a>
             </li>

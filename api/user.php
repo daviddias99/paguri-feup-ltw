@@ -1,11 +1,10 @@
 <?php
 
+    include_once('../includes/config.php');
     include_once('./response_status.php');
 
     $request_method = $_SERVER['REQUEST_METHOD'];
     $accept_header = $_SERVER['HTTP_ACCEPT'];
-
-    $response = array();
 
     if ($accept_header != 'application/json') {
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
@@ -13,7 +12,16 @@
 
     include_once("../database/user_queries.php");
 
+    $response = array();
+
+    $isAdmin = isset($_SESSION['isAdmin']);
+    $isLoggedIn = isset($_SESSION['userID']);
+
     if($request_method == 'GET') {
+
+        if (!$isLoggedIn && !$isAdmin) {
+            api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate yourself to access this resource.');
+        }
         
         if(array_key_exists('id', $_GET)) {
             $info = getUserInfoById($_GET['id']);
@@ -21,6 +29,9 @@
             if ($info == FALSE) {
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given id.');
             }
+
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
 
             $response['user'] = $info;
         }
@@ -30,6 +41,9 @@
             if ($info == FALSE) {
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given username.');
             }
+
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
         }
@@ -39,10 +53,16 @@
             if ($info == FALSE) {
                 api_error(ResponseStatus::NOT_FOUND, 'Did not find user with given email.');
             }
+
+            if ($isLoggedIn && $_SESSION['userID'] != $info['userID'] && !$isAdmin)
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
             
             $response['user'] = $info;
         }
         else {
+            if (!$isAdmin)
+                api_error(ResponseStatus::FORBIDDEN, 'You do not have access to this resource');
+
             $response['users'] = getAllUsers();
         }
 

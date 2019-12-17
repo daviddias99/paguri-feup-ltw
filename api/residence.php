@@ -1,22 +1,28 @@
 <?php
 
     // TODO authentication with sessions
-    // implement delete and put?
-    // how to get info from PUT and DELETE?
 
+    include_once('../includes/config.php');
     include_once('./response_status.php');
 
     $request_method = $_SERVER['REQUEST_METHOD'];
     $accept_header = $_SERVER['HTTP_ACCEPT'];
 
-    $response = array();
+    $isAdmin = isset($_SESSION['isAdmin']);
+    $isLoggedIn = isset($_SESSION['userID']);
 
     if ($accept_header != 'application/json') {
         api_error(ResponseStatus::BAD_REQUEST, 'Accept header must be application/json.');
     }
 
+    if (!$isLoggedIn && !$isAdmin) {
+        api_error(ResponseStatus::UNAUTHORIZED, 'You must authenticate yourself to access this resource.');
+    }
+
     include_once("../database/residence_queries.php");
     include_once("../database/user_queries.php");
+
+    $response = array();
 
     if($request_method == 'GET') {
 
@@ -56,7 +62,7 @@
 
     else if ($request_method == 'PUT') {
 
-        if(! array_key_exists('id', $_GET)) {
+        if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
@@ -79,10 +85,14 @@
         if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
-
-        if (getResidenceInfo($_GET['id']) == FALSE) {
+        
+        $residenceToDelete = getResidenceInfo($_GET['id']);
+        if ($residenceToDelete == FALSE) {
             api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
         }
+
+        if ($isLoggedIn && $_SESSION['userID'] != $residenceToDelete['owner'] && !$isAdmin)
+            api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the residence to delete it.');
 
         $deletedRes = deleteResidence($_GET['id']);
         if ($deletedRes == FALSE) {
@@ -153,6 +163,9 @@
 
         if(!getResidenceTypeWithID($values['type']))
             api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
+    
+        if($isLoggedIn && $_SESSION['userID'] != $values['owner'] && !$isAdmin)
+            api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the provided residence.');
     }
 
 ?>

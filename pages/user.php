@@ -5,6 +5,12 @@
     include_once('../templates/user.php');
     include_once('../database/user_queries.php');
 
+    if (!isset($_GET['id']))
+        header('Location: front_page.php');
+
+    if (!isset($_SESSION['username']))
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to see users profiles."));
+
     $id = $_GET['id'];
     $user = getUserInfoById($id);
 

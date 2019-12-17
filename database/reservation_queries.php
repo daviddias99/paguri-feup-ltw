@@ -13,6 +13,17 @@
         return $stmt->fetchAll();
     }
 
+    function getReservationWithID($reservationID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'SELECT *
+            FROM reservation
+            WHERE reservationID = ?');
+        $stmt->execute(array($reservationID));
+        return $stmt->fetch();
+    }
+
     function getResidenceReservationsBetween($residenceID, $periodStart, $periodEnd) {
         global $dbh;
 

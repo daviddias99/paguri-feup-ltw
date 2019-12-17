@@ -6,7 +6,7 @@
     include_once('../database/user_queries.php');
 
     if (! isset($_SESSION['username']))
-        die("User not logged in!");
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to edit your profile."));
 
     $username = $_SESSION['username'];
     $user = getUserInfo($username);
