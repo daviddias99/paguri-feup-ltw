@@ -93,8 +93,9 @@ function getResidenceInfo($residenceID)
     {
         global $dbh;
 
-        $stmt = $dbh->prepare('SELECT *, priority FROM residencePhoto WHERE lodge = ?');
+        $stmt = $dbh->prepare('SELECT * FROM residencePhoto WHERE lodge = ?');
         $stmt->execute(array($residenceID));
+
         return $stmt->fetchAll();
     }
 

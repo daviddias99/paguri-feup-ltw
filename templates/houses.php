@@ -1,6 +1,7 @@
 <?php
 include_once('../database/residence_queries.php');
 include_once('../database/user_queries.php');
+include_once('house_page_elements.php');
 ?>
 
 <?php function draw_add_house()
@@ -115,39 +116,48 @@ function draw_list_user_places($userID)
             <p class="empty_message">No listed places yet.</p>
             <?php } else {
 
-            foreach ($places as $place) { ?>
+            foreach ($places as $place) {
+                $info =  getResidenceInfo($place['residenceID']);
+                ?>
                 <section class="places_list_entry">
                     <?php
-                        draw_place_summary($place);
+                        draw_place_summary($info);
                         if ($userLoggedIn)
-                            draw_place_operations($place);
+                            draw_place_operations($info);
                     ?>
                 </section>
         <?php }
-                                                                                                                    } ?>
+            } ?>
     </section>
 <?php
-                                                                                                                }
+    }
 ?>
 
 <?php
-                                                                                                                function draw_place_summary($place)
-                                                                                                                {
+    function draw_place_summary($place) {
+        $descriptionTrimmed = strlen($place['description']) > 180 ? substr($place['description'], 0, 180) . "..." : $place['description'];
+        $priceSimple = simplifyPrice($place['pricePerDay']);
+        $rating = $place['rating'] == 0 ? '--' : sprintf('%0.2f', $place['rating'] / 2);
+
+        $photos = getResidencePhotos($place['residenceID']);
+        $photoPath = sizeof($photos) > 0 ? "../images/properties/medium/".$photos[0]['filepath'] : "../resources/medium-none.jpg";
 ?>
-    <section class="result">
-        <section class="image">
-            <img src="../resources/house_image_test.jpeg">
-        </section>
-        <section class="info">
-            <h1 class="info_title"><?= $place['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $place['type'] . ' &#8226 ' . $place['address'] ?></h2>
-            <p class="info_description"> <?= $place['description'] ?></p>
-            <p class="info_ppd"><?= $place['pricePerDay'] ?></p>
-            <p class="info_score">4.5</p>
-            <p class="info_capacity"> <?= $place['capacity'] ?></p>
-            <p class="info_bedrooms"> <?= $place['nBedrooms'] ?></p>
-        </section>
-    </section>
+        <a href="../pages/view_house.php?id=<?= $place['residenceID'] ?>">
+            <section class="result">
+                <section class="image">
+                    <img src="<?= $photoPath ?>">
+                </section>
+                <section class="info">
+                    <h1 class="info_title"><?= $place['title'] ?></h1>
+                    <h2 class="info_type_and_location"><?= $place['type'] ?>&#8226<?= $place['address'] ?></h2>
+                    <p class="info_description"><?= $descriptionTrimmed ?></p>
+                    <p class="info_ppd"><?= $priceSimple ?></p>
+                    <p class="info_score"><?= $rating ?></p>
+                    <p class="info_capacity"><?= $place['capacity'] ?></p>
+                    <p class="info_bedrooms"><?= $place['nBedrooms'] ?></p>
+                </section>
+            </section>
+        </a>
 <?php
     }
 ?>
