@@ -548,6 +548,9 @@ body.search_results #filters button { grid-area: filter_bttn; }
     height: 15em;
     margin-right: 0.5em;
     padding: 0.3em;
+    display: flex;
+    align-items:  center;
+    justify-content: center;
 }
 
  .result .info {
@@ -667,9 +670,10 @@ body.search_results #filters button { grid-area: filter_bttn; }
 
  .result img {
 
-    width:100%;
+    width: 300px;
+    height: 180px;
+
     object-fit: cover;
-    height: 14.4em;
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
 }
 

@@ -144,6 +144,30 @@ function filterResidencesByAvailability($checkin, $checkout, $residences)
     return $resultResidences;
 }
 
+function addPhotoPathsToResidences($residences){
+
+    $resultResidences = [];
+    for ($i = 0; $i < count($residences); $i++) {
+
+        $residence = $residences[$i];
+        $paths = [];
+        $photos = getResidencePhotos($residence['residenceID']);
+
+        foreach($photos as $photo){
+
+            array_push($paths,$photo['filepath']);
+        }
+
+        $residence['photoPaths'] = $paths;
+       
+        array_push($resultResidences, $residence);
+
+    }
+    return $resultResidences;
+
+
+}
+
 $filter_data = json_decode($_GET['filter_data'], true);
 $location_data = json_decode($_GET['location_data'], true);
 
@@ -160,5 +184,7 @@ $residences = getResidencesWith(
 $residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
 $residences = filterResidencesByLocation($location_data, $residences);
 $residences = filterResidencesByAvailability($filter_data['checkin'], $filter_data['checkout'], $residences);
+$residences = addPhotoPathsToResidences($residences);
+
 
 echo json_encode($residences);

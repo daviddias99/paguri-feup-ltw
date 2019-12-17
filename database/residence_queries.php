@@ -95,6 +95,7 @@ function getResidenceInfo($residenceID)
 
         $stmt = $dbh->prepare('SELECT *, priority FROM residencePhoto WHERE lodge = ?');
         $stmt->execute(array($residenceID));
+        
         return $stmt->fetchAll();
     }
 
@@ -374,6 +375,7 @@ function getResidenceInfo($residenceID)
 
         return json_encode($commoditiesKeys);
     }
+
 
     function addResidencePhoto($residenceID, $path) {
         global $dbh;
