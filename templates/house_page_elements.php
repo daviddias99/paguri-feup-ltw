@@ -4,7 +4,6 @@
     include_once('../database/residence_queries.php');
     include_once('../database/user_queries.php');
 
-<<<<<<< HEAD
 // Database fetching
 $residence = getResidenceInfo($_GET['id']);
 $owner = getUserInfoById($residence['owner']);
@@ -13,10 +12,8 @@ $residenceCommodities = getResidenceCommodities($_GET['id']);
 $residencePhotos= getResidencePhotos($_GET['id']);
 $comments = getResidenceComments($_GET['id']);
 $rating = getResidenceRating($_GET['id']);
-=======
     if (!isset($_GET['id']))
         header('Location: front_page.php');
->>>>>>> 5ecc2243644e50f59b70203c9e7c85e4bdea59a4
 
     // Database fetching
     $residence = getResidenceInfo($_GET['id']);
@@ -419,11 +416,7 @@ $rating = getResidenceRating($_GET['id']);
         }
         ?>
 
-    <?php function draw_main()
-    { ?>
-        <section id="main">
 
-<<<<<<< HEAD
 <?php function draw_right_side() { ?>
 
     <section id="right_side">
@@ -468,37 +461,6 @@ $rating = getResidenceRating($_GET['id']);
             draw_right_side();
         ?>
 
-=======
-            <?php draw_left_side() ?>
-
-            <section id="right_side">
-
-                <section id="residence-images" class="slideshow-container">
-
-                    <!-- Full-width images with number and caption text -->
-                    <section class="mySlides fade">
-                        <section class="numbertext">1 / 3</section>
-                        <img class="slide_show_img" src="../resources/santorini.jpg">
-                    </section>
-
-                    <section class="mySlides fade">
-                        <section class="numbertext">2 / 3</section>
-                        <img class="slide_show_img" src="../resources/oporto.jpg">
-                    </section>
-
-                    <section class="mySlides fade">
-                        <section class="numbertext">3 / 3</section>
-                        <img class="slide_show_img" src="../resources/bridge_sunset.jpg">
-                    </section>
-
-                    <!-- Next and previous buttons -->
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                </section>
-
-            </section>
-
->>>>>>> 5ecc2243644e50f59b70203c9e7c85e4bdea59a4
 
         </section>
     <?php } ?>
