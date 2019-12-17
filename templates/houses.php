@@ -1,7 +1,6 @@
 <?php
 include_once('../database/residence_queries.php');
 include_once('../database/user_queries.php');
-include_once('house_page_elements.php');
 ?>
 
 <?php function draw_add_house()
@@ -106,7 +105,7 @@ function draw_list_user_places($userID)
         <?php if ($userLoggedIn) { ?>
             <div class="my_places_title">
                 <h1>My places</h1>
-                <a class="button" href="add_house.php">Add place</a>
+                <a class="button" href="./add_house.php">Add place</a>
             </div>
         <?php } else { ?>
             <h1><?= htmlentities($user['firstName']) ?> <?= htmlentities($user['lastName']) ?>'s places</h1>
