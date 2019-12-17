@@ -144,23 +144,48 @@
         return $resultResidences;
     }
 
-    $filter_data = json_decode($_GET['filter_data'], true);
-    $location_data = json_decode($_GET['location_data'], true);
 
-    $residences = getResidencesWith(
-        $filter_data['capacity'],
-        $filter_data['nBeds'],
-        $filter_data['type'],
-        $filter_data['priceFrom'],
-        $filter_data['priceTo'],
-        $filter_data['ratingFrom'],
-        $filter_data['ratingTo']
-    );
+function addPhotoPathsToResidences($residences){
 
-    $residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
-    $residences = filterResidencesByLocation($location_data, $residences);
-    $residences = filterResidencesByAvailability($filter_data['checkin'], $filter_data['checkout'], $residences);
+    $resultResidences = [];
+    for ($i = 0; $i < count($residences); $i++) {
 
-    echo json_encode($residences);
+        $residence = $residences[$i];
+        $paths = [];
+        $photos = getResidencePhotos($residence['residenceID']);
 
-?>
+        foreach($photos as $photo){
+
+            array_push($paths,$photo['filepath']);
+        }
+
+        $residence['photoPaths'] = $paths;
+       
+        array_push($resultResidences, $residence);
+
+    }
+    return $resultResidences;
+
+
+}
+
+$filter_data = json_decode($_GET['filter_data'], true);
+$location_data = json_decode($_GET['location_data'], true);
+
+$residences = getResidencesWith(
+    $filter_data['capacity'],
+    $filter_data['nBeds'],
+    $filter_data['type'],
+    $filter_data['priceFrom'],
+    $filter_data['priceTo'],
+    $filter_data['ratingFrom'],
+    $filter_data['ratingTo']
+);
+
+$residences = filterResidencesByCommodities($filter_data['commodities'], $residences);
+$residences = filterResidencesByLocation($location_data, $residences);
+$residences = filterResidencesByAvailability($filter_data['checkin'], $filter_data['checkout'], $residences);
+$residences = addPhotoPathsToResidences($residences);
+
+
+echo json_encode($residences);

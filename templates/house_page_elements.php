@@ -4,8 +4,19 @@
     include_once('../database/residence_queries.php');
     include_once('../database/user_queries.php');
 
+<<<<<<< HEAD
+// Database fetching
+$residence = getResidenceInfo($_GET['id']);
+$owner = getUserInfoById($residence['owner']);
+$commodities = getAllCommodities();
+$residenceCommodities = getResidenceCommodities($_GET['id']);
+$residencePhotos= getResidencePhotos($_GET['id']);
+$comments = getResidenceComments($_GET['id']);
+$rating = getResidenceRating($_GET['id']);
+=======
     if (!isset($_GET['id']))
         header('Location: front_page.php');
+>>>>>>> 5ecc2243644e50f59b70203c9e7c85e4bdea59a4
 
     // Database fetching
     $residence = getResidenceInfo($_GET['id']);
@@ -412,6 +423,52 @@
     { ?>
         <section id="main">
 
+<<<<<<< HEAD
+<?php function draw_right_side() { ?>
+
+    <section id="right_side">
+
+        <?php draw_residence_images(); ?>
+    </section>
+
+<?php } ?>
+
+<?php function draw_residence_images() { 
+    
+    global $residencePhotos;
+    ?>
+
+    <section id="residence-images" class="slideshow-container">
+
+        <?php for ($i = 0; $i < count($residencePhotos); $i++)  { ?>
+
+            <section class="mySlides fade">
+                <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
+                <img class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
+            </section>
+
+
+        <?php } ?>
+
+
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </section>
+
+<?php } ?>
+
+<?php function draw_main()
+{ ?>
+    <section id="main">
+
+        <?php 
+        
+            draw_left_side();
+            draw_right_side();
+        ?>
+
+=======
             <?php draw_left_side() ?>
 
             <section id="right_side">
@@ -441,6 +498,7 @@
 
             </section>
 
+>>>>>>> 5ecc2243644e50f59b70203c9e7c85e4bdea59a4
 
         </section>
     <?php } ?>

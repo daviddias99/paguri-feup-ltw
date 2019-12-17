@@ -69,7 +69,7 @@ function draw_header($body_class, $scripts)
                 </a>
             </li>
             <li>
-                <a href="../pages/reservations.php">
+                <a href="../pages/user_reservations.php?id=<?= $user['userID'] ?>">
                     My reservations
                 </a>
             </li>
