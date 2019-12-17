@@ -8,7 +8,7 @@ include_once('../database/user_queries.php');
     <section id="add_place" class="card">
         <h1>Add place</h1>
         <form id="add_place_form" action="" method="post">
-            <input id="user_id" type="hidden" value=<?= getUserID($_SESSION['username']) ?>>
+            <input id="user_id" type="hidden" value=<?= htmlentities($_SESSION['userID']) ?>>
             <section class="form_entry" id="title">
                 <label for="title_input">Title</label>
                 <input id="title_input" type="text" name="title" value="">
@@ -71,7 +71,7 @@ function draw_house_type_options()
 
     foreach ($types as $type) {
         ?>
-        <option value=<?= $type['residenceTypeID'] ?>><?= ucfirst($type['name']) ?></option>
+        <option value=<?= htmlentities($type['residenceTypeID']) ?>><?= htmlentities(ucfirst($type['name'])) ?></option>
 <?php
     }
 }
@@ -85,7 +85,7 @@ function draw_commodity_checkboxes()
     foreach ($commodities as $commodity) {
         ?>
         <label>
-            <input type="checkbox" class="commodities" name="commodities[]" value="<?= $commodity['commodityID'] ?>"> <?= ucfirst($commodity['name']) ?>
+            <input type="checkbox" class="commodities" name="commodities[]" value="<?= htmlentities($commodity['commodityID']) ?>"> <?= htmlentities(ucfirst($commodity['name'])) ?>
         </label>
 <?php
     }
@@ -108,7 +108,7 @@ function draw_list_user_places($userID)
                 <a class="button" href="add_house.php">Add place</a>
             </div>
         <?php } else { ?>
-            <h1><?= $user['firstName'] ?> <?= $user['lastName'] ?>'s places</h1>
+            <h1><?= htmlentities($user['firstName']) ?> <?= htmlentities($user['lastName']) ?>'s places</h1>
         <?php }
             if (sizeof($places) == 0) {
                 ?>
@@ -139,13 +139,13 @@ function draw_place_summary($place)
             <img src="../resources/house_image_test.jpeg">
         </section>
         <section class="info">
-            <h1 class="info_title"><?= $place['title'] ?> </h1>
-            <h2 class="info_type_and_location"><?= $place['type'] . ' &#8226 ' . $place['address'] ?></h2>
-            <p class="info_description"> <?= $place['description'] ?></p>
-            <p class="info_ppd"><?= $place['pricePerDay'] ?></p>
+            <h1 class="info_title"><?= htmlentities($place['title']) ?> </h1>
+            <h2 class="info_type_and_location"><?= htmlentities($place['type']) . ' &#8226 ' . htmlentities($place['address']) ?></h2>
+            <p class="info_description"> <?= htmlentities($place['description']) ?></p>
+            <p class="info_ppd"><?= htmlentities($place['pricePerDay']) ?></p>
             <p class="info_score">4.5</p>
-            <p class="info_capacity"> <?= $place['capacity'] ?></p>
-            <p class="info_bedrooms"> <?= $place['nBedrooms'] ?></p>
+            <p class="info_capacity"> <?= htmlentities($place['capacity']) ?></p>
+            <p class="info_bedrooms"> <?= htmlentities($place['nBedrooms']) ?></p>
         </section>
     </section>
 <?php
@@ -156,12 +156,12 @@ function draw_place_summary($place)
 function draw_place_operations($place)
 { ?>
     <section class="place_operations">
-        <input type="hidden" value=<?= $place['residenceID'] ?>>
+        <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
         <a class="button" id="" href="">Add availability</a>
         <a class="button" href="">Reservations</a>
 
         <form class="post_link" action="../pages/edit_place.php" method="post">
-            <input type="hidden" name="id" value="<?= $place['residenceID'] ?>">
+            <input type="hidden" name="id" value="<?= htmlentities($place['residenceID']) ?>">
             <input type="submit" class="button" value="Edit">
         </form>
 
@@ -194,34 +194,34 @@ function draw_edit_place($place)
         <form id="edit_place_form" action="" method="">
             <section class="form_entry" id="title">
                 <label for="title_input">Title</label>
-                <input id="title_input" type="text" name="title" value="<?= $place['title'] ?>">
+                <input id="title_input" type="text" name="title" value="<?= htmlentities($place['title']) ?>">
             </section>
             <section class="form_entry" id="description">
                 <label for="description_input">Description</label>
-                <textarea id="description_input" type="text" name="description" rows="6"><?= $place['description'] ?></textarea>
+                <textarea id="description_input" type="text" name="description" rows="6"><?= htmlentities($place['description']) ?></textarea>
             </section>
 
-            <input id="user_id" type="hidden" value="<?= $place['owner'] ?>">
-            <input id="place_id" type="hidden" value="<?= $place['residenceID'] ?>">
-            <input id="commodities" type="hidden" value="<?= getCommoditiesAsKeysString($place['residenceID']) ?>">
-            <input id="capacity" type="hidden" value="<?= $place['capacity'] ?>">
-            <input id="num_bathrooms" type="hidden" value="<?= $place['nBathrooms'] ?>">
-            <input id="num_bedrooms" type="hidden" value="<?= $place['nBedrooms'] ?>">
-            <input id="num_beds" type="hidden" value="<?= $place['nBeds'] ?>">
-            <input id="location" type="hidden" value="<?= $place['address'] ?>">
-            <input id="price" type="hidden" value="<?= $place['pricePerDay'] ?>">
-            <input id="type" type="hidden" value="<?= $place['residenceTypeID'] ?>">
-            <input id="latitude" type="hidden" value="<?= $place['latitude'] ?>">
-            <input id="longitude" type="hidden" value="<?= $place['longitude'] ?>">
-            <input id="city" type="hidden" value="<?= $place['country'] ?>">
-            <input id="country" type="hidden" value="<?= $place['city'] ?>">
+            <input id="user_id" type="hidden" value="<?= htmlentities($place['owner']) ?>">
+            <input id="place_id" type="hidden" value="<?= htmlentities($place['residenceID']) ?>">
+            <input id="commodities" type="hidden" value="<?= htmlentities(getCommoditiesAsKeysString($place['residenceID'])) ?>">
+            <input id="capacity" type="hidden" value="<?= htmlentities($place['capacity']) ?>">
+            <input id="num_bathrooms" type="hidden" value="<?= htmlentities($place['nBathrooms']) ?>">
+            <input id="num_bedrooms" type="hidden" value="<?= htmlentities($place['nBedrooms']) ?>">
+            <input id="num_beds" type="hidden" value="<?= htmlentities($place['nBeds']) ?>">
+            <input id="location" type="hidden" value="<?= htmlentities($place['address']) ?>">
+            <input id="price" type="hidden" value="<?= htmlentities($place['pricePerDay']) ?>">
+            <input id="type" type="hidden" value="<?= htmlentities($place['residenceTypeID']) ?>">
+            <input id="latitude" type="hidden" value="<?= htmlentities($place['latitude']) ?>">
+            <input id="longitude" type="hidden" value="<?= htmlentities($place['longitude']) ?>">
+            <input id="city" type="hidden" value="<?= htmlentities($place['country']) ?>">
+            <input id="country" type="hidden" value="<?= htmlentities($place['city']) ?>">
 
             <label class="choose_photo button">Choose
                 <input class="choose_photo_input" type="file" name="image" multiple>
             </label>
 
             <?php foreach ($photos as $photo) { ?>
-                <section class="image_preview" id="<?= $photo['photoID'] ?>">
+                <section class="image_preview" id="<?= htmlentities($photo['photoID']) ?>">
                     <img src="../images/properties/originals/<?= $photo['filepath']?>">
                     <span class="remove_image fas fa-trash-alt"></span>
                 </section>

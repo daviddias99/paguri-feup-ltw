@@ -6,6 +6,10 @@ function encodeForAjax(data) {
     }).join('&')
 }
 
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 const images = {};
 const removedImages = [];
 let lastImageID = 0;
@@ -71,7 +75,7 @@ document.getElementById("submit_button").onclick = function (event) {
     const idInput = document.createElement('input');
     idInput.type = 'hidden';
     idInput.name = 'id';
-    idInput.value = id;
+    idInput.value = htmlEntities(id);
 
     redirectForm.appendChild(idInput);
     document.body.appendChild(redirectForm);

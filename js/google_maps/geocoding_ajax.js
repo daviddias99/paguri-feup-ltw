@@ -11,10 +11,14 @@ let address_timeout;
 let center_changed_timeout;
 
 function encodeForAjax(data) {
-    return Object.keys(data).map(function(k){
-      return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&')
-  }
+  return Object.keys(data).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+  }).join('&')
+}
+
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 function updateAddressInfo(event) {
     let response = JSON.parse(event.target.responseText);
@@ -55,10 +59,10 @@ function updateAddressInfo(event) {
           addMarker(coords, markerInfo);
 
           // update inputs values
-          document.getElementById("latitude").value = markerInfo.position.lat;
-          document.getElementById("longitude").value = markerInfo.position.lng;
-          document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
-          document.getElementById("country").value = markerInfo.country;
+          document.getElementById("latitude").value = htmlEntities(markerInfo.position.lat);
+          document.getElementById("longitude").value = htmlEntities(markerInfo.position.lng);
+          document.getElementById("city").value = htmlEntities(markerInfo.city || addressInfo.admin_area_level_1);
+          document.getElementById("country").value = htmlEntities(markerInfo.country);
           break;
       default:
           throw new Error("Unknown current page.");
@@ -79,7 +83,7 @@ function updateInputsValues(event, latLng) {
     switch(current_page) {
       case "search_results":
 
-          document.getElementById("location").value = address;
+          document.getElementById("location").value = htmlEntities(address);
           updateURLFilters();
           buildResultsHeaderHTML(document.getElementById("results_header"));
           filterUpdateHandler(latLng, search_radius);
@@ -103,9 +107,9 @@ function updateInputsValues(event, latLng) {
 
           document.getElementById("latitude").value = latLng.lat();
           document.getElementById("longitude").value = latLng.lng();
-          document.getElementById("city").value = markerInfo.city || addressInfo.admin_area_level_1;
-          document.getElementById("country").value = markerInfo.country;
-          document.getElementById("location").value = address;
+          document.getElementById("city").value = htmlEntities(markerInfo.city || addressInfo.admin_area_level_1);
+          document.getElementById("country").value = htmlEntities(markerInfo.country);
+          document.getElementById("location").value = htmlEntities(address);
 
 
           moveMap(latLng);

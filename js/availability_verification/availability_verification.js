@@ -1,3 +1,8 @@
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+}
+
 let checkinS = document.getElementById('checkin_input');
 let checkoutS = document.getElementById('checkout_input');
 
@@ -24,9 +29,9 @@ function priceDisplayHTML(checkin,checkout) {
     // Build HTML
     result +=
         '<h3> Total price: </h3>' +
-        '<p>' + diffDays + ' days x €' + pricePerDay + ' = €' + diffDays * pricePerDay + '</p>';
+        '<p>' + diffDays + ' days x €' + htmlEntities(pricePerDay) + ' = €' + diffDays * pricePerDay + '</p>';
 
-        return result;
+    return result;
 }
 
 /**
