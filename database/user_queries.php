@@ -216,6 +216,7 @@ function updateProfilePicture($username, $photoID)
                                 WHERE userID = owner AND username = ? AND residenceID = ?');
 
         $stmt->execute(array($username, $residenceID));
+        
 
         return $stmt->fetch();
     }
