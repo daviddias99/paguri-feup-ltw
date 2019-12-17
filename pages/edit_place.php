@@ -9,10 +9,10 @@
     if (! isset($_SESSION['username']))
         header('Location: not_found_page.php?message='.urlencode("You must be logged in to edit a residence."));
 
-    if (!isset($_POST['id']))
+    if (!isset($_GET['id']))
         header('Location: front_page.php');
 
-    $placeID = $_POST['id'];
+    $placeID = $_GET['id'];
     $username = $_SESSION['username'];
 
 

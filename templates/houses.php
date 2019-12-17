@@ -169,12 +169,7 @@ function draw_list_user_places($userID)
         <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
         <a class="button" id="" href="">Add availability</a>
         <a class="button" href="">Reservations</a>
-
-        <form class="post_link" action="../pages/edit_place.php" method="post">
-            <input type="hidden" name="id" value="<?= htmlentities($place['residenceID']) ?>">
-            <input type="submit" class="button" value="Edit">
-        </form>
-
+        <a class="button" href="../pages/edit_place.php?id=<?= $place['residenceID']?>">Edit</a>
         <button class="button remove_reservation">Remove</button>
     </section>
 <?php } ?>
@@ -226,16 +221,17 @@ function draw_edit_place($place)
             <input id="city" type="hidden" value="<?= htmlentities($place['country']) ?>">
             <input id="country" type="hidden" value="<?= htmlentities($place['city']) ?>">
 
-            <label class="choose_photo button">Choose
-                <input class="choose_photo_input" type="file" name="image" multiple>
-            </label>
-
-            <?php foreach ($photos as $photo) { ?>
-                <section class="image_preview" id="<?= htmlentities($photo['photoID']) ?>">
-                    <img src="../images/properties/originals/<?= $photo['filepath']?>">
-                    <span class="remove_image fas fa-trash-alt"></span>
-                </section>
-            <?php } ?>
+            <section id="edit_place_images">
+                <?php foreach ($photos as $photo) { ?>
+                    <section class="image_preview" id="<?= $photo['photoID'] ?>">
+                        <img src="../images/properties/medium/<?= $photo['filepath'] ?>">
+                        <div class="remove_image fas fa-trash-alt"></div>
+                    </section>
+                <?php } ?>
+                <label class="choose_photo button fas fa-plus">
+                    <input class="choose_photo_input" type="file" name="image" multiple>
+                </label>
+            </section>
 
             <input class="button" id="submit_button" type="submit" value="Update">
         </form>

@@ -58,7 +58,6 @@ document.getElementById("submit_button").onclick = function (event) {
     request.send();
 
     Object.keys(images).forEach(key => {
-        console.log("sending image");
         send(id, images[key]);
     });
 
