@@ -9,6 +9,7 @@ $residence = getResidenceInfo($_GET['id']);
 $owner = getUserInfoById($residence['owner']);
 $commodities = getAllCommodities();
 $residenceCommodities = getResidenceCommodities($_GET['id']);
+$residencePhotos= getResidencePhotos($_GET['id']);
 $comments = getResidenceComments($_GET['id']);
 $rating = getResidenceRating($_GET['id']);
 
@@ -405,38 +406,49 @@ $rating = ($rating == null) ? '--' : $rating/2;
     }
     ?>
 
+<?php function draw_right_side() { ?>
+
+    <section id="right_side">
+
+        <?php draw_residence_images(); ?>
+    </section>
+
+<?php } ?>
+
+<?php function draw_residence_images() { 
+    
+    global $residencePhotos;
+    ?>
+
+    <section id="residence-images" class="slideshow-container">
+
+        <?php for ($i = 0; $i < count($residencePhotos); $i++)  { ?>
+
+            <section class="mySlides fade">
+                <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
+                <img class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
+            </section>
+
+
+        <?php } ?>
+
+
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </section>
+
+<?php } ?>
+
 <?php function draw_main()
 { ?>
     <section id="main">
 
-        <?php draw_left_side() ?>
-
-        <section id="right_side">
-
-            <section id="residence-images" class="slideshow-container">
-
-                <!-- Full-width images with number and caption text -->
-                <section class="mySlides fade">
-                    <section class="numbertext">1 / 3</section>
-                    <img class="slide_show_img" src="../resources/santorini.jpg">
-                </section>
-
-                <section class="mySlides fade">
-                    <section class="numbertext">2 / 3</section>
-                    <img class="slide_show_img" src="../resources/oporto.jpg">
-                </section>
-
-                <section class="mySlides fade">
-                    <section class="numbertext">3 / 3</section>
-                    <img class="slide_show_img" src="../resources/bridge_sunset.jpg">
-                </section>
-
-                <!-- Next and previous buttons -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </section>
-
-        </section>
+        <?php 
+        
+            draw_left_side();
+            draw_right_side();
+        ?>
 
 
     </section>

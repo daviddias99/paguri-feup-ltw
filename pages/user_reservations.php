@@ -22,8 +22,6 @@ draw_header('user_rentals', NULL);
 draw_user_reservations($userID);
 draw_footer();
 
-//TODO: show review if no review added
-
 ?>
 
 <?php function draw_user_reservations($userID)

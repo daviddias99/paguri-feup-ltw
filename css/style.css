@@ -76,6 +76,10 @@ body {
   font-size: 1.2em;
 }
 
+.navbar .logo p{
+    color: white;
+}
+
 .navbar a {
     color: white;
     text-decoration: none;
@@ -85,7 +89,8 @@ body {
     padding-left: 1.5em;
 }
 
-.navbar li a {
+body .navbar li a {
+    color: white;
     display: flex;
     align-items: center;
 }
@@ -1367,8 +1372,8 @@ form.comment_content {
 
 .slide_show_img {
 
-    width: 1050px;
-    height: 520px;
+    width: 900px;
+    height: 534px;
 }
 
 #right_side * {box-sizing:border-box}
@@ -1380,9 +1385,9 @@ form.comment_content {
 
 /* Slideshow container */
 .slideshow-container {
-  width: 100%;
+  width: 900px;
   position: relative;
-  margin: auto;
+  margin: 2.5em 0 auto 5em;
 
 }
 

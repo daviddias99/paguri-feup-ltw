@@ -382,11 +382,8 @@
         margin: 0em;
     }
 
-
-    .slide_show_img {
-
-        width: 100%;
-        height: auto;
+    .slideshow-container {
+        margin: 0;
     }
 
     body.residence_page #residence_info {
@@ -410,6 +407,17 @@
         box-sizing: border-box;
     }
 
+
+    .slide_show_img {
+
+        width: 300px;
+        height: 180px;
+    }
+
+    .slideshow-container {
+        width: 300px;
+        margin: 0em auto 0em auto;
+    }
 
     #residence_info h1{
         width: 100%;
@@ -486,7 +494,6 @@
         font-size: smaller;
     }
 
-    
 
     .comment_user_info img{
         width: 45px;
