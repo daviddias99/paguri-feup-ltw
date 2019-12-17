@@ -5,12 +5,11 @@
     include_once('../templates/residence_availabilities.php');
 
     // Ensure all the needed variables are given
-    if(!isset($_SESSION['username']) || 
+    if(!isset($_SESSION['userID']) || 
     !isset( $_GET['residenceID']) || 
     !isset($_GET['checkin_date']) || 
     !isset($_GET['checkout_date']) 
     ){
-
         echo 'Something went wrong';
         header('Location: ../pages/front_page.php');
         exit;
@@ -20,7 +19,7 @@
     $checkin_date =  $_GET['checkin_date'];   
     $checkout_date =  $_GET['checkout_date'];   
     $residence = getResidenceInfo($residenceID);
-    $userID = getUserInfo($_SESSION['username'])['userID'];
+    $userID = $_SESSION['userID'];
 
     // Ensure that the renter is not the owner
     if($residence['owner'] == $userID){
@@ -28,7 +27,7 @@
         exit;
     }
 
-    // Check if if rent dates respect availabilities
+    // Check if rent dates respect availabilities
     if(!datesRespectAvailabilities(getAvailabilities($residenceID),$checkin_date,$checkout_date)){
         header('Location: ../pages/front_page.php');
         exit;
@@ -47,4 +46,5 @@
     }
 
     // Return to house page
-    header('Location: ../pages/view_house.php?id='.$_GET['residenceID']);
+    header('Location: ../pages/view_house.php?id='.$residenceID);
+?>

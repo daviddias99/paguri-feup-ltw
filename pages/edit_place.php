@@ -7,14 +7,17 @@
     include_once('../database/residence_queries.php');
 
     if (! isset($_SESSION['username']))
-        die("User not logged in!");
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to edit a residence."));
+
+    if (!isset($_POST['id']))
+        header('Location: front_page.php');
 
     $placeID = $_GET['id'];
     $username = $_SESSION['username'];
 
 
     if (! userHasResidence($username, $placeID))
-        die("Not your place.");
+        header('Location: not_found_page.php?message='.urlencode("You can only edit your own places."));
 
     $place = getResidenceInfo($placeID);
 

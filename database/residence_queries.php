@@ -412,3 +412,16 @@ function getResidenceInfo($residenceID)
 
         $stmt->execute(array($photoID));
     }
+
+    function getResidenceOfPhoto($photoID) {
+        global $dbh;
+
+        $stmt = $dbh->prepare('SELECT * 
+                                FROM residence JOIN residencePhoto
+                                ON residenceID=lodge
+                                WHERE photoID = ?');
+        $stmt->execute(array($photoID));
+        return $stmt->fetch();
+    }
+
+?>

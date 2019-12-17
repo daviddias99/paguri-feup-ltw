@@ -1,5 +1,9 @@
 'use strict'
 
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 let prev_filter_state = null;
 let prev_residences_response = null;
 
@@ -23,16 +27,16 @@ class FilterState {
     urlString() {
         let urlStr = "?";
 
-        if (this.location != "") urlStr += "location=" + this.location + "&";
-        if (this.checkin != "") urlStr += "checkin=" + this.checkin + "&";
-        if (this.checkout != "") urlStr += "checkout=" + this.checkout + "&";
-        if (this.priceFrom != "") urlStr += "min_price=" + this.priceFrom + "&";
-        if (this.priceTo != "") urlStr += "max_price=" + this.priceTo + "&";
-        if (this.ratingFrom != "") urlStr += "min_rating=" + this.ratingFrom + "&";
-        if (this.ratingTo != "") urlStr += "max_rating=" + this.ratingTo + "&";
-        if (this.type != "") urlStr += "type=" + this.type + "&";
-        if (this.nBeds != "") urlStr += "min_beds=" + this.nBeds + "&";
-        if (this.capacity != "") urlStr += "guest_count=" + this.capacity + "&";
+        if (this.location != "") urlStr += "location=" + encodeURIComponent(this.location) + "&";
+        if (this.checkin != "") urlStr += "checkin=" + encodeURIComponent(this.checkin) + "&";
+        if (this.checkout != "") urlStr += "checkout=" + encodeURIComponent(this.checkout) + "&";
+        if (this.priceFrom != "") urlStr += "min_price=" + encodeURIComponent(this.priceFrom )+ "&";
+        if (this.priceTo != "") urlStr += "max_price=" + encodeURIComponent(this.priceTo) + "&";
+        if (this.ratingFrom != "") urlStr += "min_rating=" + encodeURIComponent(this.ratingFrom) + "&";
+        if (this.ratingTo != "") urlStr += "max_rating=" + encodeURIComponent(this.ratingTo) + "&";
+        if (this.type != "") urlStr += "type=" + encodeURIComponent(this.type) + "&";
+        if (this.nBeds != "") urlStr += "min_beds=" + encodeURIComponent(this.nBeds) + "&";
+        if (this.capacity != "") urlStr += "guest_count=" + encodeURIComponent(this.capacity) + "&";
 
         if (Object.keys(this.commodities).length > 0) {
             let first = true;
@@ -42,7 +46,7 @@ class FilterState {
                         urlStr += "commodities=";
                         first = false;
                     }
-                    urlStr += commodity + ","
+                    urlStr += encodeURIComponent(commodity) + ","
                 }
             }
             // remove trailing comma
@@ -131,14 +135,14 @@ function buildResidenceHTML(property){
                     '<img src="'+ photoPath+ '">' +
                 '</section>' +  
                 '<section class="info">' + 
-                    '<h1 class="info_title">' + property['title'] + '</h1>' +
-                    '<h2 class="info_type_and_location">' + typeStr + ' &#8226 ' + property['address']  + '</h2>' +
-                    '<p class="info_description">'  + descriptionTrimmed + '</p>' +
-                    '<p class="total_price">' + totalPriceSimple + '</p>' +
-                    '<p class="info_ppd">' + ppdSimple +'</p>' +
-                    '<p class="info_score">'+ property['rating']+'</p>' +
-                    '<p class="info_capacity">' + property['capacity']+'</p>' +
-                    '<p class="info_bedrooms"> '+ property['nBedrooms']+' </p>' +
+                    '<h1 class="info_title">' + htmlEntities(property['title']) + '</h1>' +
+                    '<h2 class="info_type_and_location">' + htmlEntities(typeStr) + ' &#8226 ' + property['address']  + '</h2>' +
+                    '<p class="info_description">'  + htmlEntities(descriptionTrimmed) + '</p>' +
+                    '<p class="total_price">' + htmlEntities(totalPriceSimple) + '</p>' +
+                    '<p class="info_ppd">' + htmlEntities(ppdSimple) +'</p>' +
+                    '<p class="info_score">'+ htmlEntities(property['rating']) +'</p>' +
+                    '<p class="info_capacity">' + htmlEntities(property['capacity']) +'</p>' +
+                    '<p class="info_bedrooms"> '+ htmlEntities(property['nBedrooms']) +' </p>' +
                 '</section>' +
             '</section>' +
         '</a>'    
@@ -162,7 +166,7 @@ function buildResultsHeaderHTML(results_header){
     const address = document.getElementById('location').value;  
     let h1 = document.createElement("h1");
     if (address.length > 0)
-        h1.innerHTML = "Showing places near '" + address + "'" ;
+        h1.innerHTML = "Showing places near '" + htmlEntities(address) + "'" ;
     else
         h1.innerHTML = "Showing available places";
     results_header.replaceChild(h1,results_header.firstElementChild);
@@ -172,7 +176,7 @@ function buildResultsHeaderHTML(results_header){
 function buildResultCountHeader(results_header, count){
 
     let h2 = document.createElement("h2");
-    h2.innerHTML = count + " results found (Wow!)" ;
+    h2.innerHTML = count + " results found" + (count > 0 ? " (Wow!)" : "") ;
   
     results_header.replaceChild(h2,results_header.firstElementChild.nextSibling);
   
