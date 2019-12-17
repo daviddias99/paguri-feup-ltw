@@ -17,10 +17,12 @@
     $supportedFormats = array(IMAGETYPE_JPEG => '.jpg', IMAGETYPE_PNG => '.png');
 
     $imgType = exif_imagetype($image);
+
+    if (! isset($suppertedFormats[$imgType]))
+        die();
+
     $extension = $supportedFormats[$imgType];
 
-    if ($extension == null)
-        die();
 
     // Generate filenames for original, small and medium files
     $photoID = addResidencePhoto($residenceID, sha1_file($image) . $extension);
