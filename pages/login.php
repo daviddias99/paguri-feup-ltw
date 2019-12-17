@@ -5,7 +5,7 @@
     include_once('../templates/auth.php');
 
     if (isset($_SESSION['username']))
-        die("User logged in!");
+        header('Location: front_page.php');
 
     draw_header('front_page', null);
     draw_login();

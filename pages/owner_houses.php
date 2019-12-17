@@ -4,7 +4,7 @@
     include_once('../templates/common/footer.php');
 
     if (! isset($_SESSION['username']))
-        die("User not logged in!");
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to view your residences."));
 
     $username = $_SESSION['username'];
 

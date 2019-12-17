@@ -6,7 +6,7 @@
     include_once('../database/reservation_queries.php');
 
     if (! isset($_SESSION['username']))
-        die("user not logged in");
+        header('Location: not_found_page.php?message='.urlencode("You must be logged in to check your reservations."));
 
     $reservations = getUserReservations($_SESSION['username']);
 
