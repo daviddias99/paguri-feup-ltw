@@ -57,6 +57,27 @@
     }
 
 
+    function addComment($booking,$title,$content,$rating,$datestamp){
+
+        global $dbh;
+
+        $stmt = $dbh->prepare(
+            'INSERT INTO 
+                comment(booking, title, content, rating, datestamp)
+                VALUES (?,?,?,?,?)');
+
+            try{
+
+                $stmt->execute(array($booking,$title,$content,$rating,$datestamp));
+            }
+            catch(PDOException $Exception) {
+                error_log($Exception);
+                return FALSE;
+            }
+        
+            return TRUE;
+    }
+
     function addReply($author,$parent,$title,$content,$datestamp){
 
         global $dbh;
@@ -74,4 +95,3 @@
                 return FALSE;
             }
     }
-?>

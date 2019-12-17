@@ -1311,7 +1311,7 @@ body.residence_page #review_section > h1 {
 .reply {
 
     width: 100%;
-    height: 10em;
+    height: 12em;
     margin-bottom: 2em;
     border-top: 1px solid rgb(200,200,200);
 
@@ -1578,3 +1578,99 @@ body.rent_house .disabled {
     background-color: grey;
 }
 
+
+/*User reservations page*/
+
+body.user_rentals #user_rentals{
+
+    width: auto;
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    height: auto;
+    padding: 1em;
+
+}
+
+body.user_rentals #user_rentals table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+body.user_rentals #user_rentals th, td {
+
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0.5em;
+}
+
+body.user_rentals #user_rentals th{
+    background-color: #f7cc97;
+}
+
+td:last-child {
+    padding: 0em 0em 0em 0.5em;
+    border: none;
+
+}
+
+td:first-child {
+    padding: 0em 0.5em 0em 0em;
+    border: none;
+
+}
+
+body.user_rentals #user_rentals th:last-child{
+    border: none;
+    background-color: white;
+}
+
+body.user_rentals #user_rentals th:first-child{
+    border: none;
+    background-color: white;
+}
+
+body.user_rentals #user_rentals td{
+    height: 100%;
+    
+}
+
+body.user_rentals #user_rentals a {
+
+    text-decoration: underline;
+    color: black;
+}
+
+body.user_rentals #user_rentals th.last_header_cell {
+
+    border: none;
+}
+
+/*Write review page*/
+
+body.write_review #review_form{
+
+    width: auto;
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    border-radius: 6px;
+    height: auto;
+    padding: 1em;
+
+}
+
+body.write_review #review_form form {
+
+    display: flex;
+    flex-direction: column;
+}
+
+body.write_review #review_form form .comment_rating {
+
+    margin-top: 1em;
+    color: rgb(34, 34, 34);
+}

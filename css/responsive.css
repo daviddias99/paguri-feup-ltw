@@ -403,11 +403,6 @@
 
 @media (max-width: 40em) {
     
-    #site_header nav {
-
-        display: none;
-    }
-
     body.residence_page #main {
 
         width: 100%;
@@ -463,7 +458,7 @@
 
     .main_review {
 
-        height: 6em;
+        height: 7em;
         grid-template-areas: 
         "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating comment_date_and_rating" 
         "comment_user_info comment_title comment_title comment_title comment_title" 
