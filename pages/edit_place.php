@@ -12,7 +12,7 @@
     if (!isset($_POST['id']))
         header('Location: front_page.php');
 
-    $placeID = $_GET['id'];
+    $placeID = $_POST['id'];
     $username = $_SESSION['username'];
 
 
