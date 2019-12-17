@@ -4,14 +4,6 @@
     include_once('../database/residence_queries.php');
     include_once('../database/user_queries.php');
 
-// Database fetching
-$residence = getResidenceInfo($_GET['id']);
-$owner = getUserInfoById($residence['owner']);
-$commodities = getAllCommodities();
-$residenceCommodities = getResidenceCommodities($_GET['id']);
-$residencePhotos= getResidencePhotos($_GET['id']);
-$comments = getResidenceComments($_GET['id']);
-$rating = getResidenceRating($_GET['id']);
     if (!isset($_GET['id']))
         header('Location: front_page.php');
 
@@ -20,6 +12,7 @@ $rating = getResidenceRating($_GET['id']);
     $owner = getUserInfoById($residence['owner']);
     $commodities = getAllCommodities();
     $residenceCommodities = getResidenceCommodities($_GET['id']);
+    $residencePhotos= getResidencePhotos($_GET['id']);
     $comments = getResidenceComments($_GET['id']);
     $rating = getResidenceRating($_GET['id']);
 
