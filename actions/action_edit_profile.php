@@ -24,7 +24,7 @@
 
     // cant change other users info
     if($userID != $_SESSION['userID']) {
-        header('Location: ../pages/front_page.php');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio);
@@ -51,9 +51,9 @@
 
         $imgType = exif_imagetype($tmpPath);
         if (! isset($supportedFormats[$imgType]))
-            die();
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
 
-        $extension = $supportedFormats[$imgType];
+            $extension = $supportedFormats[$imgType];
 
         $userRowID = getUserID($username);
 
