@@ -15,8 +15,6 @@ function getCurrentMapPage() {
     throw new Error("Page does not require a map!"); 
 }
 
-import('../filter_results/filters.js');
-
 let map;
 let map_clusterer;
 let markers = [];
