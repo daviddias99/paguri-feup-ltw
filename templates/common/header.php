@@ -41,6 +41,7 @@ function draw_header($body_class, $scripts)
                 }
                 ?>
         </nav>
+        <section class="content_wrapper">
     <?php
     }
     ?>
