@@ -159,16 +159,12 @@ function draw_list_user_places($userID)
         <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
         <a class="button" id="" href="">Add availability</a>
         <a class="button" href="">Reservations</a>
-<<<<<<< HEAD
-        <a class="button" href="../pages/edit_place.php?id=<?=$place['residenceID'] ?>">Edit</a>
-=======
 
         <form class="post_link" action="../pages/edit_place.php" method="post">
             <input type="hidden" name="id" value="<?= htmlentities($place['residenceID']) ?>">
             <input type="submit" class="button" value="Edit">
         </form>
 
->>>>>>> security
         <button class="button remove_reservation">Remove</button>
     </section>
 <?php } ?>
