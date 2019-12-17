@@ -298,5 +298,8 @@ function clearMarkers() {
     if (map_clusterer) {
         map_clusterer.removeMarkers(markers, true);
     }
+    
+    markers.forEach((marker) => marker.setMap(null));
+
     markers = [];
 }

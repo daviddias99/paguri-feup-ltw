@@ -15,10 +15,6 @@ function draw_user($user)
                 <em>Email</em>
                 <p><?= htmlentities($user['email']) ?>
             </li>
-            <li>
-                <em>Password</em>
-                <p><?= htmlentities($user['password']) ?>
-            </li>
         </ul>
 
         <?php if ($userLoggedIn) { ?>
