@@ -216,19 +216,6 @@ function draw_edit_place($place)
             <input id="city" type="hidden" value="<?= htmlentities($place['country']) ?>">
             <input id="country" type="hidden" value="<?= htmlentities($place['city']) ?>">
 
-<<<<<<< HEAD
-            <section id="edit_place_images">
-                <?php foreach ($photos as $photo) { ?>
-                    <section class="image_preview" id="<?= $photo['photoID'] ?>">
-                        <img src="../images/properties/medium/<?= $photo['filepath'] ?>">
-                        <div class="remove_image fas fa-trash-alt"></div>
-                    </section>
-                <?php } ?>
-                <label class="choose_photo button fas fa-plus">
-                    <input class="choose_photo_input" type="file" name="image" multiple>
-                </label>
-            </section>
-=======
             <label class="choose_photo button">Choose
                 <input class="choose_photo_input" type="file" name="image" multiple>
             </label>
@@ -239,7 +226,6 @@ function draw_edit_place($place)
                     <span class="remove_image fas fa-trash-alt"></span>
                 </section>
             <?php } ?>
->>>>>>> security
 
             <input class="button" id="submit_button" type="submit" value="Update">
         </form>
