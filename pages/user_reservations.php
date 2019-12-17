@@ -84,7 +84,7 @@ draw_footer();
                 <td><?=$residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country']?> </td>
                 <td>€<?=$residence['pricePerDay'] * $reservationDays?></td>
                 <td>
-                    <?php if($state == "&#9989" && count($comments) != 0) { ?>
+                    <?php if($state == "&#9989" && count($comments) == 0) { ?>
                         <form action="write_review.php" method="get" >
                             <input type="hidden" name="id" value="<?=$reservation['reservationID']?>">
                             <input type="submit" value="Review">

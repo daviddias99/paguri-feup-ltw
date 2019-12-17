@@ -712,7 +712,6 @@ body.user_profile {
 
 #profile {
     display: grid;
-    grid-template-columns: auto auto auto min(0, 1fr);
     grid-template-rows: min-content auto min-content min-content;
     grid-template-areas: "image image image name"
                          "image image image info"
@@ -1014,7 +1013,6 @@ body.residence_page #right_side {
     width: 60%;
     background-color: white;
     margin: 3em;
-    padding: auto 0 auto 0;
 }
 
 
@@ -1052,7 +1050,6 @@ body.residence_page #residence_info .ri_rating {
 body.residence_page #residence_info .ri_rating h4{
 
     text-align: center;
-    padding: auto;
 }
 
 body.residence_page #residence_info .ri_owner { grid-area: owner; }
