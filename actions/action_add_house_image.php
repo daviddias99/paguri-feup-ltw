@@ -45,9 +45,9 @@ include_once('../database/residence_queries.php');
             imagejpeg($big, $bigPath, 100);
             break;
         case IMAGETYPE_PNG:
-            imagepng($small, $smallPath, 100);
-            imagepng($medium, $mediumPath, 100);
-            imagepng($big, $bigPath, 100);
+            imagepng($small, $smallPath);
+            imagepng($medium, $mediumPath);
+            imagepng($big, $bigPath);
             break;
     }
 

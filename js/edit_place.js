@@ -60,14 +60,11 @@ document.getElementById("submit_button").onclick = function (event) {
     Object.keys(images).forEach(key => {
         console.log("sending image");
         send(id, images[key]);
-        delete images[key];
     });
 
     removedImages.forEach(image => {
         remove(image);
     });
-    removedImages.length = 0;
-
 };
 
 function send(id, image) {
@@ -111,13 +108,14 @@ document.querySelector(".choose_photo").onchange = function (event) {
     for (let i = 0; i < event.target.files.length; i++) {
         const reader = new FileReader();
 
-        images[++lastImageID] = event.target.files[i];
+        const currentID = ++lastImageID;
+        images[currentID] = event.target.files[i];
 
         reader.onload = function () {
 
             const section = document.createElement('section');
             section.setAttribute('class', 'new_image_preview');
-            section.setAttribute('id', lastImageID);
+            section.setAttribute('id', currentID);
 
             const preview = document.createElement('img');
 
