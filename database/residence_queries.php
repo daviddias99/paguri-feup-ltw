@@ -197,6 +197,8 @@ function getResidenceInfo($residenceID)
 
         $stmt->execute(array($residenceID));
 
+        if ($stmt->rowCount() <= 0) return null;
+
         return $stmt->fetchAll()[0]['rating'];
     }
 
