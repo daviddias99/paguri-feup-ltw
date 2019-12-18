@@ -15,7 +15,7 @@
     $residenceCommodities = getResidenceCommodities($_GET['id']);
     $residencePhotos= getResidencePhotos($_GET['id']);
     $comments = getResidenceComments($_GET['id']);
-    $rating = getResidenceRating($_GET['id']);
+    $rating = $residence['rating'];
 
     // Logged in status
     $loggedAccountStatus = [];
@@ -426,9 +426,20 @@
                 <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
                 <img class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
             </section>
+                <section class="mySlides fade">
+                <img class="slide_show_img" src="../resources/big-none.jpg">
+            </section>
 
+        <?php } 
+    
+    if (count($residencePhotos) == 0)  { ?>
+        <section class="mySlides fade">
+            <img class="slide_show_img" src="../resources/big-none.jpg">
+        </section>
 
-        <?php } }?>
+        <?php } 
+    
+    }?>
 
 
         <!-- Next and previous buttons -->
