@@ -103,7 +103,7 @@
 
 
 @media (max-width: 60em) {
-    body.user_profile {
+    body.user_profile, body.rent_house, body.residence_page, body.user_rentals {
         background: none;
     }
 
@@ -197,7 +197,7 @@
 }
 
 @media (max-width: 40em) {
-        body.front_page, body.user_profile {
+    body.front_page {
         background: none;
     }
 

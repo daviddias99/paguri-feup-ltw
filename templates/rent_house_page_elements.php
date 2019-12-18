@@ -40,7 +40,7 @@
 { ?>
 
 
-    <section id="residence_info_simplified">
+    <section id="residence_info_simplified" class="card">
 
         <h1>Renting a residence</h1>
 
