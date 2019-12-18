@@ -149,7 +149,7 @@ function draw_list_user_places($userID)
                 </section>
                 <section class="info">
                     <h1 class="info_title"><?= htmlentities($place['title']) ?></h1>
-                    <h2 class="info_type_and_location"><?= htmlentities($place['type']) ?> . ' &#8226 ' . <?= htmlentities($place['address']) ?></h2>
+                    <h2 class="info_type_and_location"><?= htmlentities(ucfirst($place['type'])) ?>  &#8226  <?= htmlentities($place['address']) ?></h2>
                     <p class="info_description"><?= htmlentities($descriptionTrimmed) ?></p>
                     <p class="info_ppd"><?= htmlentities($priceSimple) ?></p>
                     <p class="info_score"><?= htmlentities($rating) ?></p>
