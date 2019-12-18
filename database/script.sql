@@ -19,9 +19,9 @@ VALUES
 
 INSERT INTO user(userID,username,email,firstName,lastName,password,biography,photo)
 VALUES
-(1,'daviddias99','david.luis@hotmail.com','David','Silva','$2y$12$pCN6ESriuEH1QzyoRgnYAuWPvtXE7ijkpIu8pktihjf3r2aKA41ym','Sou apaixonado pela natureza','default.jpg'),
-(2,'mario_gil','advent@king.com','Mario','Gil','$2y$12$B82dgOrGgwjWK999m/CG/uaryWqvU8wbhsTaWpv6sbh3QqVSmW4MC','Adoro animais e alugar casas','default.jpg'),
-(3,'luispcunha','luis@mistercimba.com','Luis','Cunha','$2y$12$ZyUquIFbu7H49mr9adIaWeVK.Sxxn0lA6j3mhxCZ8HRGiRKJAYkB6','Adoro xadrez e belas paisagens','default.jpg');
+(1,'daviddias99','david.luis@hotmail.com','David','Silva','$2y$12$pCN6ESriuEH1QzyoRgnYAuWPvtXE7ijkpIu8pktihjf3r2aKA41ym','Sou apaixonado pela natureza','19af1b492f45b93bc986af6a859c8d8e2c190b52b.jpg'),
+(2,'mario_gil','advent@king.com','Mario','Gil','$2y$12$B82dgOrGgwjWK999m/CG/uaryWqvU8wbhsTaWpv6sbh3QqVSmW4MC','Adoro animais e alugar casas','2ed75cd31c8e2bc7e949bcf9ec242dc0bd2ac5c26.jpg'),
+(3,'luispcunha','luis@mistercimba.com','Luis','Cunha','$2y$12$ZyUquIFbu7H49mr9adIaWeVK.Sxxn0lA6j3mhxCZ8HRGiRKJAYkB6','Adoro xadrez e belas paisagens','361e8b314b9502544d7554fbacba5bc35723b48f5.jpg');
 
 
 INSERT INTO residence(residenceID,owner, title, description, pricePerDay, capacity, nBedrooms, nBathrooms, nBeds, type, address, city, country, latitude, longitude)
@@ -80,3 +80,13 @@ INSERT INTO reply(replyID, author, parent, title, content, datestamp)
 VALUES
 (1,2,1,'Faltou dizer','O bolo rei que deixou para a minha chegada estava muito bom','2019/12/18 04:59'),
 (2,1,1,'Ainda bem que gostou','De nada, recomende aos seus amigos!','2019/12/18 05:00');
+
+
+INSERT INTO residencePhoto(lodge, filepath, priority) 
+VALUES
+    (3, '1d9ec5f0c6c70ee6f9c8ed350b288cac0e8961f94.jpg', 0),
+    (3, '2424ebe40d21b9aad978ddd0a5bd979bcc2e5807b.jpg', 0),
+    (2, '39c69a2b8139ccdde28d09c644cc3682aa3b57cd0.jpg', 0),
+    (2, '40e288c952e35848b98d6777bbee7b7e4dbd30040.jpg', 0),
+    (5, '7e120d6cb3faef6f1d4545d9c382ea22edabf18e0.jpg', 0),
+    (5, '8f7e3869bd5dcd691624ce838419b73aa14c61671.jpg', 0);
