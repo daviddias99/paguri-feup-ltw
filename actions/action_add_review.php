@@ -9,11 +9,18 @@
     !isset( $_GET['review_title']) || 
     !isset( $_GET['reservationID']) || 
     !isset($_GET['rating']) || 
-    !isset($_GET['content']) 
+    !isset($_GET['content'])  ||
+    !isset($_GET['csrf'])
     ){
 
         header('Location: ../pages/not_found_page.php?message=' . urlencode("Not enough information was given."));
         exit;
+    }
+
+    $csrf = $_GET['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/front_page.php'));
     }
 
     $reservation = getReservationWithID($_GET['reservationID']);

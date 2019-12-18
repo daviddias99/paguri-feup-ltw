@@ -12,6 +12,7 @@
                 <label>Password</label>
                 <input id="check_out" type="password" name="password" minlength="6" placeholder="********" value="" required>
             </section>
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
             <input class="button" id="submit_button" type="submit" value="Login">
 
@@ -49,6 +50,7 @@
                 <label for="pw_conf_input">Confirm password</label>
                 <input id="pw_conf_input" type="password" name="passwordConfirmation" minlength="6" placeholder="********" value="" required>
             </section>
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
             <input class="button" id="submit_button" type="submit" value="Register">
         </form>
         <p>Already have an account? Log in <a href="login.php">here</a>.</p>

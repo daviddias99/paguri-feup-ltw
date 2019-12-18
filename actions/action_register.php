@@ -11,7 +11,8 @@
         !isset($_POST['email']) || 
         !isset($_POST['firstName']) || 
         !isset($_POST['lastName']) || 
-        !isset($_POST['password']))
+        !isset($_POST['password']) ||
+        !isset($_POST['csrf']))
     {            
         die(header('Location: ../pages/register.php'));
     }
@@ -21,6 +22,11 @@
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $password = $_POST['password'];
+    $csrf = $_POST['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/register.php'));
+    }
 
     if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $username)) {
         die(header('Location: ../pages/register.php'));

@@ -379,6 +379,7 @@
                         <input type="hidden" name="residence" value="<?= htmlentities($_GET['id']) ?>">
                         <input class="comment_title" placeholder="Title of your reply" required="required" type="text" name="title">
                         <textarea class="comment_content" placeholder="What's on you mind?" required="required" name="content" rows="4" cols="50"></textarea>
+                        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                         <input class="submit_reply" formaction="../actions/action_add_reply.php" type="submit" value="Reply">
                     </form>
 
@@ -408,14 +409,18 @@
 
 <?php } ?>
 
-<?php function draw_residence_images() { 
-    
+<?php function draw_residence_images() {
+
     global $residencePhotos;
     ?>
 
     <section id="residence-images" class="slideshow-container">
-
-        <?php for ($i = 0; $i < count($residencePhotos); $i++)  { ?>
+        <?php if (! isset($residencePhotos))  { ?>
+            <section class="mySlides fade">
+                <img class="slide_show_img" src="../resources/big-none.jpg">
+            </section>
+        <?php } else {
+         for ($i = 0; $i < count($residencePhotos); $i++)  { ?>
 
             <section class="mySlides fade">
                 <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
@@ -423,7 +428,7 @@
             </section>
 
 
-        <?php } ?>
+        <?php } }?>
 
 
         <!-- Next and previous buttons -->
@@ -437,8 +442,8 @@
 { ?>
     <section id="main">
 
-        <?php 
-        
+        <?php
+
             draw_left_side();
             draw_right_side();
         ?>
@@ -457,6 +462,7 @@
                 drawReviews($comments);
                 ?>
         </section>
+    </section>
     <?php } ?>
 
     <?php function draw()

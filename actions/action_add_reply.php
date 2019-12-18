@@ -7,7 +7,8 @@
     if(!isset($_SESSION['userID']) || 
         !isset($_GET['reviewID']) || 
         !isset($_GET['title']) || 
-        !isset($_GET['content']))
+        !isset($_GET['content'])  ||
+        !isset($_GET['csrf']))
     {
 
         header('Location: ../pages/front_page.php');
@@ -18,6 +19,11 @@
     $reviewID = $_GET['reviewID'];    
     $title = $_GET['title'];    
     $content = $_GET['content'];  
+    $csrf = $_GET['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/front_page.php'));
+    }
 
     // Add new reply to database
     addReply($userID,$reviewID,$title,$content,date("Y/m/d H:i"));

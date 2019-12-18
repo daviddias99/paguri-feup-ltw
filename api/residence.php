@@ -84,6 +84,12 @@
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
 
+        if(!isset($_GET['csrf']))
+            api_error(ResponseStatus::BAD_REQUEST, 'Missing CSRF Token.');
+
+        if($_GET['csrf'] != $_SESSION['csrf'])
+            api_error(ResponseStatus::FORBIDDEN, 'Invalid CSRF Token.');
+
         $residenceToDelete = getResidenceInfo($_GET['id']);
         if ($residenceToDelete == FALSE) {
             api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
@@ -125,12 +131,17 @@
             'country',
             'latitude',
             'longitude',
-            'commodities'
+            'commodities',
+            'csrf'
         ];
 
         if(!array_keys_exist($values, $needed_keys)) {
             api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
         }
+
+        $csrf = $values['csrf'];
+        if ($_SESSION['csrf'] !== $csrf)
+            api_error(ResponseStatus::FORBIDDEN, "Invalid CSRF token");
 
         $numeric_keys = [
             'pricePerDay',

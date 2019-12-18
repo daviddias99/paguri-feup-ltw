@@ -8,6 +8,8 @@ include_once('../database/residence_queries.php');
 include_once('../database/comment_queries.php');
 include_once('../database/user_queries.php');
 
+if (!isset($_GET['id']))
+    die(header('Location: front_page.php'));
 
 $userID = $_GET['id'];
 $user = getUserInfoById($userID);
@@ -32,9 +34,9 @@ draw_footer();
 
     ?>
 
-    <section id="user_rentals">
+    <section id="user_rentals" class="card">
 
-        <h1>My rentals</h1>
+        <h1>My reservations</h1>
 
         <table>
 
@@ -48,7 +50,7 @@ draw_footer();
             <th></th>
         </tr>
 
-        <?php 
+        <?php
 
         if(count($reservations) == 0){
             ?> <td></td><td colspan=5> No reservations yet. </td> <td></td> <?php
@@ -77,30 +79,30 @@ draw_footer();
             else if(round(($now - $start)/(60 * 60 * 24)) <= 3){
                 $state = "&#128284";
             }
-            
+
 
         ?>
             <tr>
                 <td><?=$state?></td>
-                <td><?=substr($reservation['startDate'],0,10)?></td>
-                <td><?=substr($reservation['endDate'],0,10)?></td>
-                <td><a href="view_house.php?id=<?=$residence['residenceID']?>"><?=$residence['title']?></a></td>
-                <td><?=$residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country']?> </td>
-                <td>€<?=$residence['pricePerDay'] * $reservationDays?></td>
+                <td><?=htmlentities(substr($reservation['startDate'],0,10))?></td>
+                <td><?=htmlentities(substr($reservation['endDate'],0,10))?></td>
+                <td><a href="view_house.php?id=<?=$residence['residenceID']?>"><?=htmlentities($residence['title'])?></a></td>
+                <td><?=htmlentities($residence['address']) . ', ' . htmlentities($residence['city']) . ', ' . htmlentities($residence['country'])?> </td>
+                <td>€<?=htmlentities($residence['pricePerDay']) * $reservationDays?></td>
                 <td>
                     <?php if($state == "&#9989" && count($comments) == 0) { ?>
                         <form action="write_review.php" method="get" >
                             <input type="hidden" name="id" value="<?=$reservation['reservationID']?>">
                             <input type="submit" value="Review">
                         </form>
-                    
+
                     <?php } else {?>
                         --------
                     <?php } ?>
-            
-                </td> 
+
+                </td>
             </tr>
-            
+
 
         <?php } ?>
 

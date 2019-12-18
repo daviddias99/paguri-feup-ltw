@@ -10,7 +10,7 @@ function encodeForAjax(data) {
 if (document.querySelectorAll(".remove_reservation")) {
     const clickHandler = function(event) {
         const id = event.target.parentNode.firstChild.nextSibling.value;
-
+        const csrf = document.getElementById("csrf").value;
         const request = new XMLHttpRequest();
 
         request.addEventListener("load", function(newEvent) {
@@ -33,7 +33,7 @@ if (document.querySelectorAll(".remove_reservation")) {
             }
         });
 
-        request.open("delete", "../api/residence.php?" + encodeForAjax({id: id}), true);
+        request.open("delete", "../api/residence.php?" + encodeForAjax({id: id, csrf: csrf}), true);
         request.setRequestHeader('Accept', 'application/json');
         request.send();
     }

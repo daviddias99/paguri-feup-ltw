@@ -4,7 +4,7 @@
 getCurrentMapPage();
 
 let api_key = "AIzaSyD0_ruPYuzA1ntPaautYqVqtjOT96oNLSE";
-let search_radius = 2; //km
+let search_radius = 10; //km
 
 /* Variable used to store reference to return from setTimeout */
 let address_timeout;

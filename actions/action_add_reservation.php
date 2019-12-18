@@ -8,7 +8,8 @@
     if(!isset($_SESSION['userID']) || 
     !isset( $_GET['residenceID']) || 
     !isset($_GET['checkin_date']) || 
-    !isset($_GET['checkout_date']) 
+    !isset($_GET['checkout_date'])  ||
+    !isset($_GET['csrf'])
     ){
         echo 'Something went wrong';
         header('Location: ../pages/front_page.php');
@@ -20,6 +21,11 @@
     $checkout_date =  $_GET['checkout_date'];   
     $residence = getResidenceInfo($residenceID);
     $userID = $_SESSION['userID'];
+    $csrf = $_GET['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/front_page.php'));
+    }
 
     // Ensure that the renter is not the owner
     if($residence['owner'] == $userID){

@@ -22,6 +22,7 @@ document.getElementById("submit_button").onclick = function (event) {
     const latitude = document.getElementById("latitude").value;
     const longitude = document.getElementById("longitude").value;
     const pricePerDay = document.getElementById("price_input").value;
+    const csrf = document.getElementById("csrf").value;
 
     if (!owner || !title || !location || !capacity || 
         !numBeds || !numBedrooms || !numBathrooms ||
@@ -59,6 +60,7 @@ document.getElementById("submit_button").onclick = function (event) {
             latitude: latitude,
             longitude: longitude,
             pricePerDay: pricePerDay,
-            commodities: JSON.stringify(selectedCommodities)
+            commodities: JSON.stringify(selectedCommodities),
+            csrf: csrf
         }));
 };
