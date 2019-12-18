@@ -30,14 +30,13 @@ document.getElementById("submit_button").onclick = function (event) {
     const pricePerDay = document.getElementById("price").value;
     const commodities = document.getElementById("commodities").value;
 
-    if (!id || !owner || !title || !location || !capacity || 
+    if (!id || !owner || !title || !location || !capacity ||
         !numBeds || !numBedrooms || !numBathrooms || !city || !country ||
         !pricePerDay || !latitude || !longitude) return;
-        
+
     event.preventDefault();
 
     const request = new XMLHttpRequest();
-    request.onload = () => window.location.href = "../pages/view_house.php?id=" + id;
     request.open("put", "../api/residence.php?" + encodeForAjax({
         id: id,
         owner: owner,
@@ -99,7 +98,7 @@ function remove(imageID) {
 function onLoad() {
     numSent++;
     if (numSent == Object.keys(images).length + removedImages.length) {
-       window.location.reload();
+        request.onload = () => window.location.href = "../pages/view_house.php?id=" + id;
     }
 }
 
