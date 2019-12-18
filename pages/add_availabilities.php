@@ -31,7 +31,7 @@ if (!$valid) {
 
     <h1>Add availabilities for residence:'<?=$residence['title']?>'</h1>
 
-        <form method="get" action="../actions/add_availability.php">
+        <form method="get" action="../actions/action_add_availability.php">
 
             
             <input type="hidden" name="residenceID" id="residenceID" value="<?= htmlentities($residence['residenceID']) ?>">

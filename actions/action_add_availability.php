@@ -1,6 +1,9 @@
 <?php
 
+    include_once('../includes/config.php');
     include_once('../database/residence_queries.php');
+    include_once('../database/user_queries.php');
+
 
     
 
@@ -19,7 +22,9 @@
     $owner = getUserInfoById($residence['owner']);
     $valid = (isset($_SESSION['username']) and $_SESSION['username'] == $owner['username']);
 
+
     if (!$valid) {
+        error_log("OLA",4);
         header('Location: ../pages/front_page.php');
         exit;
     }
@@ -27,14 +32,17 @@
     $in = $_GET['checkin_date'];
     $out = $_GET['checkout_date'];
 
-    $availabilites = getResidenceAvailabilities($residenceID);
+    $availabilities = getResidenceAvailabilities($residenceID);
 
     foreach($availabilities as $availability){
 
         $availabilityIn = strtotime($availability['startDate']);
         $availabilityOut = strtotime($availability['endDate']);
-        $intTime = strtotime($int);
+
+        echo "ain " . $availabilityIn  . " aout"  .$availabilityOut;
+        $intTime = strtotime($in);
         $outTime = strtotime($out);
+        echo "in" . $intTime  . " out"  .$outTime;
     
         if($intTime >= $availabilityIn && $intTime <= $availabilityOut){
             header('Location: ../pages/front_page.php');
@@ -47,8 +55,7 @@
         }
     }
 
-    // Add new reply to database
     addAvailability($residenceID,$in, $out);
     
-    header('Location: ../pages/user_places.php?id='.$_SESSION['id'] );
+    header('Location: ../pages/user_places.php?id='.$_SESSION['userID'] );
 ?>
