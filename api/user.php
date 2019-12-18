@@ -108,9 +108,27 @@
 
         if(userExists($values['username'], $values['email']))
             api_error(ResponseStatus::BAD_REQUEST, 'Username and/or email already in use.');
-        
-        if (strlen($values['password']) < 6)
-            api_error(ResponseStatus::BAD_REQUEST, 'Password must have at least 6 characters.');
+
+
+        if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $values['username'])) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Invalid username.');
+        }
+
+        if (!preg_match("/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/", $values['email'])){
+            api_error(ResponseStatus::BAD_REQUEST, 'Invalid email.');
+        }
+
+        if ( !preg_match ("/^[a-zA-Z]+$/", $values['firstName'])) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Invalid first name.');
+        }
+
+        if ( !preg_match ("/^[a-zA-Z]+$/", $values['lastName'])) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Invalid last name.');
+        }
+
+        if (strlen($values['password']) < 6 or strpos($values['password'], ' ') !== false) {
+            api_error(ResponseStatus::BAD_REQUEST, 'Invalid password.');
+        }
     }
 
 ?>
