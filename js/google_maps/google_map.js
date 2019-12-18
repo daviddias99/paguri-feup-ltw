@@ -90,6 +90,9 @@ function addMarkers(residences) {
         return;
     }
 
+    const default_photo_path = "../resources/small-none.jpg";
+    const photos_base_path = "../images/properties/small/";
+
     let newMarkers = residences.map(function(residence) {
 
         /* marker info */
@@ -106,7 +109,8 @@ function addMarkers(residences) {
                 lng: parseFloat(residence.longitude)
             },
             type: residence.typeStr,
-            rating: residence.rating
+            rating: residence.rating,
+            photoPath: residence.photoPaths.length > 0 ? photos_base_path + residence.photoPaths[0] : default_photo_path
         }
 
         const width_base = 40;
@@ -184,7 +188,7 @@ function addInfoWindow(marker, markerInfo) {
             const starsHTML = isNaN(markerInfo.rating) ? "" : markerInfo.rating/2 + ' <i class="fas fa-star"></i>';
             infoWindowContent = `
                 <a class="search_results_info_window" href="../pages/view_house.php?id=` + markerInfo.residenceID + `">
-                    <img src="` + "https://picsum.photos/250/150" + `">
+                    <img src="` + markerInfo.photoPath + `">
                     <h3>` + htmlEntities(markerInfo.type) + `</h3>
                     <h2>` + htmlEntities(markerInfo.title) + `</h2>
                     <h3>€` + htmlEntities(markerInfo.pricePerDay) + ` per night!</h3>

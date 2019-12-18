@@ -119,8 +119,6 @@ function buildResidenceHTML(property){
 
     let photoPath = property['photoPaths'].length == 0 ? "../resources/medium-none.jpg" : "../images/properties/medium/" + property['photoPaths'][0];
 
-    console.log(property['photoPaths']);
-
     if (property['rating'] == null)
         property['rating'] = '-- ';
     
