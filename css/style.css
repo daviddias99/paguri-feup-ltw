@@ -1611,7 +1611,7 @@ body.rent_house .disabled {
 
 body.user_rentals #user_rentals{
 
-    width: auto;
+    width: 80%;
     background-color: white;
     margin-right: auto;
     margin-left: auto;
@@ -1619,11 +1619,13 @@ body.user_rentals #user_rentals{
     border-radius: 6px;
     height: auto;
     padding: 1em;
+    overflow-x: auto;
 
 }
 
 body.user_rentals #user_rentals table {
     border-collapse: collapse;
+    
     width: 100%;
 }
 
@@ -1632,6 +1634,7 @@ body.user_rentals #user_rentals th, td {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 0.5em;
+    text-align: center;
 }
 
 body.user_rentals #user_rentals th{
