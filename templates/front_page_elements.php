@@ -20,6 +20,7 @@
                 <label for="guests_input">Guests</label>
                 <input id="guests_input" type="number" name="guest_count" value="1" min="0" max="10" step="1">
             </section>
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
             <input id="submit_button" class="button" type="submit" value="Search">
         </form>
 

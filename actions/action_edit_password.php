@@ -5,12 +5,18 @@
     if(!isset($_SESSION['username']) || 
         !isset($_POST['username']) || 
         !isset($_POST['password']) || 
-        !isset($_POST['pwConfirmation'])) {
+        !isset($_POST['pwConfirmation']) ||
+        !isset($_POST['csrf'])) {
         header('Location: ../pages/front_page.php');
         die();
     }
 
     $username = $_POST['username'];
+    $csrf = $_POST['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/login.php'));
+    }
 
     if ($username != $_SESSION['username']) {
         header('Location: ../pages/front_page.php');

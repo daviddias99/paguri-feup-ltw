@@ -379,6 +379,7 @@
                         <input type="hidden" name="residence" value="<?= htmlentities($_GET['id']) ?>">
                         <input class="comment_title" placeholder="Title of your reply" required="required" type="text" name="title">
                         <textarea class="comment_content" placeholder="What's on you mind?" required="required" name="content" rows="4" cols="50"></textarea>
+                        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                         <input class="submit_reply" formaction="../actions/action_add_reply.php" type="submit" value="Reply">
                     </form>
 

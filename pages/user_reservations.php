@@ -8,6 +8,8 @@ include_once('../database/residence_queries.php');
 include_once('../database/comment_queries.php');
 include_once('../database/user_queries.php');
 
+if (!isset($_GET['id']))
+    die(header('Location: front_page.php'));
 
 $userID = $_GET['id'];
 $user = getUserInfoById($userID);
@@ -82,11 +84,11 @@ draw_footer();
         ?>
             <tr>
                 <td><?=$state?></td>
-                <td><?=substr($reservation['startDate'],0,10)?></td>
-                <td><?=substr($reservation['endDate'],0,10)?></td>
-                <td><a href="view_house.php?id=<?=$residence['residenceID']?>"><?=$residence['title']?></a></td>
-                <td><?=$residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country']?> </td>
-                <td>€<?=$residence['pricePerDay'] * $reservationDays?></td>
+                <td><?=htmlentities(substr($reservation['startDate'],0,10))?></td>
+                <td><?=htmlentities(substr($reservation['endDate'],0,10))?></td>
+                <td><a href="view_house.php?id=<?=$residence['residenceID']?>"><?=htmlentities($residence['title'])?></a></td>
+                <td><?=htmlentities($residence['address']) . ', ' . htmlentities($residence['city']) . ', ' . htmlentities($residence['country'])?> </td>
+                <td>€<?=htmlentities($residence['pricePerDay']) * $reservationDays?></td>
                 <td>
                     <?php if($state == "&#9989" && count($comments) == 0) { ?>
                         <form action="write_review.php" method="get" >

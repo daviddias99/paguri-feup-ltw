@@ -9,13 +9,20 @@
     }
 
     // missing info
-    if(!isset($_POST['username']) || !isset($_POST['password'])) {
+    if(!isset($_POST['username']) || 
+       !isset($_POST['password']) ||
+       !isset($_POST['csrf'])) {
         header('Location: ../pages/front_page.php');
         die();
     }
 
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $csrf = $_POST['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/login.php'));
+    }
 
     if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $username)) {
         header('Location: ../pages/login.php');

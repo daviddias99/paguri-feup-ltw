@@ -31,8 +31,8 @@ function draw_user($user)
 ?>
 
 <?php
-                                                                    function draw_edit_profile($user)
-                                                                    {
+function draw_edit_profile($user)
+{
 ?>
     <section class="card" id="edit_profile">
         <h1>Update profile information</h1>
@@ -71,6 +71,7 @@ function draw_user($user)
                 <label for="bio_input">Bio</label>
                 <textarea id="bio_input" type="text" name="bio" rows="6"><?= htmlentities($user['biography']) ?></textarea>
             </section>
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
             <input class="button" id="submit_button" type="submit" value="Update">
         </form>
@@ -84,7 +85,9 @@ function draw_user($user)
             <section class="form_entry" id="pw_conf">
                 <label for="pw_conf_input">Confirm password</label>
                 <input id="pw_conf_input" type="password" minlength="6" name="pwConfirmation" value="" required>
-            </section>
+            </section>            
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+
             <input class="button" type="submit" value="Change password">
         </form>
     </section>

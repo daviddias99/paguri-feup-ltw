@@ -10,7 +10,8 @@
         !isset($_POST['email']) ||
         !isset($_POST['firstName']) ||
         !isset($_POST['lastName']) ||
-        !isset($_POST['bio'])) {
+        !isset($_POST['bio']) ||
+        !isset($_POST['csrf'])) {
 
         die(header('Location: ../pages/front_page.php'));
     }
@@ -22,6 +23,11 @@
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $bio = $_POST['bio'];
+    $csrf = $_POST['csrf'];
+
+    if($_SESSION['csrf'] !== $csrf) {
+        die(header('Location: ../pages/login.php'));
+    }
 
     if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $newUsername)) {
         header('Location: ../pages/edit_profile.php');
@@ -40,6 +46,17 @@
 
     // cant change other users info
     if($userID != $_SESSION['userID']) {
+        die(header('Location: ' . $_SERVER['HTTP_REFERER']));
+    }
+
+    $userInfo1 = getUserInfo($newUsername);
+    $userInfo2 = getUserInfoByEmail($email);
+
+    if ($userInfo1 != FALSE and $userInfo1['userID'] != $userID) {
+        die(header('Location: ' . $_SERVER['HTTP_REFERER']));
+    }
+
+    if ($userInfo2 != FALSE and $userInfo2['userID'] != $userID) {
         die(header('Location: ' . $_SERVER['HTTP_REFERER']));
     }
 

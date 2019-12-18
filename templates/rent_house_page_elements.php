@@ -30,6 +30,7 @@
             Check-out:
             <input id="checkout_input" name="checkout_date" required="required" type="date" />
         </label>
+        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
         <input class="button disabled" id="rent_submit_button" type="submit" value="Rent this residence" />
     </form>

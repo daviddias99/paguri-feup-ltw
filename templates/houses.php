@@ -60,6 +60,9 @@ include_once('../templates/helper_functions.php');
             <input id="longitude" type="hidden" required>
             <input id="city" type="hidden" required>
             <input id="country" type="hidden" required>
+
+            <input id="csrf" type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+
             <input class="button" id="submit_button" type="submit" value="Add">
         </form>
     </section>
@@ -102,6 +105,8 @@ function draw_list_user_places($userID)
     $places = getUserResidences($userID);
 ?>
     <section id="places_list" class="card">
+        <input id="csrf" type="hidden" name="csrf" value=<?= $_SESSION['csrf'] ?>>
+
 
         <?php if ($userLoggedIn) { ?>
             <div class="my_places_title">
@@ -168,7 +173,6 @@ function draw_list_user_places($userID)
     <section class="place_operations">
         <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
         <a class="button" id="" href="">Add availability</a>
-        <a class="button" href="">Reservations</a>
         <a class="button" href="../pages/edit_place.php?id=<?= $place['residenceID']?>">Edit</a>
         <button class="button remove_reservation">Remove</button>
     </section>
@@ -232,6 +236,8 @@ function draw_edit_place($place)
                     <input class="choose_photo_input" type="file" name="image" multiple accept="image/jpeg,image/png">
                 </label>
             </section>
+            
+            <input id="csrf" type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
             <input class="button" id="submit_button" type="submit" value="Update">
         </form>

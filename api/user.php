@@ -99,12 +99,17 @@
             'email', 
             'firstName', 
             'lastName',
-            'password'
+            'password',
+            'csrf'
         ];
 
         if(!array_keys_exist($values, $needed_keys)) {
             api_error(ResponseStatus::BAD_REQUEST, 'Missing values in request body.');
         }
+
+        $csrf = $values['csrf'];
+        if ($_SESSION['csrf'] !== $csrf)
+            api_error(ResponseStatus::FORBIDDEN, "Invalid CSRF token");
 
         if(userExists($values['username'], $values['email']))
             api_error(ResponseStatus::BAD_REQUEST, 'Username and/or email already in use.');
