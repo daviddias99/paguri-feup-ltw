@@ -12,6 +12,7 @@
         !isset($_POST['lastName']) ||
         !isset($_POST['bio'])) {
         header('Location: ../pages/front_page.php');
+        die();
     }
 
     $userID = $_POST['userID'];
@@ -22,9 +23,25 @@
     $lastName = $_POST['lastName'];
     $bio = $_POST['bio'];
 
+    if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $newUsername)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $firstName)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $lastName)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
     // cant change other users info
     if($userID != $_SESSION['userID']) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
+        die();
     }
 
     updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio);

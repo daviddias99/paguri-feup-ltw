@@ -28,7 +28,12 @@
     $reviewTitle = $_GET['review_title']; 
     $reservationID =  $_GET['reservationID'];  
     $reviewRating = $_GET['rating'];    
-    $reviewContent = $_GET['content'];  
+    $reviewContent = $_GET['content'];
+    
+    if (!is_numeric($reviewRating) || $reviewRating > 10) {
+        header('Location: ../pages/front_page.php');
+        die();
+    }
 
     // Add new reply to database
     addComment($reservationID,$reviewTitle,$reviewContent,$reviewRating,date("Y/m/d H:i"));

@@ -169,6 +169,10 @@ function addPhotoPathsToResidences($residences){
 
 }
 
+if(!isset($_GET['filter_data']) or !isset($_GET['location_data'])) {
+    die();
+}
+
 $filter_data = json_decode($_GET['filter_data'], true);
 $location_data = json_decode($_GET['location_data'], true);
 

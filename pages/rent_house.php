@@ -12,28 +12,26 @@
     include_once('../database/residence_queries.php');
 
     if (!isset($_GET['residenceID']))
-        header('Location: front_page.php');
+        die(header('Location: front_page.php'));
 
     $residenceID = $_GET['residenceID'];
     $residence = getResidenceInfo($residenceID);
 
     // Redirect the user if the residence does not exist
     if ($residence == FALSE) {
-        
-        header('Location: not_found_page.php?message='.urlencode("The residence you're looking for does not exist. Spooky!"));
+        die(header('Location: not_found_page.php?message='.urlencode("The residence you're looking for does not exist. Spooky!")));
     }
 
     // A user must be logged in to rent a house
     if (!isset($_SESSION['username'])) {
-
-        header('Location: not_found_page.php?message='.urlencode("You must be logged in to rent a residence."));
+        die(header('Location: not_found_page.php?message='.urlencode("You must be logged in to rent a residence.")));
     }
 
     $owner = getUserInfoById($residence['owner']);
 
     // A user can't rent his own residence
     if($owner['username'] == $_SESSION['username']){
-        header('Location: not_found_page.php?message='.urlencode("You can't rent you're own residence..."));
+        die(header('Location: not_found_page.php?message='.urlencode("You can't rent you're own residence...")));
     }
     $availabilities = getResidenceAvailabilities($residenceID);
 

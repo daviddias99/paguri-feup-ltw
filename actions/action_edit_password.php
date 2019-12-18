@@ -7,6 +7,7 @@
         !isset($_POST['password']) || 
         !isset($_POST['pwConfirmation'])) {
         header('Location: ../pages/front_page.php');
+        die();
     }
 
     $username = $_POST['username'];
@@ -19,8 +20,8 @@
     $password = $_POST['password'];
     $pwConfirmation = $_POST['pwConfirmation'];
 
-    if (strlen($password) < 6 or $password !== $pwConfirmation) {
-        header('Location: ../pages/front_page.php');        
+    if (strlen($password) < 6 or strpos($password, ' ') !== false or $password !== $pwConfirmation) {
+        die(header('Location: ../pages/edit_profile.php'));        
     }
 
     updateUserPassword($username, $password);

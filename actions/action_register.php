@@ -4,7 +4,7 @@
     
     // already logged in
     if(isset($_SESSION['userID'])) {
-        header('Location: ../pages/front_page.php');
+        die(header('Location: ../pages/register.php'));
     }
 
     if( !isset($_POST['username']) || 
@@ -13,7 +13,7 @@
         !isset($_POST['lastName']) || 
         !isset($_POST['password']))
     {            
-        header('Location: ../pages/front_page.php');
+        die(header('Location: ../pages/register.php'));
     }
 
     $username = $_POST['username'];
@@ -21,6 +21,22 @@
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $password = $_POST['password'];
+
+    if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $username)) {
+        die(header('Location: ../pages/register.php'));
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $firstName)) {
+        die(header('Location: ../pages/register.php'));
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $lastName)) {
+        die(header('Location: ../pages/register.php'));
+    }
+
+    if (strlen($password) < 6 or strpos($password, ' ') !== false) {
+        die(header('Location: ../pages/register.php'));
+    }
 
 
     $newUserID = createUser($username, $email, $firstName, $lastName, $password);

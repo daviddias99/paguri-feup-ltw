@@ -27,9 +27,15 @@
         exit;
     }
 
+    if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $checkin_date))
+        die(header('Location; ../pages/view_house.php?id='.$residenceID));
+        
+    if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $checkout_date))
+        die(header('Location; ../pages/view_house.php?id='.$residenceID));
+
     // Check if rent dates respect availabilities
     if(!datesRespectAvailabilities(getAvailabilities($residenceID),$checkin_date,$checkout_date)){
-        header('Location: ../pages/front_page.php');
+        header('Location: ../pages/view_house.php?id='.$residenceID);
         exit;
     }
 

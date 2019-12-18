@@ -7,7 +7,7 @@
     draw_header('user_profile', array('user_properties.js'));
 
     if (!isset($_GET['id']))
-        header('Location: front_page.php');
+        die(header('Location: front_page.php'));
 
     $userID = $_GET['id'];
 
