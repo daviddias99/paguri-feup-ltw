@@ -138,7 +138,7 @@
             <section class="main_review">
 
                 <section class="comment_user_info">
-                    <img src="../resources/<?= $userphotopath ?>">
+                    <img src="../resources/<?= $userphotopath ?>" alt="usercomment">
                     <a href="./user.php?id=<?= htmlentities($review['username']) ?>">
                         <p class="reviewer_name"> <?= htmlentities($review['firstName']) . ' ' . htmlentities($review['lastName']) ?></p>
                         <p class="reviewer_username">(<?= htmlentities($review['username']) ?>)</p>
@@ -190,7 +190,7 @@
 
             <section class="reply">
                 <section class="comment_user_info">
-                    <img src="../resources/<?= $userphotopath ?>">
+                    <img src="../resources/<?= $userphotopath ?>" alt="reply">
                     <a href="./user.php?id=<?= htmlentities($reply['username']) ?>">
                         <p class="reviewer_name"> <?= htmlentities($reply['firstName']) . ' ' . htmlentities($reply['lastName']) ?></p>
                         <p class="reviewer_username">(<?= htmlentities($reply['username']) ?>)</p>
@@ -246,7 +246,7 @@
                 <h3> Owner: </h3>
                 <section id="owner_avatar">
                     <a href="./user.php?id=<?= htmlentities($owner['username']) ?>">
-                        <img src="<?= $ownerphotopath ?>">
+                        <img src="<?= $ownerphotopath ?>" alt="owner">
                         <p> <?= htmlentities($owner_name) ?></p>
                     </a>
                 </section>
@@ -301,9 +301,9 @@
             <section id="residence_info">
 
                 <h1 class="ri_title"><?= htmlentities($residence['title']) ?></h1>
-                <h2 class="ri_type_and_location"> <?= htmlentities(ucfirst($residence['type'])) . ' &#8226 ' . $residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country'] ?> </h2>
+                <h2 class="ri_type_and_location"> <?= htmlentities(ucfirst($residence['type'])) . ' &#8226; ' . $residence['address'] . ', ' . $residence['city'] . ', ' . $residence['country'] ?> </h2>
                 <div class="ri_rating">
-                    <h4><?= htmlentities($rating) ?> &#9733 </h4>
+                    <h4><?= htmlentities($rating) ?> &#9733; </h4>
                 </div>
                 <p class="ri_description"><?= htmlentities(ucfirst($residence['description'])) ?></p>
 
@@ -353,7 +353,7 @@
             <section class="reply reply_form">
 
                 <section class="comment_user_info">
-                    <img src="<?= $userphotopath ?>">
+                    <img src="<?= $userphotopath ?>" alt="userPhoto">
 
                     <?php
                         if ($loggedAccountStatus['status']) { ?>
@@ -417,14 +417,14 @@
     <section id="residence-images" class="slideshow-container">
         <?php if (! isset($residencePhotos))  { ?>
             <section class="mySlides fade">
-                <img class="slide_show_img" src="../resources/big-none.jpg">
+                <img class="slide_show_img" src="../resources/big-none.jpg" alt="big">
             </section>
         <?php } else {
          for ($i = 0; $i < count($residencePhotos); $i++)  { ?>
 
             <section class="mySlides fade">
                 <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
-                <img class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
+                <img alt="bigResidence" class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
             </section>
                 <section class="mySlides fade">
                 <img class="slide_show_img" src="../resources/big-none.jpg">

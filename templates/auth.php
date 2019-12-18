@@ -43,7 +43,7 @@
                 <input id="last_name_input" type="text" name="lastName" minlength="1" placeholder="Doe" value="" required>
             </section>
             <section id="password" class="form_entry">
-                <label for="passowrd_input">Password</label>
+                <label for="password_input">Password</label>
                 <input id="password_input" type="password" name="password" minlength="6" placeholder="********" value="" required>
             </section>
             <section id="conf_password" class="form_entry">
