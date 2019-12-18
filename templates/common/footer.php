@@ -1,9 +1,11 @@
-<?php function draw_footer() { ?>
-            </section>
-            <footer>
-                <p>Just a footer</p>
-                <a href="../api/docs/index.html" class="far fa-file-alt"> API docs</a>
-            </footer>
-        </body>
+<?php function draw_footer()
+{ ?>
+    </section>
+    <footer>
+        <p>®<em> Paguri. </em>David Silva, Luís Cunha, Mário Gil.</p>
+        <a href="../api/docs/index.html" target="_blank"><i class="far fa-file-alt"></i>API docs</a>
+    </footer>
+    </body>
+
     </html>
 <?php } ?>
