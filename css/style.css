@@ -545,9 +545,6 @@ body.search_results #filters button { grid-area: filter_bttn; }
     box-shadow: 0 6px 6px rgba(0,0,0,.2);
 
 
-    height: 15em;
-    width: 98%;
-
     display: flex;
     flex-direction: row;
 
@@ -556,7 +553,7 @@ body.search_results #filters button { grid-area: filter_bttn; }
 
  .result .image {
 
-    width: 35%;
+    width: max-content;
     height: 15em;
     margin-right: 0.5em;
     padding: 0.3em;
@@ -583,6 +580,23 @@ body.search_results #filters button { grid-area: filter_bttn; }
     grid-area: title;
     font-size: 1.5em;
     margin: 0em;
+}
+
+.result .info .info_title h1 {
+    margin: 0.8em 0.3em;
+}
+
+#places_list.card {
+    width: max-content;
+}
+
+.places_list_entry{
+    width: 100%;
+}
+.places_list_entry a{
+
+    text-decoration: none;
+    width: 85%;
 }
 
  .result .info h2 {
@@ -1561,9 +1575,6 @@ body.rent_house #rent_form {
 }
 
 
-#places_list h1 {
-    margin: 0.8em 0.3em;
-}
 
 #places_list .my_places_title h1 {
     margin: 0 0.3em;
@@ -1584,7 +1595,12 @@ body.rent_house #rent_form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    width:15%;
 }
+
+
+
 body.rent_house .disabled {
 
     background-color: grey;
@@ -1595,7 +1611,7 @@ body.rent_house .disabled {
 
 body.user_rentals #user_rentals{
 
-    width: auto;
+    width: 80%;
     background-color: white;
     margin-right: auto;
     margin-left: auto;
@@ -1603,11 +1619,13 @@ body.user_rentals #user_rentals{
     border-radius: 6px;
     height: auto;
     padding: 1em;
+    overflow-x: auto;
 
 }
 
 body.user_rentals #user_rentals table {
     border-collapse: collapse;
+    
     width: 100%;
 }
 
@@ -1616,6 +1634,7 @@ body.user_rentals #user_rentals th, td {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 0.5em;
+    text-align: center;
 }
 
 body.user_rentals #user_rentals th{
