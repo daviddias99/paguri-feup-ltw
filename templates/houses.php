@@ -229,7 +229,7 @@ function draw_edit_place($place)
                     </section>
                 <?php } ?>
                 <label class="choose_photo button fas fa-plus">
-                    <input class="choose_photo_input" type="file" name="image" multiple>
+                    <input class="choose_photo_input" type="file" name="image" multiple accept="image/jpeg,image/png">
                 </label>
             </section>
 

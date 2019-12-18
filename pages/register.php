@@ -5,7 +5,7 @@
     include_once('../templates/auth.php');
 
     if (isset($_SESSION['username']))
-        header('Location: front_page.php');
+        die(header('Location: front_page.php'));
 
     if (isset($_SESSION['username']))
         draw_header('front_page', $_SESSION['username']);

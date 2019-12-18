@@ -3,7 +3,7 @@
     include_once('../includes/config.php');
 
     if (!isset($_GET['id']))
-        header('Location: front_page.php');
+        die(header('Location: front_page.php'));
 
     include_once('../templates/common/header.php');
     include_once('../templates/common/footer.php');
@@ -16,7 +16,7 @@
 
     // Redirect the user if the residence does not exist
     if ($residence == FALSE) {
-        header('Location: not_found_page.php?message='.urlencode("The residence you're looking for does not exist."));
+        die(header('Location: not_found_page.php?message='.urlencode("The residence you're looking for does not exist.")));
     }
 
     // Draw the page

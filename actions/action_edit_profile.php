@@ -11,7 +11,8 @@
         !isset($_POST['firstName']) ||
         !isset($_POST['lastName']) ||
         !isset($_POST['bio'])) {
-        header('Location: ../pages/front_page.php');
+
+        die(header('Location: ../pages/front_page.php'));
     }
 
     $userID = $_POST['userID'];
@@ -22,15 +23,32 @@
     $lastName = $_POST['lastName'];
     $bio = $_POST['bio'];
 
+    if ( !preg_match ("/^[a-zA-Z0-9_-]+$/", $newUsername)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $firstName)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
+    if ( !preg_match ("/^[a-zA-Z]+$/", $lastName)) {
+        header('Location: ../pages/edit_profile.php');
+        die();
+    }
+
     // cant change other users info
     if($userID != $_SESSION['userID']) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        die(header('Location: ' . $_SERVER['HTTP_REFERER']));
     }
 
     updateUserInfo($username, $newUsername, $email, $firstName, $lastName, $bio);
 
     $_SESSION['username'] = $newUsername;
 
+
+    // profile picture update
     if (isset($_POST['remove'])) {
         $oldPhotoID = updateProfilePicture($username, 'default.jpg');
         if ($oldPhotoID !== 'default.jpg') {
@@ -51,9 +69,9 @@
 
         $imgType = exif_imagetype($tmpPath);
         if (! isset($supportedFormats[$imgType]))
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            die(header('Location: ' . $_SERVER['HTTP_REFERER']));
 
-            $extension = $supportedFormats[$imgType];
+        $extension = $supportedFormats[$imgType];
 
         $userRowID = getUserID($username);
 
@@ -73,7 +91,6 @@
 
         // Move the uploaded file to its final destination
         move_uploaded_file($tmpPath, $originalFileName);
-
 
         // Create an image representation of the original image
         switch ($imgType) {
