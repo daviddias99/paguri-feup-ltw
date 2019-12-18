@@ -37,7 +37,7 @@ document.getElementById("submit_button").onclick = function (event) {
     event.preventDefault();
 
     const request = new XMLHttpRequest();
-
+    request.onload = () => window.location.href = "../pages/view_house.php?id=" + id;
     request.open("put", "../api/residence.php?" + encodeForAjax({
         id: id,
         owner: owner,
@@ -68,8 +68,6 @@ document.getElementById("submit_button").onclick = function (event) {
     removedImages.forEach(image => {
         remove(image);
     });
-
-    window.location.href = "../pages/view_house.php?id=" + id;
 };
 
 function send(id, image) {
