@@ -18,8 +18,8 @@
 
     $imgType = exif_imagetype($image);
 
-    if (! isset($suppertedFormats[$imgType]))
-        die();
+    // if (! isset($suppertedFormats[$imgType]))
+    //     die();
 
     $extension = $supportedFormats[$imgType];
 

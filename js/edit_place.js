@@ -58,20 +58,22 @@ document.getElementById("submit_button").onclick = function (event) {
     request.send();
 
     Object.keys(images).forEach(key => {
+        console.log('sending ' + key);
         send(id, images[key]);
     });
 
     removedImages.forEach(image => {
+        removing('image ' + image);
         remove(image);
     });
 };
 
-function send(id, image) {
+function send(residence, image) {
     let formData = new FormData();
     const request = new XMLHttpRequest();
 
     formData.set('image', image);
-    formData.set('id', id);
+    formData.set('id', residence);
 
     request.open("POST", '../actions/action_add_house_image.php');
     request.send(formData);
@@ -92,8 +94,9 @@ function remove(imageID) {
 
 function onLoad() {
     numSent++;
-    if (numSent == Object.keys(images).length + removedImages.length)
-        window.location.reload();
+    if (numSent == Object.keys(images).length + removedImages.length) {
+       window.location.reload();
+    }
 }
 
 
@@ -108,6 +111,10 @@ document.querySelector(".choose_photo").onchange = function (event) {
         const reader = new FileReader();
 
         const currentID = ++lastImageID;
+
+        if (event.target.files[i].size > 1073741824 || ! (/^image\/[jpeg|png]/g.test(event.target.files[i].type)))
+             break;
+
         images[currentID] = event.target.files[i];
 
         reader.onload = function () {
