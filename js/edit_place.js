@@ -12,7 +12,6 @@ let lastImageID = 0;
 let numSent = 0;
 
 document.getElementById("submit_button").onclick = function (event) {
-    event.preventDefault();
 
     const id = document.getElementById("place_id").value;
     const owner = document.getElementById("user_id").value;
@@ -31,6 +30,11 @@ document.getElementById("submit_button").onclick = function (event) {
     const pricePerDay = document.getElementById("price").value;
     const commodities = document.getElementById("commodities").value;
 
+    if (!id || !owner || !title || !location || !capacity || 
+        !numBeds || !numBedrooms || !numBathrooms || !city || !country ||
+        !pricePerDay || !latitude || !longitude) return;
+        
+    event.preventDefault();
 
     const request = new XMLHttpRequest();
 
@@ -64,6 +68,8 @@ document.getElementById("submit_button").onclick = function (event) {
     removedImages.forEach(image => {
         remove(image);
     });
+
+    window.location.href = "../pages/view_house.php?id=" + id;
 };
 
 function send(id, image) {

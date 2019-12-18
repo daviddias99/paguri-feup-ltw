@@ -7,7 +7,6 @@ function encodeForAjax(data) {
 }
 
 document.getElementById("submit_button").onclick = function (event) {
-    event.preventDefault();
 
     const owner = document.getElementById("user_id").value;
     const title = document.getElementById("title_input").value;
@@ -24,6 +23,12 @@ document.getElementById("submit_button").onclick = function (event) {
     const longitude = document.getElementById("longitude").value;
     const pricePerDay = document.getElementById("price_input").value;
 
+    if (!owner || !title || !location || !capacity || 
+        !numBeds || !numBedrooms || !numBathrooms ||
+        !pricePerDay || !country || !city || !latitude || !longitude) return;
+    
+    event.preventDefault();
+
     const selectedCommodities = [];
     const commodityCheckboxes = document.querySelectorAll(".commodities");;
     commodityCheckboxes.forEach(element => {
@@ -34,6 +39,8 @@ document.getElementById("submit_button").onclick = function (event) {
     const request = new XMLHttpRequest();
 
     request.open("post", "../api/residence.php?", true);
+    
+    request.onload = () => window.location.href = "../pages/user_places.php?id=" + owner;
     request.setRequestHeader('Accept', 'application/json');
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.send(encodeForAjax({
