@@ -730,6 +730,7 @@ body.user_profile {
 }
 
 .card {
+    box-sizing: border-box;
     width: 60em;
     background-color: white;
     margin: 3em auto;
@@ -761,11 +762,12 @@ body.user_profile {
 
 #profile {
     display: grid;
+    grid-template-columns: min-content min-content min-content 1fr 5fr;
     grid-template-rows: min-content auto min-content min-content;
-    grid-template-areas: "image image image name"
-                         "image image image info"
-                         ". button . info"
-                         "about about about about";
+    grid-template-areas: "image image image  . name"
+                         "image image image  . info"
+                         "button button button . info"
+                         "about about about  about about";
 }
 
 #profile h1 {
@@ -776,7 +778,7 @@ body.user_profile {
 #profile img {
     display: block;
     grid-area: image;
-    margin: 2em auto;
+    margin: 2em;
 }
 
 #profile ul {
