@@ -120,8 +120,8 @@ function draw_right_side()
         </section>
 
         <section id="dates">
-            <label> From: <input id="check_in" type="date" name="checkin_date" placeholder="dd-mm-yyyy" value="<?= $checkin ?>" required> </label>
-            <label> to:<input id="check_out" type="date" name="checkout_date" placeholder="dd-mm-yyyy" value="<?= $checkout ?>" required>
+            <label> From: <input id="check_in" type="date" name="checkin_date" value="<?= $checkin ?>" required> </label>
+            <label> to:<input id="check_out" type="date" name="checkout_date" value="<?= $checkout ?>" required></label>
         </section>
 
         <section id="type">
@@ -146,8 +146,8 @@ function draw_right_side()
         </section>
 
         <section id="price">
-            <label> Price: <input id="minPrice" type="number" value="<?=$min_price?>" min="1" max="9999999999999" step="1"> </price>
-                <label> to:<input id="maxPrice" type="number" value="<?=$max_price?>" min="1" max="9999999999999" step="1"> </price>
+            <label> Price: <input id="minPrice" type="number" value="<?=$min_price?>" min="1" max="9999999999999" step="1"> </label>
+                <label> to:<input id="maxPrice" type="number" value="<?=$max_price?>" min="1" max="9999999999999" step="1"> </label>
         </section>
 
         <section id="rating">

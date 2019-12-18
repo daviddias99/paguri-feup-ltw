@@ -53,7 +53,7 @@ draw_footer();
         <?php 
 
         if(count($reservations) == 0){
-            ?> <td></td><td colspan=5> No reservations yet. </td> <td></td> <?php
+            ?> <tr><td></td><td colspan=5> No reservations yet. </td> <td></td></tr> <?php
         }
 
         foreach ($reservations as $reservation) {
