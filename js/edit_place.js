@@ -12,7 +12,6 @@ let lastImageID = 0;
 let numSent = 0;
 
 document.getElementById("submit_button").onclick = function (event) {
-    event.preventDefault();
 
     const id = document.getElementById("place_id").value;
     const owner = document.getElementById("user_id").value;
@@ -31,9 +30,14 @@ document.getElementById("submit_button").onclick = function (event) {
     const pricePerDay = document.getElementById("price").value;
     const commodities = document.getElementById("commodities").value;
 
+    if (!id || !owner || !title || !location || !capacity || 
+        !numBeds || !numBedrooms || !numBathrooms || !city || !country ||
+        !pricePerDay || !latitude || !longitude) return;
+        
+    event.preventDefault();
 
     const request = new XMLHttpRequest();
-
+    request.onload = () => window.location.href = "../pages/view_house.php?id=" + id;
     request.open("put", "../api/residence.php?" + encodeForAjax({
         id: id,
         owner: owner,
@@ -58,20 +62,22 @@ document.getElementById("submit_button").onclick = function (event) {
     request.send();
 
     Object.keys(images).forEach(key => {
+        console.log('sending ' + key);
         send(id, images[key]);
     });
 
     removedImages.forEach(image => {
+        removing('image ' + image);
         remove(image);
     });
 };
 
-function send(id, image) {
+function send(residence, image) {
     let formData = new FormData();
     const request = new XMLHttpRequest();
 
     formData.set('image', image);
-    formData.set('id', id);
+    formData.set('id', residence);
 
     request.open("POST", '../actions/action_add_house_image.php');
     request.send(formData);
@@ -92,8 +98,9 @@ function remove(imageID) {
 
 function onLoad() {
     numSent++;
-    if (numSent == Object.keys(images).length + removedImages.length)
-        window.location.reload();
+    if (numSent == Object.keys(images).length + removedImages.length) {
+       window.location.reload();
+    }
 }
 
 
@@ -108,6 +115,10 @@ document.querySelector(".choose_photo").onchange = function (event) {
         const reader = new FileReader();
 
         const currentID = ++lastImageID;
+
+        if (event.target.files[i].size > 1073741824 || ! (/^image\/[jpeg|png]/g.test(event.target.files[i].type)))
+             break;
+
         images[currentID] = event.target.files[i];
 
         reader.onload = function () {

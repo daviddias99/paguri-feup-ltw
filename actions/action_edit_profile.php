@@ -60,7 +60,7 @@
         saveProfilePhoto($newUsername, $_FILES['image']['tmp_name']);
     }
 
-    header('Location: ../pages/user.php?id=' . $userID);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 
 
     function saveProfilePhoto($username, $tmpPath)

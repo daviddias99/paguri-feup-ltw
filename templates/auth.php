@@ -10,7 +10,7 @@
             </section>
             <section class="form_entry">
                 <label>Password</label>
-                <input id="check_out" type="password" name="password" minlenght="6" placeholder="********" value="" required>
+                <input id="check_out" type="password" name="password" minlength="6" placeholder="********" value="" required>
             </section>
 
             <input class="button" id="submit_button" type="submit" value="Login">

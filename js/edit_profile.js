@@ -36,7 +36,11 @@ document.querySelector(".choose_photo").onchange = function (event) {
     }
 
     document.getElementById("remove_photo_input").checked = false;
-    reader.readAsDataURL(event.target.files[0]);
+
+    if (event.target.files[0].size > 1073741824 || !(/^image\/[jpeg|png]/g.test(event.target.files[0].type)))
+        document.getElementById("choose_photo_input").value = null;
+    else
+        reader.readAsDataURL(event.target.files[0]);
 }
 
 document.getElementById("remove_photo").onclick = function (event) {

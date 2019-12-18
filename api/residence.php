@@ -83,7 +83,7 @@
         if(!array_key_exists('id', $_GET)) {
             api_error(ResponseStatus::METHOD_NOT_ALLOWED, 'Residence ID must be specified.');
         }
-        
+
         $residenceToDelete = getResidenceInfo($_GET['id']);
         if ($residenceToDelete == FALSE) {
             api_error(ResponseStatus::NOT_FOUND, 'Did not find residence with given id.');
@@ -107,6 +107,8 @@
 
 
     function check_residence_values($values) {
+
+        global $isLoggedIn, $isAdmin;
 
         $needed_keys = [
             'owner',
@@ -161,7 +163,7 @@
 
         if(!getResidenceTypeWithID($values['type']))
             api_error(ResponseStatus::BAD_REQUEST, 'Given residence type does not exist.');
-    
+
         if($isLoggedIn && $_SESSION['userID'] != $values['owner'] && !$isAdmin)
             api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the provided residence.');
     }
