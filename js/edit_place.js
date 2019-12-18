@@ -30,14 +30,13 @@ document.getElementById("submit_button").onclick = function (event) {
     const pricePerDay = document.getElementById("price").value;
     const commodities = document.getElementById("commodities").value;
 
-    if (!id || !owner || !title || !location || !capacity || 
+    if (!id || !owner || !title || !location || !capacity ||
         !numBeds || !numBedrooms || !numBathrooms || !city || !country ||
         !pricePerDay || !latitude || !longitude) return;
-        
+
     event.preventDefault();
 
     const request = new XMLHttpRequest();
-    request.onload = () => window.location.href = "../pages/view_house.php?id=" + id;
     request.open("put", "../api/residence.php?" + encodeForAjax({
         id: id,
         owner: owner,
@@ -62,46 +61,46 @@ document.getElementById("submit_button").onclick = function (event) {
     request.send();
 
     Object.keys(images).forEach(key => {
-        console.log('sending ' + key);
         send(id, images[key]);
     });
 
     removedImages.forEach(image => {
-        removing('image ' + image);
         remove(image);
     });
+
+
+    function onLoad() {
+        numSent++;
+        if (numSent == Object.keys(images).length + removedImages.length) {
+            window.location.href = "../pages/view_house.php?id=" + id;
+        }
+    }
+
+    function send(residence, image) {
+        let formData = new FormData();
+        const request = new XMLHttpRequest();
+
+        formData.set('image', image);
+        formData.set('id', residence);
+
+        request.open("POST", '../actions/action_add_house_image.php');
+        request.send(formData);
+
+        request.onload = onLoad;
+    }
+
+    function remove(imageID) {
+        const request = new XMLHttpRequest();
+
+        request.open("POST", "../actions/action_remove_house_image.php", true);
+        request.setRequestHeader('Accept', 'application/json');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        request.send(encodeForAjax({ imageID: imageID }));
+
+        request.onload = onLoad;
+    }
 };
 
-function send(residence, image) {
-    let formData = new FormData();
-    const request = new XMLHttpRequest();
-
-    formData.set('image', image);
-    formData.set('id', residence);
-
-    request.open("POST", '../actions/action_add_house_image.php');
-    request.send(formData);
-
-    request.onload = onLoad;
-}
-
-function remove(imageID) {
-    const request = new XMLHttpRequest();
-
-    request.open("POST", "../actions/action_remove_house_image.php", true);
-    request.setRequestHeader('Accept', 'application/json');
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    request.send(encodeForAjax({imageID: imageID }));
-
-    request.onload = onLoad;
-}
-
-function onLoad() {
-    numSent++;
-    if (numSent == Object.keys(images).length + removedImages.length) {
-       window.location.reload();
-    }
-}
 
 
 
