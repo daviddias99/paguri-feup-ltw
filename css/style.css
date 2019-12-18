@@ -30,6 +30,26 @@ body {
 body > footer {
     flex-shrink: 0;
     background-color: var(--color-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2em;
+    color: white;
+    box-shadow: 0px -7px 16px -2px rgba(0,0,0,0.58);
+}
+
+body > footer p {
+    margin: 0.6em 2em;
+}
+
+body > footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 2em;
+}
+
+body > footer a i {
+    margin: 0.5em;
 }
 
 body > .content_wrapper {
@@ -113,7 +133,7 @@ body .navbar li a {
     padding-right: 1.5em;
 }
 
-.navbar li a:hover,
+a:hover,
 .navbar .hamburger-btn:hover {
   opacity: 0.5;
 }
@@ -710,6 +730,7 @@ body.user_profile {
 }
 
 .card {
+    box-sizing: border-box;
     width: 60em;
     background-color: white;
     margin: 3em auto;
@@ -741,11 +762,12 @@ body.user_profile {
 
 #profile {
     display: grid;
+    grid-template-columns: min-content min-content min-content 1fr 5fr;
     grid-template-rows: min-content auto min-content min-content;
-    grid-template-areas: "image image image name"
-                         "image image image info"
-                         ". button . info"
-                         "about about about about";
+    grid-template-areas: "image image image  . name"
+                         "image image image  . info"
+                         "button button button . info"
+                         "about about about  about about";
 }
 
 #profile h1 {
@@ -756,7 +778,7 @@ body.user_profile {
 #profile img {
     display: block;
     grid-area: image;
-    margin: 2em auto;
+    margin: 2em;
 }
 
 #profile ul {
@@ -1625,7 +1647,7 @@ body.user_rentals #user_rentals{
 
 body.user_rentals #user_rentals table {
     border-collapse: collapse;
-    
+
     width: 100%;
 }
 
@@ -1752,4 +1774,28 @@ body.write_review #review_form form .comment_rating {
     font-size: 2.2em;
     border-radius: 50%;
     margin: auto;
+}
+
+/*Add availabilities page*/
+
+body.choose_availabilities #choose_availabilities{
+
+    background-color: white;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    margin: 1em auto;
+    border-radius: 6px;
+    padding: 1em;
+}
+
+body.choose_availabilities #choose_availabilities form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly ;
+    align-items: center;
+}
+
+body.choose_availabilities #choose_availabilities form input {
+    height: 2em;
 }

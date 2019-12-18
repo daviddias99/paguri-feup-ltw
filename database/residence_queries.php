@@ -426,4 +426,13 @@ function getResidenceInfo($residenceID)
         return $stmt->fetch();
     }
 
+    function addAvailability($residenceID, $start, $end) {
+
+        global $dbh;
+
+        $stmt = $dbh->prepare('INSERT INTO availability(lodge, startDate, endDate)
+                               VALUES (?, ?, ?)');
+        $stmt->execute(array($residenceID, $start, $end));
+    }
+
 ?>

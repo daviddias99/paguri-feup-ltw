@@ -1,3 +1,5 @@
+
+ 
 'use strict'
 
 function encodeForAjax(data) {
@@ -188,3 +190,5 @@ function removeImage(event) {
     event.target.parentNode.remove();
     delete images[event.target.parentNode.id];
 }
+
+

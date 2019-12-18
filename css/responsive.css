@@ -1,17 +1,4 @@
 @media (max-width: 100em) {
-    body.user_profile {
-        background: none;
-    }
-
-    .card {
-        width: auto;
-        background-color: white;
-        border-radius: 0;
-        box-shadow: none;
-        align-content: center;
-        padding: 0;
-    }
-
 
     .navbar .menu {
         background-color: #475c7a;
@@ -48,63 +35,6 @@
         display: inline-block;
     }
 
-    #edit_profile {
-        padding: 0;
-    }
-
-    #edit_profile h1 {
-        margin: 0 auto;
-    }
-
-    #edit_profile #profile_info {
-        grid-template-columns: min-content min-content;
-        grid-template-rows: auto auto auto auto auto;
-        grid-template-areas: "image image"
-                            "choose-photo remove-photo"
-                            "first-name first-name"
-                            "last-name last-name"
-                            "username username"
-                            "email email"
-                            "bio bio"
-                            "submit submit";
-    }
-
-    #edit_profile #change_password {
-        display: flex;
-        flex-direction: column;
-    }
-
-
-
-
-    #profile {
-        margin: 0.8em auto;
-        flex-direction: column;
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: auto auto auto auto auto;
-        grid-template-areas:"image"
-                            "name"
-                            "info"
-                            "button"
-                            "about";
-    }
-
-    #profile img {
-        margin: 0 auto;
-    }
-
-    #profile h1 {
-        justify-self: center;
-        margin: 0.5em;
-    }
-
-    #profile .button {
-        margin-top: 0.5em;
-    }
-
-    #profile p {
-        word-wrap: break-word;
-    }
 
 
 
@@ -170,8 +100,104 @@
     }
 }
 
+
+
+@media (max-width: 60em) {
+    body.user_profile {
+        background: none;
+    }
+
+
+    .card {
+        width: auto;
+        background-color: white;
+        border-radius: 0;
+        box-shadow: none;
+        align-content: center;
+        padding: 0;
+    }
+
+      #edit_profile {
+        display: grid;
+        grid-template-rows: auto auto auto;
+        grid-template-columns: 1fr;
+        grid-template-areas: "title"
+                             "info"
+                             "pw";
+        justify-items: center;
+        margin: 2em auto;
+    }
+
+    #edit_profile h1 {
+        grid-area: title;
+        margin: 0em 2em;
+        margin-bottom: 0.3em;
+        text-align: center;
+    }
+
+    #edit_profile #profile_info {
+        grid-area: info;
+        grid-template-columns: min-content min-content;
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas: "image image"
+                            "choose-photo remove-photo"
+                            "first-name first-name"
+                            "last-name last-name"
+                            "username username"
+                            "email email"
+                            "bio bio"
+                            "submit submit";
+    }
+
+    #edit_profile #change_password {
+        grid-area: pw;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        grid-template-areas: "pw"
+                             "pw-conf"
+                             "submit";
+        justify-self: 1fr;
+    }
+
+    #profile {
+        padding: 1em;
+    }
+
+    body.residence_page #main {
+
+        flex-direction: column;
+        height: auto;
+    }
+
+    body.residence_page #left_side {
+
+        width: 100%;
+    }
+
+    body.residence_page #right_side {
+
+        width: 100%;
+        margin: 0em;
+    }
+
+    .slideshow-container {
+        margin: 0;
+    }
+
+    body.residence_page #residence_info {
+
+        grid-template-rows: 0.7fr 0.6fr 1fr 0.7fr 0.7fr 1fr;
+    }
+
+    body.residence_page #review_section {
+        width: 95%;
+        margin: 1em auto 0em auto;
+    }
+
+}
+
 @media (max-width: 40em) {
-    body.front_page, body.user_profile {
+        body.front_page, body.user_profile {
         background: none;
     }
 
@@ -202,6 +228,37 @@
         grid-area: submit;
         margin: 1em 0.3em;
     }
+
+
+    #profile {
+        margin: 2em;
+        flex-direction: column;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas:"image"
+                            "name"
+                            "info"
+                            "button"
+                            "about";
+    }
+
+    #profile img {
+        margin: 0 auto;
+    }
+
+    #profile h1 {
+        justify-self: center;
+        margin: 0.5em;
+    }
+
+    #profile .button {
+        margin-top: 0.5em;
+    }
+
+    #profile p {
+        word-wrap: break-word;
+    }
+
 
     body.search_results #main {
 
@@ -361,45 +418,7 @@
 
 
 
-}
 
-@media (max-width: 60em) {
-
-    body.residence_page #main {
-
-        flex-direction: column;
-        height: auto;
-    }
-
-    body.residence_page #left_side {
-
-        width: 100%;
-    }
-
-    body.residence_page #right_side {
-
-        width: 100%;
-        margin: 0em;
-    }
-
-    .slideshow-container {
-        margin: 0;
-    }
-
-    body.residence_page #residence_info {
-
-        grid-template-rows: 0.7fr 0.6fr 1fr 0.7fr 0.7fr 1fr;
-    }
-
-    body.residence_page #review_section {
-        width: 95%;
-        margin: 1em auto 0em auto;
-    }
-
-}
-
-@media (max-width: 40em) {
-    
     body.residence_page #main {
 
         width: 100%;
@@ -429,11 +448,11 @@
         grid-template-rows: 0.4fr 0.3fr 0.6fr 0.7fr 0.7fr 0.6fr 0.6fr;
 
         grid-template-areas:
-        "title title title rating" 
-        "type_and_location type_and_location type_and_location type_and_location" 
-        "description description description description" 
-        "properties properties properties properties" 
-        "commodities commodities commodities commodities" 
+        "title title title rating"
+        "type_and_location type_and_location type_and_location type_and_location"
+        "description description description description"
+        "properties properties properties properties"
+        "commodities commodities commodities commodities"
         "owner owner owner owner "
         "rent_button rent_button rent_button rent_button ";
     }
@@ -467,9 +486,9 @@
     .main_review {
 
         height: 7em;
-        grid-template-areas: 
-        "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating comment_date_and_rating" 
-        "comment_user_info comment_title comment_title comment_title comment_title" 
+        grid-template-areas:
+        "comment_user_info comment_date_and_rating comment_date_and_rating comment_date_and_rating comment_date_and_rating"
+        "comment_user_info comment_title comment_title comment_title comment_title"
         "comment_user_info comment_content comment_content comment_content options";
     }
 
@@ -484,7 +503,7 @@
     .comment_user_info .reviewer_name{
         font-size: small;
     }
-    
+
     .comment_date_and_rating{
         font-size: small;
     }
@@ -497,7 +516,7 @@
 
     .comment_user_info img{
         width: 45px;
-        height: 45px;    
+        height: 45px;
         border-radius: 50%;
         margin-bottom: 0.5em;
     }
@@ -508,9 +527,9 @@
     }
 
     .reply {
-        grid-template-areas: 
-        "comment_user_info reply_date reply_date reply_date reply_date" 
-        "comment_user_info comment_title comment_title comment_title options" 
+        grid-template-areas:
+        "comment_user_info reply_date reply_date reply_date reply_date"
+        "comment_user_info comment_title comment_title comment_title options"
         "comment_user_info comment_content comment_content comment_content options";
 
         margin: 0em;
@@ -527,9 +546,9 @@
     .reply_form {
 
         height: 12em;
-        grid-template-areas: 
-        "comment_user_info reply_date reply_date reply_date reply_date" 
-        "comment_user_info comment_title comment_title comment_title comment_title" 
+        grid-template-areas:
+        "comment_user_info reply_date reply_date reply_date reply_date"
+        "comment_user_info comment_title comment_title comment_title comment_title"
         "comment_user_info comment_content comment_content comment_content comment_content";
     }
 }

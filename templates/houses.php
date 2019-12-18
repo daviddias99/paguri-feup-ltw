@@ -172,7 +172,7 @@ function draw_list_user_places($userID)
 ?>
     <section class="place_operations">
         <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
-        <a class="button" id="" href="">Add availability</a>
+        <a class="button" href="../pages/add_availabilities.php?residenceID=<?= $place['residenceID']?>" id="" href="">Add availability</a>
         <a class="button" href="../pages/edit_place.php?id=<?= $place['residenceID']?>">Edit</a>
         <button class="button remove_reservation">Remove</button>
     </section>
