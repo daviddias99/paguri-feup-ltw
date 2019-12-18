@@ -48,7 +48,13 @@ draw_footer();
             <th></th>
         </tr>
 
-        <?php foreach ($reservations as $reservation) {
+        <?php 
+
+        if(count($reservations) == 0){
+            ?> <td></td><td colspan=5> No reservations yet. </td> <td></td> <?php
+        }
+
+        foreach ($reservations as $reservation) {
 
             $residence = getResidenceInfo($reservation['lodge']);
             $start = strtotime($reservation['startDate']);

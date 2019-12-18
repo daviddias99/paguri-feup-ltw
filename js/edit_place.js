@@ -112,21 +112,6 @@ document.querySelector(".choose_photo").onchange = function (event) {
 
         reader.onload = function () {
 
-            const section = document.createElement('section');
-            section.setAttribute('class', 'new_image_preview');
-            section.setAttribute('id', currentID);
-
-            const preview = document.createElement('img');
-
-            const del = document.createElement('div');
-            del.setAttribute('class', 'remove_image fas fa-trash-alt');
-            del.onclick = removeImage;
-
-            section.appendChild(preview);
-            section.appendChild(del);
-            imageSection.insertBefore(section, document.querySelector("#edit_place_images .choose_photo"));
-
-
             const img = document.createElement('img');
 
             img.onload = function () {
@@ -155,6 +140,20 @@ document.querySelector(".choose_photo").onchange = function (event) {
                 canvas.height = dstHeight;
 
                 ctx.drawImage(this, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight);
+
+                const section = document.createElement('section');
+                section.setAttribute('class', 'new_image_preview');
+                section.setAttribute('id', currentID);
+
+                const preview = document.createElement('img');
+
+                const del = document.createElement('div');
+                del.setAttribute('class', 'remove_image fas fa-trash-alt');
+                del.onclick = removeImage;
+
+                section.appendChild(preview);
+                section.appendChild(del);
+                imageSection.insertBefore(section, document.querySelector("#edit_place_images .choose_photo"));
 
                 preview.src = canvas.toDataURL();
             }

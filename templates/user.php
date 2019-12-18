@@ -2,7 +2,7 @@
 function draw_user($user)
 {
     $userLoggedIn = (isset($_SESSION['username']) and $_SESSION['username'] == $user['username']);
-    ?>
+?>
     <section class="card" id='profile'>
         <img class='profile_pic' src="../images/users/thumbnails_medium/<?= $user['photo'] ?>">
         <h1><?= htmlentities($user['firstName']) ?> <?= htmlentities($user['lastName']) ?></h1>
@@ -27,13 +27,13 @@ function draw_user($user)
     </section>
     </section>
 <?php
-}
+                                                                    }
 ?>
 
 <?php
-function draw_edit_profile($user)
-{
-    ?>
+                                                                    function draw_edit_profile($user)
+                                                                    {
+?>
     <section class="card" id="edit_profile">
         <h1>Update profile information</h1>
 
@@ -44,7 +44,7 @@ function draw_edit_profile($user)
             <input type="hidden" name="username" value=<?= htmlentities($user['username']) ?> />
 
             <label class="button choose_photo">Choose
-                <input class="choose_photo_input" type="file" name="image">
+                <input class="choose_photo_input" type="file" name="image" accept="image/jpeg,image/png">
             </label>
 
             <label id="remove_photo" class="button">Remove
@@ -89,5 +89,5 @@ function draw_edit_profile($user)
         </form>
     </section>
 <?php
-}
+                                                                            }
 ?>
