@@ -34,9 +34,9 @@ draw_footer();
 
     ?>
 
-    <section id="user_rentals">
+    <section id="user_rentals" class="card">
 
-        <h1>My rentals</h1>
+        <h1>My reservations</h1>
 
         <table>
 
@@ -50,7 +50,7 @@ draw_footer();
             <th></th>
         </tr>
 
-        <?php 
+        <?php
 
         if(count($reservations) == 0){
             ?> <td></td><td colspan=5> No reservations yet. </td> <td></td> <?php
@@ -79,7 +79,7 @@ draw_footer();
             else if(round(($now - $start)/(60 * 60 * 24)) <= 3){
                 $state = "&#128284";
             }
-            
+
 
         ?>
             <tr>
@@ -95,14 +95,14 @@ draw_footer();
                             <input type="hidden" name="id" value="<?=$reservation['reservationID']?>">
                             <input type="submit" value="Review">
                         </form>
-                    
+
                     <?php } else {?>
                         --------
                     <?php } ?>
-            
-                </td> 
+
+                </td>
             </tr>
-            
+
 
         <?php } ?>
 

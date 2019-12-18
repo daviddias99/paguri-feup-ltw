@@ -27,7 +27,7 @@ body {
     flex-direction: column;
 }
 
-body > footer {
+#footer {
     flex-shrink: 0;
     background-color: var(--color-5);
     display: flex;
@@ -38,11 +38,11 @@ body > footer {
     box-shadow: 0px -7px 16px -2px rgba(0,0,0,0.58);
 }
 
-body > footer p {
+#footer p {
     margin: 0.6em 2em;
 }
 
-body > footer a {
+#footer > a {
     color: white;
     text-decoration: none;
     margin-right: 2em;
@@ -606,9 +606,6 @@ body.search_results #filters button { grid-area: filter_bttn; }
     margin: 0.8em 0.3em;
 }
 
-#places_list.card {
-    width: max-content;
-}
 
 .places_list_entry{
     width: 100%;
@@ -1544,16 +1541,9 @@ body.rent_house #availabilities h2{
 
 
 body.rent_house #residence_info_simplified{
-
-    background-color: white;
-    width: 50%;
-    height: max-content;
     display: flex;
     flex-direction: column;
-    border-radius: 6px;
     padding: 1em;
-    margin: 1% auto auto auto;
-
 }
 
 body.rent_house #residence_summary{
@@ -1632,23 +1622,17 @@ body.rent_house .disabled {
 /*User reservations page*/
 
 body.user_rentals #user_rentals{
-
-    width: 80%;
-    background-color: white;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 1em;
-    border-radius: 6px;
-    height: auto;
-    padding: 1em;
     overflow-x: auto;
-
 }
 
 body.user_rentals #user_rentals table {
     border-collapse: collapse;
 
     width: 100%;
+}
+
+#user_rentals h1 {
+    margin-left: 1em;
 }
 
 body.user_rentals #user_rentals th, td {
