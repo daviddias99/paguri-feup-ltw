@@ -1,7 +1,7 @@
 #!/bin/bash
 rm paguri.db
 sqlite3 paguri.db < init_db.sql
-sqlite3 paguri.db < populate_db.sql
+sqlite3 paguri.db < script.sql
 
 rm ../images/properties/big/*.jpg
 rm ../images/properties/small/*.jpg
