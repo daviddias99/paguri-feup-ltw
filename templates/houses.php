@@ -12,7 +12,7 @@ include_once('../templates/helper_functions.php');
             <input id="user_id" type="hidden" value=<?= htmlentities($_SESSION['userID']) ?>>
             <section class="form_entry" id="title">
                 <label for="title_input">Title</label>
-                <input id="title_input" type="text" name="title" value="">
+                <input id="title_input" type="text" minlength="1" name="title" value="" required>
             </section>
             <section class="form_entry" id="house_type">
                 <label for="house_type_input">Type</label>
@@ -22,7 +22,7 @@ include_once('../templates/helper_functions.php');
             </section>
             <section class="form_entry" id="price">
                 <label for="price_input">Price per night</label>
-                <input type="number" id="price_input" value="1" min="1">
+                <input type="number" id="price_input" value="1" min="1" required>
             </section>
             <section class="form_entry" id="description">
                 <label for="description_input">Description</label>
@@ -30,7 +30,7 @@ include_once('../templates/helper_functions.php');
             </section>
             <section class="form_entry" id="location_wrapper">
                 <label for="location">Location</label>
-                <input id="location" type="text" name="location" value="">
+                <input id="location" type="text" minlength="1" name="location" value="" required>
             </section>
             <section id="map"></section>
             <section class="form_entry" id="commodities">
@@ -41,25 +41,25 @@ include_once('../templates/helper_functions.php');
             </section>
             <section class="form_entry" id="capacity">
                 <label for="capacity_input">Capacity</label>
-                <input id="capacity_input" type="number" name="capacity" value="1" min="0" max="10" step="1">
+                <input id="capacity_input" type="number" name="capacity" value="1" min="0" max="10" step="1" required>
             </section>
             <section class="form_entry" id="num_bedrooms">
                 <label for="num_bedrooms_input">Number of bedrooms </label>
-                <input id="num_bedrooms_input" type="number" name="num-bedrooms" value="1" min="0" max="10" step="1">
+                <input id="num_bedrooms_input" type="number" name="num-bedrooms" value="1" min="0" max="10" step="1" required>
             </section>
             <section class="form_entry" id="num_bathrooms">
                 <label for="num_bathrooms_input">Number of bathrooms</label>
-                <input id="num_bathrooms_input" type="number" name="num-bathrooms" value="1" min="0" max="10" step="1">
+                <input id="num_bathrooms_input" type="number" name="num-bathrooms" value="1" min="0" max="10" step="1" required>
             </section>
             <section class="form_entry" id="num_beds">
                 <label for="num_beds_input">Number of beds</label>
-                <input id="num_beds_input" type="number" name="num-beds" value="1" min="0" max="10" step="1">
+                <input id="num_beds_input" type="number" name="num-beds" value="1" min="0" max="10" step="1" required>
             </section>
 
-            <input id="latitude" type="hidden">
-            <input id="longitude" type="hidden">
-            <input id="city" type="hidden">
-            <input id="country" type="hidden">
+            <input id="latitude" type="hidden" required>
+            <input id="longitude" type="hidden" required>
+            <input id="city" type="hidden" required>
+            <input id="country" type="hidden" required>
             <input class="button" id="submit_button" type="submit" value="Add">
         </form>
     </section>
@@ -199,27 +199,27 @@ function draw_edit_place($place)
         <form id="edit_place_form" action="" method="">
             <section class="form_entry" id="title">
                 <label for="title_input">Title</label>
-                <input id="title_input" type="text" name="title" value="<?= htmlentities($place['title']) ?>">
+                <input id="title_input" type="text" name="title" minlength="1" value="<?= htmlentities($place['title']) ?>" required>
             </section>
             <section class="form_entry" id="description">
                 <label for="description_input">Description</label>
                 <textarea id="description_input" type="text" name="description" rows="6"><?= htmlentities($place['description']) ?></textarea>
             </section>
 
-            <input id="user_id" type="hidden" value="<?= htmlentities($place['owner']) ?>">
-            <input id="place_id" type="hidden" value="<?= htmlentities($place['residenceID']) ?>">
+            <input id="user_id" type="hidden" value="<?= htmlentities($place['owner']) ?>" required>
+            <input id="place_id" type="hidden" value="<?= htmlentities($place['residenceID']) ?>" required>
             <input id="commodities" type="hidden" value="<?= htmlentities(getCommoditiesAsKeysString($place['residenceID'])) ?>">
-            <input id="capacity" type="hidden" value="<?= htmlentities($place['capacity']) ?>">
-            <input id="num_bathrooms" type="hidden" value="<?= htmlentities($place['nBathrooms']) ?>">
-            <input id="num_bedrooms" type="hidden" value="<?= htmlentities($place['nBedrooms']) ?>">
-            <input id="num_beds" type="hidden" value="<?= htmlentities($place['nBeds']) ?>">
-            <input id="location" type="hidden" value="<?= htmlentities($place['address']) ?>">
-            <input id="price" type="hidden" value="<?= htmlentities($place['pricePerDay']) ?>">
-            <input id="type" type="hidden" value="<?= htmlentities($place['residenceTypeID']) ?>">
-            <input id="latitude" type="hidden" value="<?= htmlentities($place['latitude']) ?>">
-            <input id="longitude" type="hidden" value="<?= htmlentities($place['longitude']) ?>">
-            <input id="city" type="hidden" value="<?= htmlentities($place['country']) ?>">
-            <input id="country" type="hidden" value="<?= htmlentities($place['city']) ?>">
+            <input id="capacity" type="hidden" value="<?= htmlentities($place['capacity']) ?>" required>
+            <input id="num_bathrooms" type="hidden" value="<?= htmlentities($place['nBathrooms']) ?>" required>
+            <input id="num_bedrooms" type="hidden" value="<?= htmlentities($place['nBedrooms']) ?>" required>
+            <input id="num_beds" type="hidden" value="<?= htmlentities($place['nBeds']) ?>" required>
+            <input id="location" type="hidden" value="<?= htmlentities($place['address']) ?>" required>
+            <input id="price" type="hidden" value="<?= htmlentities($place['pricePerDay']) ?>" required>
+            <input id="type" type="hidden" value="<?= htmlentities($place['residenceTypeID']) ?>" required>
+            <input id="latitude" type="hidden" value="<?= htmlentities($place['latitude']) ?>" required>
+            <input id="longitude" type="hidden" value="<?= htmlentities($place['longitude']) ?>" required>
+            <input id="city" type="hidden" value="<?= htmlentities($place['country']) ?>" required>
+            <input id="country" type="hidden" value="<?= htmlentities($place['city']) ?>" required>
 
             <section id="edit_place_images">
                 <?php foreach ($photos as $photo) { ?>

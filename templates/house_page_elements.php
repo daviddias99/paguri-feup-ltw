@@ -28,7 +28,7 @@
 
     // Owner photo
     $ownerphoto = getUserPhotoID($owner['username']);
-    $ownerphotopath = "../images/users/thumbnails_small/$ownerphoto";
+    $ownerphotopath = "../images/users/thumbnails_medium/$ownerphoto";
 
     // Variable value assembly
     $owner_name = htmlentities($owner['firstName'] . ' ' . $owner['lastName']);
@@ -132,7 +132,7 @@
         {
             // Owner photo
             $userphoto = getUserPhotoID($review['username']);
-            $userphotopath = "../images/users/thumbnails_small/$userphoto";
+            $userphotopath = "../images/users/thumbnails_medium/$userphoto";
 
             ?>
             <section class="main_review">
@@ -185,7 +185,7 @@
 
             // Owner photo
             $userphoto = getUserPhotoID($reply['username']);
-            $userphotopath = "../images/users/thumbnails_small/$userphoto";
+            $userphotopath = "../images/users/thumbnails_medium/$userphoto";
             ?>
 
             <section class="reply">
@@ -340,7 +340,7 @@
 
                 // Owner photo
                 $userphoto = getUserPhotoID($loggedAccountStatus['username']);
-                $userphotopath = "../images/users/thumbnails_small/$userphoto";
+                $userphotopath = "../images/users/thumbnails_medium/$userphoto";
             } else {
                 $loggedUserFullName = 'Anonymous';
                 $loggedUserUserName = 'anonymous_user';
