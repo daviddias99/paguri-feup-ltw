@@ -166,6 +166,14 @@
 
         if($isLoggedIn && $_SESSION['userID'] != $values['owner'] && !$isAdmin)
             api_error(ResponseStatus::FORBIDDEN, 'You must be the owner of the provided residence.');
+    
+        if(strlen($values['title']) == 0 ||
+           strlen($values['address']) == 0 ||
+           strlen($values['city']) == 0 ||
+           strlen($values['country']) == 0)
+           api_error(ResponseStatus::BAD_REQUEST, 'Invalid body values.');
+
+        
     }
 
 ?>
