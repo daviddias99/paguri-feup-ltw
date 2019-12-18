@@ -17,7 +17,7 @@ function draw_header($body_class, $scripts)
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
-            <link href="https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Lato%7CNunito&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="../css/style.css" rel="stylesheet">
@@ -31,7 +31,7 @@ function draw_header($body_class, $scripts)
     <body class=<?= $body_class ?>>
         <nav class="navbar">
             <a href="front_page.php" class="logo">
-                <img src="../resources/logo_temp.png" height="50" width="50">
+                <img src="../resources/logo_temp.png" alt="paguri_logo" height="50" width="50">
                 <p>paguri</p>
             </a>
             <?php

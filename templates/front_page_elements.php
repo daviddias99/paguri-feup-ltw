@@ -10,11 +10,11 @@
             </section>
             <section class="form_entry" id="check_in">
                 <label for="checkin_input">Check-in</label>
-                <input id="checkin_input" type="date" name="checkin" placeholder="dd-mm-yyyy" value="">
+                <input id="checkin_input" type="date" name="checkin" value="">
             </section>
             <section class="form_entry" id="check_out">
                 <label for="checkout_input">Checkout</label>
-                <input id="checkout_input" type="date" name="checkout" placeholder="dd-mm-yyyy" value="">
+                <input id="checkout_input" type="date" name="checkout" value="">
             </section>
             <section class="form_entry" id="guests">
                 <label for="guests_input">Guests</label>

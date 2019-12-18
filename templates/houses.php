@@ -150,11 +150,11 @@ function draw_list_user_places($userID)
         <a href="../pages/view_house.php?id=<?= $place['residenceID'] ?>">
             <section class="result">
                 <section class="image">
-                    <img src="<?= htmlentities($photoPath) ?>">
+                    <img alt="photo" src="<?= htmlentities($photoPath) ?>">
                 </section>
                 <section class="info">
                     <h1 class="info_title"><?= htmlentities($place['title']) ?></h1>
-                    <h2 class="info_type_and_location"><?= htmlentities(ucfirst($place['type'])) ?>  &#8226  <?= htmlentities($place['address']) ?></h2>
+                    <h2 class="info_type_and_location"><?= htmlentities(ucfirst($place['type'])) ?>  &#8226;  <?= htmlentities($place['address']) ?></h2>
                     <p class="info_description"><?= htmlentities($descriptionTrimmed) ?></p>
                     <p class="info_ppd"><?= htmlentities($priceSimple) ?></p>
                     <p class="info_score"><?= htmlentities($rating) ?></p>
@@ -172,7 +172,7 @@ function draw_list_user_places($userID)
 ?>
     <section class="place_operations">
         <input type="hidden" value=<?= htmlentities($place['residenceID']) ?>>
-        <a class="button" href="../pages/add_availabilities.php?residenceID=<?= $place['residenceID']?>" id="" href="">Add availability</a>
+        <a class="button" href="../pages/add_availabilities.php?residenceID=<?= $place['residenceID']?>">Add availability</a>
         <a class="button" href="../pages/edit_place.php?id=<?= $place['residenceID']?>">Edit</a>
         <button class="button remove_reservation">Remove</button>
     </section>
@@ -228,7 +228,7 @@ function draw_edit_place($place)
             <section id="edit_place_images">
                 <?php foreach ($photos as $photo) { ?>
                     <section class="image_preview" id="<?= $photo['photoID'] ?>">
-                        <img src="../images/properties/medium/<?= $photo['filepath'] ?>">
+                        <img alt="firstPhoto" src="../images/properties/medium/<?= $photo['filepath'] ?>">
                         <div class="remove_image fas fa-trash-alt"></div>
                     </section>
                 <?php } ?>

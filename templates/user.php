@@ -4,7 +4,7 @@ function draw_user($user)
     $userLoggedIn = (isset($_SESSION['username']) and $_SESSION['username'] == $user['username']);
 ?>
     <section class="card" id='profile'>
-        <img class='profile_pic' src="../images/users/thumbnails_medium/<?= $user['photo'] ?>">
+        <img class='profile_pic' alt="user_img" src="../images/users/thumbnails_medium/<?= $user['photo'] ?>">
         <h1><?= htmlentities($user['firstName']) ?> <?= htmlentities($user['lastName']) ?></h1>
         <ul id="info">
             <li>
@@ -21,7 +21,7 @@ function draw_user($user)
             <a class="button" href="edit_profile.php">Edit profile</a>
         <?php } ?>
 
-        <section id="about_me" />
+        <section id="about_me" >
         <h2>About me</h2>
         <p><?= htmlentities($user['biography']) ?></p>
     </section>
