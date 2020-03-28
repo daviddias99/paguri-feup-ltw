@@ -426,10 +426,7 @@
                 <section class="numbertext"><?=$i+1?> / <?=count($residencePhotos)?></section>
                 <img alt="bigResidence" class="slide_show_img" src="../images/properties/big/<?=$residencePhotos[$i]['filepath']?>">
             </section>
-                <section class="mySlides fade">
-                <img class="slide_show_img" src="../resources/big-none.jpg">
-            </section>
-
+                
         <?php } 
     
     if (count($residencePhotos) == 0)  { ?>
