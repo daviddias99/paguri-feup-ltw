@@ -1,3 +1,24 @@
+# Paguri: House rental website
+
+**2017/2018** - 3rd Year, 1nd Semester
+
+**Course:** *Linguagens e Tecnologias Web* ([LTW](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=436447)) | Web Languages and Technologies
+
+**Authors:** David Silva ([daviddias99](https://github.com/daviddias99)), Luís Cunha ([luispcunha](https://github.com/luispcunha)) and Mário Gil ([GambuzX](https://github.com/GambuzX))
+
+---
+
+**Project**
+
+**Description:** _See below_
+
+**Technologies:** _See below_
+
+**Skills:** _See below_
+
+**Grade:** 19.6/20
+---
+
 # Paguri :house:
 House rental web application
 
