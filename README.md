@@ -17,6 +17,7 @@
 **Skills:** _See below_
 
 **Grade:** 19.6/20
+
 ---
 
 # Paguri :house:
